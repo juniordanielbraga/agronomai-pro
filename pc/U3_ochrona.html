@@ -1,0 +1,50 @@
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&family=Fraunces:opsz,wght@9..144,700&display=swap" rel="stylesheet">
+<style>
+.ia{--nv:#1E4620;--nv2:#2C5E2E;--or:#B8861A;--gold:#D9A82B;--g:#13a10e;--y:#FFD54A;--tx:#17231a;--mu:#5b6658;--ln:#e4dccb;font-family:Poppins,system-ui,sans-serif;color:var(--tx);background:#f5f0e3;min-height:100vh;padding-bottom:32px;line-height:1.5;-webkit-font-smoothing:antialiased}
+.ia *{box-sizing:border-box}.ia .w{max-width:480px;margin:0 auto;padding:0 16px}
+.ia .top{background:var(--nv);color:#fff;padding:9px 0 10px;position:sticky;top:0;z-index:5;box-shadow:0 2px 10px rgba(16,40,18,.28)}
+.ia .pbt{display:flex;justify-content:space-between;align-items:center;gap:10px;font-size:12px;font-weight:500}
+.ia .pbt span{white-space:nowrap;overflow:hidden;text-overflow:ellipsis;opacity:.92}.ia .pbt b{color:var(--y);font-weight:700}
+.ia .pb{height:6px;background:rgba(255,255,255,.14);border-radius:99px;overflow:hidden;margin-top:6px}
+.ia .pb i{display:block;height:100%;background:linear-gradient(90deg,#7CB342,#FFD54A);border-radius:99px;animation:ia-fill 1.4s ease-out forwards}
+.ia .stp{font-size:11px;opacity:.7;margin-top:5px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.ia .brand{display:flex;justify-content:center;align-items:center;gap:6px;margin-top:14px;font-family:Fraunces,Georgia,serif;font-weight:700;font-size:17px;color:var(--nv)}
+.ia .brand i{font-style:normal;color:#5e9732}.ia .brand b{font-family:Poppins;font-size:10.5px;background:var(--gold);color:#1b1b1b;border-radius:5px;padding:1px 6px}
+.ia .warn{background:#fff6e0;color:#7a5200;text-align:center;font-weight:600;font-size:12px;padding:7px 12px;border-bottom:1px solid #f3dfa6}
+.ia h1{font-size:clamp(21px,5.8vw,28px);line-height:1.22;font-weight:800;letter-spacing:-.01em;margin:12px 0 8px;text-align:center;color:var(--nv)}.ia h1 em{color:var(--or);font-style:normal}
+.ia .sub{text-align:center;color:var(--mu);font-size:14px;margin:0 0 12px}
+.ia .card{background:#fff;border:1px solid var(--ln);border-radius:14px;padding:16px;margin:12px 0;box-shadow:0 1px 2px rgba(30,70,32,.05)}
+.ia .box{display:block;width:62%;max-width:240px;margin:4px auto}
+.ia p{font-size:14.5px;margin:8px 0;color:#2a3428}.ia .hl{background:linear-gradient(transparent 62%,#f6e4b0 62%);font-weight:600}
+.ia ul.ok{list-style:none;padding:0;margin:4px 0}.ia ul.ok li{padding:8px 0 8px 28px;position:relative;font-size:14px;line-height:1.4;border-bottom:1px solid #f1ece0}.ia ul.ok li:last-child{border:0}
+.ia ul.ok li:before{content:'';position:absolute;left:0;top:10px;width:18px;height:18px;border-radius:5px;background:var(--nv) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Cpath d='M4 8.3l2.6 2.6L12 5.5' fill='none' stroke='%23FFD54A' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E") center/14px no-repeat}
+.ia table{width:100%;border-collapse:collapse;font-size:13.5px}.ia td{padding:9px 4px;border-bottom:1px solid #f1ece0}.ia tr:last-child td{border:0}.ia td:last-child{text-align:right;font-weight:700;color:var(--nv2)}
+.ia .price{text-align:center;padding:18px 16px}
+.ia .val{font-size:13px;color:var(--mu)}.ia .val s{color:#8a9388}
+.ia .price .p{font-size:40px;font-weight:800;color:var(--nv);line-height:1.1;letter-spacing:-.02em;margin:2px 0}
+.ia .price .sv{display:inline-block;background:#e8f3e1;color:#2e6b1f;font-weight:600;font-size:12px;border-radius:99px;padding:3px 10px}
+.ia .tm{display:flex;align-items:center;justify-content:center;gap:6px;font-weight:600;font-size:12.5px;color:#b42318;margin:12px 0 10px}
+.ia .tm b{font-variant-numeric:tabular-nums;background:#fdecea;border-radius:6px;padding:1px 7px}
+.ia .yes{display:flex;align-items:center;justify-content:center;gap:8px;width:100%;min-height:52px;border:0;cursor:pointer;background:linear-gradient(180deg,#18b012,#0f8a08);color:#fff;font:inherit;font-weight:700;font-size:clamp(14.5px,4.3vw,17px);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;padding:0 16px;border-radius:12px;box-shadow:0 6px 16px rgba(15,138,8,.28);animation:ia-glow 2s infinite;-webkit-tap-highlight-color:transparent}
+.ia .yes:active{transform:translateY(1px)}.ia .yes:after{content:'→';font-weight:700}
+.ia .game .yes{background:linear-gradient(180deg,#ffe07a,#D9A82B);color:#163518;box-shadow:0 6px 16px rgba(217,168,43,.35);animation:none}.ia .game .yes:after{content:''}
+.ia .one{font-size:11.5px;color:var(--mu);margin-top:7px}
+.ia .no{display:block;width:100%;background:none;border:0;color:#8a9388;font:inherit;font-size:12.5px;text-decoration:underline;text-underline-offset:3px;margin:14px 0 4px;cursor:pointer;line-height:1.4}
+.ia .g30{display:flex;flex-wrap:wrap;gap:6px 14px;align-items:center;justify-content:center;font-size:11.5px;color:var(--mu);margin-top:12px;padding-top:12px;border-top:1px solid #f1ece0}
+.ia .game{text-align:center}.ia .hide{display:none}
+.ia .big{font-size:42px;font-weight:800;color:var(--or);letter-spacing:-.02em;line-height:1.1}
+.ia .lbl{font-size:13px;font-weight:600;color:var(--mu)}
+.ia .quote{border-left:3px solid var(--gold);padding:4px 0 4px 12px;font-style:italic;color:#3a4537;font-size:14px}
+@keyframes ia-fill{from{width:0}}@keyframes ia-glow{0%,100%{box-shadow:0 6px 16px rgba(15,138,8,.28)}50%{box-shadow:0 6px 24px rgba(15,138,8,.5)}}
+</style><div class="ia"><div class="top"><div class="w"><div class="pbt"><span>⏳ Przygotowujemy Twój dostęp do AgronomAI PRO…</span><b>80%</b></div>
+<div class="pb"><i style="width:80%"></i></div><div class="stp">Krok 4 z 6 · nie zamykaj tej strony, żeby nie stracić oferty</div></div></div><div class="warn">⚠️ UWAGA: ta oferta pokazuje się tylko raz — po zamknięciu strony nie wróci</div><div class="w"><div class="brand">🌱 Agronom<i>AI</i> <b>PRO</b></div>
+<h1>Program ochrony na cały sezon — <em>dla 12 upraw, w jednym miejscu</em></h1>
+<p class="sub">Pszenica, rzepak, kukurydza, buraki, ziemniaki, sady, borówka i więcej.</p>
+<img class="box" src="{product-image}" alt="{product-title}">
+<div class="card"><p>Co roku to samo: <span class="hl">fazy BBCH, agrofagi, progi szkodliwości i rotacja substancji</span> rozpisane od nowa dla każdego klienta. Ten pakiet daje gotowy szkielet sezonu — Ty wpisujesz tylko środki i dawki z aktualnej etykiety.</p>
+<table><tr><td>12 upraw × szablon na cały sezon</td><td>✓</td></tr><tr><td>Fazy BBCH i kluczowe agrofagi</td><td>✓</td></tr><tr><td>Progi szkodliwości i monitoring</td><td>✓</td></tr><tr><td>Integrowana ochrona i rotacja substancji</td><td>✓</td></tr><tr><td>Ewidencja zabiegów gotowa do kontroli</td><td>✓</td></tr><tr><td>30 promptów AI do zaleceń dla rolnika</td><td>✓</td></tr></table></div>
+<div class="card price"><div class="val">Wartość: <s>{compare}</s></div>
+<div class="p">{price}</div><div class="sv">Oszczędzasz {savings} · płatność jednorazowa</div>
+<div class="tm">⏱ Oferta ważna jeszcze <b>{timer}</b></div>
+<button class="yes" data-pp-accept>Tak, dodaj Programy ochrony</button><div class="one">🔒 Jedno kliknięcie · bez ponownego wpisywania karty</div>
+<div class="g30"><span>🛡️ 30 dni gwarancji</span><span>⚡ Dostęp od razu na maila</span><span>🌾 Dla agronomów</span></div></div><button class="no" data-pp-decline>Nie, dziękuję — rozpisuję programy sam</button></div></div>
