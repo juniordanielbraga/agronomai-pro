@@ -42,12 +42,12 @@
 <p class="sub">Zdrap pole palcem i zobacz swoją zniżkę.</p>
 <div class="card game"><div style="position:relative;width:280px;height:150px;margin:0 auto;border-radius:14px;overflow:hidden;background:#fff;border:2px solid #1E4620;box-shadow:0 6px 18px rgba(30,70,32,.18)">
 <div style="position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center"><div class="lbl">Twoja zniżka</div><div class="big">-{discount}</div></div>
-<canvas id="zd" width="280" height="150" style="position:absolute;inset:0;touch-action:none;cursor:pointer"></canvas></div><div class="one">👆 zdrapuj palcem</div></div>
+<canvas id="zd" width="280" height="150" style="position:absolute;inset:0;touch-action:none;cursor:pointer"></canvas></div><div class="one">👆 zdrap palcem</div></div>
 <div id="rev3" class="hide"><img class="box" src="{product-image}" alt="{product-title}" style="width:48%;max-width:180px"><div class="card price"><div class="val">Wartość: <s>{compare}</s></div>
 <div class="p">{price}</div><div class="sv">Oszczędzasz {savings} · płatność jednorazowa</div>
 <div class="tm">⏱ Oferta ważna jeszcze <b>{timer}</b></div>
-<button class="yes" data-pp-accept>Odbieram Programy ze zniżką</button><div class="one">🔒 Jedno kliknięcie · bez ponownego wpisywania karty</div>
-<div class="g30"><span>🛡️ 30 dni gwarancji</span><span>⚡ Dostęp od razu na maila</span><span>🌾 Dla agronomów</span></div></div></div><button class="no" data-pp-decline>Nie, dziękuję — rezygnuję ze zniżki</button>
+<button class="yes" data-pp-accept>Odbieram Programy ze zniżką</button><div class="one">🔒 Jedno kliknięcie · bez ponownego wpisywania danych karty</div>
+<div class="g30"><span>🛡️ 30 dni na zwrot pieniędzy</span><span>⚡ Dostęp od razu na maila</span><span>🌾 Dla agronomów</span></div></div></div><button class="no" data-pp-decline>Nie, dziękuję — rezygnuję ze zniżki</button>
 <script>(function(){var c=document.getElementById('zd'),x=c.getContext('2d'),d=false,done=false;var gr=x.createLinearGradient(0,0,280,150);gr.addColorStop(0,'#1E4620');gr.addColorStop(1,'#2C5E2E');x.fillStyle=gr;x.fillRect(0,0,280,150);x.strokeStyle='rgba(255,213,74,.12)';x.lineWidth=10;for(var k=-150;k<430;k+=24){x.beginPath();x.moveTo(k,0);x.lineTo(k+150,150);x.stroke()}x.fillStyle='#FFD54A';x.font='600 18px Poppins,sans-serif';x.textAlign='center';x.fillText('ZDRAP TUTAJ',140,80);x.font='500 12px Poppins,sans-serif';x.fillStyle='rgba(255,255,255,.75)';x.fillText('przesuń palcem',140,102);x.globalCompositeOperation='destination-out';
 function s(e){if(!d)return;var r=c.getBoundingClientRect(),p=e.touches?e.touches[0]:e;x.beginPath();x.arc(p.clientX-r.left,p.clientY-r.top,22,0,7);x.fill();chk();e.preventDefault()}
 function chk(){if(done)return;var a=x.getImageData(0,0,280,150).data,n=0;for(var i=3;i<a.length;i+=16)if(a[i]==0)n++;if(n>a.length/16*.45){done=true;c.style.transition='opacity .5s';c.style.opacity=0;var r=document.getElementById('rev3');r.classList.remove('hide');r.scrollIntoView({behavior:'smooth'})}}
