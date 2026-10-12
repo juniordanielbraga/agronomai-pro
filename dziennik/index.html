@@ -1,0 +1,700 @@
+<!doctype html>
+<html lang="pl"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="robots" content="noindex,nofollow">
+<meta name="apple-mobile-web-app-capable" content="yes"><meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="Dziennik PRO"><meta name="theme-color" content="#1E4620">
+<link rel="manifest" href="manifest.webmanifest"><link rel="icon" href="../app/icon.svg" type="image/svg+xml"><link rel="apple-touch-icon" href="../app/icon-192.png">
+<title>Dziennik polowy PRO — AgronomAI PRO</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&family=Space+Mono:wght@400;700&family=Fraunces:ital,opsz,wght@1,9..144,600&display=swap" rel="stylesheet">
+<style>
+:root{--g9:#1E4620;--g8:#2C5E2E;--leaf:#7CB342;--cta:#2E7D32;--gold:#D9A82B;--red:#C62828;--blue:#1565C0;
+--bg:#F5F0E3;--grid:rgba(30,70,32,.055);--card:#fff;--ink:#1d1f1b;--mut:#62614f;--line:#e2dac3;--soft:#f3eedf;--onp:#fff;--warnbg:#fff6dc;--warnln:#ecd58a;--warntx:#5d4a14}
+[data-theme=dark]{--bg:#121711;--grid:rgba(165,212,106,.05);--card:#1b2219;--ink:#eef2e8;--mut:#a3ab98;--line:#2f3a2a;--soft:#222b1f;--g9:#a5d46a;--g8:#a5d46a;--cta:#4f9a3f;--warnbg:#2a2715;--warnln:#4a4320;--warntx:#eadca8}
+*{box-sizing:border-box;margin:0;padding:0}
+html{-webkit-text-size-adjust:100%}
+body{font-family:Poppins,system-ui,sans-serif;color:var(--ink);font-size:16px;line-height:1.5;min-height:100vh;
+background-color:var(--bg);background-image:linear-gradient(var(--grid) 1px,transparent 1px),linear-gradient(90deg,var(--grid) 1px,transparent 1px);background-size:28px 28px;
+padding-bottom:calc(84px + env(safe-area-inset-bottom))}
+button,input,select,textarea{font:inherit;color:inherit}
+a{color:inherit}
+.mono,.k,.pill,.chip,.cnt{font-family:'Space Mono',monospace}
+.wrap{max-width:720px;margin:0 auto;padding:0 16px}
+/* top bar */
+.top{position:sticky;top:0;z-index:20;background:var(--g9);color:#fff;padding:calc(10px + env(safe-area-inset-top)) 0 10px}
+[data-theme=dark] .top{background:#17351a}
+.top .wrap{display:flex;align-items:center;gap:10px}
+.top .bk{width:44px;height:44px;border-radius:12px;border:1px solid rgba(255,255,255,.25);background:rgba(255,255,255,.08);color:#fff;font-size:22px;display:flex;align-items:center;justify-content:center;cursor:pointer;flex:none;text-decoration:none}
+.top .ttl{flex:1;min-width:0}
+.top .ttl b{display:block;font-size:17px;font-weight:700;letter-spacing:-.2px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.top .ttl small{display:block;font-family:'Space Mono';font-size:10px;letter-spacing:1.8px;opacity:.75;text-transform:uppercase}
+.top svg.lg{width:40px;height:40px;border-radius:10px;flex:none}
+.top .tb{width:44px;height:44px;border-radius:12px;border:1px solid rgba(255,255,255,.25);background:rgba(255,255,255,.08);color:#fff;font-size:18px;cursor:pointer;flex:none}
+main{padding:16px 0 24px}
+.back{display:inline-flex;align-items:center;gap:6px;font-weight:600;font-size:14.5px;color:var(--g8);text-decoration:none;padding:10px 0;min-height:44px}
+.pill{display:inline-flex;align-items:center;gap:8px;font-size:10.5px;letter-spacing:1.6px;border:1px solid var(--line);background:var(--card);border-radius:99px;padding:6px 12px;text-transform:uppercase}
+.pill:before{content:'';width:7px;height:7px;border-radius:50%;background:#3FA34D;box-shadow:0 0 0 3px rgba(63,163,77,.18)}
+h1{font-size:36px;line-height:1.05;font-weight:800;letter-spacing:-1.2px;margin:12px 0 8px}
+h1 em{font-family:Fraunces,Georgia,serif;font-style:italic;font-weight:600;color:var(--gold);letter-spacing:-.5px}
+h2{font-size:22px;font-weight:800;letter-spacing:-.5px;line-height:1.2}
+h3{font-size:16.5px;font-weight:700}
+.lead{color:var(--mut);font-size:15px;margin-bottom:16px}
+.k{font-size:10.5px;letter-spacing:1.8px;color:var(--mut);text-transform:uppercase;display:block;margin:22px 0 8px}
+.stats{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin:14px 0 6px}
+.stat{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:10px 8px;text-align:center}
+.stat b{display:block;font-size:22px;font-weight:800;letter-spacing:-.5px;line-height:1.1}
+.stat small{font-family:'Space Mono';font-size:9px;letter-spacing:1px;color:var(--mut);text-transform:uppercase}
+.tiles{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.tile{background:var(--card);border:1px solid var(--line);border-radius:18px;padding:16px 14px 14px;text-decoration:none;color:var(--ink);display:flex;flex-direction:column;gap:8px;min-height:168px;box-shadow:0 2px 0 rgba(30,70,32,.04);position:relative;overflow:hidden}
+.tile:active{transform:scale(.98)}
+.tile .ic{width:52px;height:52px;border-radius:14px;display:flex;align-items:center;justify-content:center;color:#fff}
+.tile .ic svg{width:28px;height:28px}
+.tile b{font-size:17px;font-weight:700;line-height:1.2;letter-spacing:-.2px}
+.tile p{font-size:12.5px;color:var(--mut);line-height:1.4}
+.tile .cnt{position:absolute;top:14px;right:12px;font-size:11px;background:var(--soft);border-radius:99px;padding:2px 9px;color:var(--mut)}
+.card{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:16px;margin-bottom:12px}
+.card.acc{border-left:5px solid var(--leaf)}
+.card.gold{border-left:5px solid var(--gold)}
+.card h3{margin-bottom:6px}
+.btn{min-height:52px;border:1.5px solid var(--line);background:var(--card);border-radius:14px;padding:12px 16px;font-weight:600;font-size:15.5px;cursor:pointer;display:inline-flex;align-items:center;justify-content:center;gap:8px;text-decoration:none;color:var(--ink);text-align:center;line-height:1.2}
+.btn:active{transform:scale(.98)}
+.btn.pri{background:var(--cta);border-color:var(--cta);color:#fff}
+.btn.dk{background:#1E4620;border-color:#1E4620;color:#fff}
+.btn.gd{background:var(--gold);border-color:var(--gold);color:#2a2105}
+.btn.red{color:var(--red);border-color:rgba(198,40,40,.35)}
+.btn.sm{min-height:44px;padding:8px 12px;font-size:14px;border-radius:12px}
+.btn.full{width:100%}
+.bgrid{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.bgrid.c3{grid-template-columns:1fr 1fr 1fr}
+.items{display:grid;gap:10px}
+.item{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:14px;display:flex;gap:12px;align-items:flex-start;cursor:pointer;text-align:left;width:100%}
+.item:active{background:var(--soft)}
+.item .dt{flex:none;width:52px;text-align:center;border-radius:10px;background:var(--soft);padding:6px 2px;font-family:'Space Mono';line-height:1.1}
+.item .dt b{display:block;font-size:19px}.item .dt small{font-size:10px;text-transform:uppercase;color:var(--mut)}
+.item .tx{flex:1;min-width:0}
+.item .tx b{display:block;font-size:15.5px;font-weight:700;line-height:1.3}
+.item .tx p{font-size:13.5px;color:var(--mut);margin-top:2px;overflow-wrap:anywhere}
+.item .ar{flex:none;color:var(--mut);font-size:20px;align-self:center}
+.chip{display:inline-block;font-size:10.5px;letter-spacing:.8px;border:1px solid var(--line);background:var(--soft);border-radius:99px;padding:2px 9px;color:var(--mut);text-transform:uppercase;margin:4px 4px 0 0;white-space:nowrap}
+.chip.g{background:#e6f2d9;border-color:#cfe5b6;color:#2C5E2E}.chip.r{background:#fde7e5;border-color:#f6c3be;color:#9b1c1c}.chip.y{background:#fbf0cf;border-color:#efd78c;color:#6b5210}.chip.b{background:#e3eefb;border-color:#bdd5f2;color:#0f4c96}
+[data-theme=dark] .chip.g,[data-theme=dark] .chip.r,[data-theme=dark] .chip.y,[data-theme=dark] .chip.b{background:var(--soft);border-color:var(--line);color:var(--ink)}
+.empty{text-align:center;color:var(--mut);padding:26px 16px;border:2px dashed var(--line);border-radius:16px;font-size:14.5px}
+.empty b{display:block;color:var(--ink);font-size:16px;margin-bottom:4px}
+.warn{background:var(--warnbg);border:1px solid var(--warnln);color:var(--warntx);border-radius:14px;padding:12px 14px;font-size:13.5px;line-height:1.45;display:flex;gap:10px}
+.warn:before{content:'!';flex:none;width:22px;height:22px;border-radius:50%;background:var(--gold);color:#2a2105;font-weight:800;display:flex;align-items:center;justify-content:center;font-size:13px;margin-top:1px}
+.alert{background:#fde7e5;border:1px solid #f1b3ac;color:#8c1b14;border-radius:12px;padding:10px 12px;font-size:13.5px;margin-top:10px;font-weight:600}
+[data-theme=dark] .alert{background:#3a1c19;border-color:#6b2a24;color:#ffcfc9}
+.kv{display:grid;grid-template-columns:1fr 1fr;gap:8px 12px;font-size:14px}
+.kv div small{display:block;font-family:'Space Mono';font-size:10px;letter-spacing:1px;text-transform:uppercase;color:var(--mut)}
+.kv div b{font-weight:700}
+/* forms */
+.fl{display:block;margin-bottom:12px}
+.fl>span{display:block;font-weight:600;font-size:14px;margin-bottom:5px}
+.fl>span i{font-style:normal;color:var(--red)}
+.fl small{display:block;color:var(--mut);font-size:12.5px;margin-top:4px}
+.fl input,.fl select,.fl textarea,.inp{width:100%;min-height:52px;border:1.5px solid var(--line);border-radius:12px;padding:12px 13px;font-size:16px;background:var(--soft);color:var(--ink);-webkit-appearance:none;appearance:none}
+.fl select,.inp.sel{background-image:linear-gradient(45deg,transparent 50%,var(--mut) 50%),linear-gradient(135deg,var(--mut) 50%,transparent 50%);background-position:calc(100% - 20px) 50%,calc(100% - 14px) 50%;background-size:6px 6px;background-repeat:no-repeat;padding-right:36px}
+.fl textarea{min-height:96px;resize:vertical;line-height:1.45}
+.fl input:focus,.fl select:focus,.fl textarea:focus,.inp:focus{outline:3px solid rgba(124,179,66,.55);border-color:var(--leaf);background:var(--card)}
+.fl.err input,.fl.err select,.fl.err textarea{border-color:var(--red);background:#fff3f2}
+.frow{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.frow3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px}
+.mic{margin-top:8px}
+/* sheet */
+#sheet{position:fixed;inset:0;z-index:60;display:none}
+#sheet.on{display:block}
+.sh-bg{position:absolute;inset:0;background:rgba(10,20,10,.55)}
+.sh{position:absolute;left:0;right:0;bottom:0;max-height:94vh;background:var(--bg);border-radius:22px 22px 0 0;display:flex;flex-direction:column;max-width:720px;margin:0 auto;box-shadow:0 -10px 40px rgba(0,0,0,.25)}
+.sh-h{display:flex;align-items:center;gap:10px;padding:16px 16px 10px;border-bottom:1px solid var(--line)}
+.sh-h b{flex:1;font-size:18px;font-weight:800;letter-spacing:-.3px}
+.sh-h .x{width:44px;height:44px;border-radius:12px;border:1px solid var(--line);background:var(--card);font-size:24px;cursor:pointer;line-height:1}
+.sh-b{overflow:auto;padding:14px 16px 6px;flex:1}
+.sh-f{display:flex;gap:10px;padding:12px 16px calc(12px + env(safe-area-inset-bottom));border-top:1px solid var(--line);background:var(--card)}
+.sh-f .btn{flex:1}
+.sh-note{font-size:12.5px;color:var(--mut);margin:-2px 0 12px}
+/* tabs, filters */
+.tabs{display:grid;grid-template-columns:repeat(3,1fr);gap:6px;background:var(--soft);border:1px solid var(--line);border-radius:14px;padding:4px;margin-bottom:12px}
+.tabs button{min-height:46px;border:0;background:transparent;border-radius:11px;font-weight:600;font-size:14px;cursor:pointer;color:var(--mut)}
+.tabs button.on{background:var(--card);color:var(--ink);box-shadow:0 1px 4px rgba(0,0,0,.08)}
+.filt{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:12px;margin-bottom:12px}
+.filt .fl{margin-bottom:8px}
+.filt .fl>span{font-size:12.5px;margin-bottom:3px}
+.filt .fl input,.filt .fl select{min-height:46px;padding:9px 11px;font-size:15px}
+.sum{font-size:13.5px;color:var(--mut);margin:4px 2px 10px;display:flex;justify-content:space-between;gap:8px;align-items:center}
+.fab{position:fixed;right:16px;bottom:calc(92px + env(safe-area-inset-bottom));z-index:30;min-height:60px;border-radius:30px;padding:0 22px;border:0;background:var(--gold);color:#2a2105;font-weight:800;font-size:16px;box-shadow:0 8px 24px rgba(30,70,32,.3);cursor:pointer;display:flex;align-items:center;gap:8px}
+/* bottom nav */
+.nav{position:fixed;left:0;right:0;bottom:0;z-index:40;background:var(--card);border-top:1px solid var(--line);padding-bottom:env(safe-area-inset-bottom)}
+.nav .in{max-width:720px;margin:0 auto;display:grid;grid-template-columns:repeat(5,1fr)}
+.nav a{min-height:68px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:3px;text-decoration:none;color:var(--mut);font-size:11px;font-weight:600}
+.nav a svg{width:25px;height:25px}
+.nav a.on{color:var(--cta)}
+[data-theme=dark] .nav a.on{color:#a5d46a}
+.nav a.on svg{stroke-width:2.4}
+/* calc */
+.res{background:var(--g9);color:#fff;border-radius:18px;padding:18px 16px;margin-bottom:12px}
+[data-theme=dark] .res{background:#17351a}
+.res .big{font-size:52px;font-weight:800;letter-spacing:-2px;line-height:1}
+.res .big small{font-size:18px;letter-spacing:0;font-weight:600;opacity:.85;margin-left:4px}
+.res .lb{font-family:'Space Mono';font-size:10.5px;letter-spacing:1.6px;text-transform:uppercase;opacity:.8}
+.res .eq{font-size:13px;opacity:.9;margin-top:10px;line-height:1.6;font-family:'Space Mono'}
+.res .eq b{color:#ffd56a}
+table.t{width:100%;border-collapse:collapse;font-size:14px}
+table.t th{font-family:'Space Mono';font-size:10px;letter-spacing:1px;text-transform:uppercase;color:var(--mut);text-align:left;font-weight:700;padding:6px 4px;border-bottom:1.5px solid var(--line)}
+table.t td{padding:9px 4px;border-bottom:1px solid var(--line);vertical-align:top}
+table.t td.n,table.t th.n{text-align:right;white-space:nowrap;font-variant-numeric:tabular-nums}
+table.t tr:last-child td{border-bottom:0}
+table.t input{width:100%;min-height:44px;border:1.5px solid var(--line);border-radius:10px;padding:6px 8px;background:var(--soft);font-size:15px;text-align:right}
+table.t input.l{text-align:left}
+.tsc{overflow-x:auto;margin:0 -4px;padding:0 4px}
+.pkg{display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;margin-top:8px}
+.pkg div{background:var(--soft);border:1px solid var(--line);border-radius:12px;padding:10px;text-align:center}
+.pkg b{display:block;font-size:22px;font-weight:800;letter-spacing:-.5px}
+.pkg small{font-family:'Space Mono';font-size:9.5px;letter-spacing:.8px;text-transform:uppercase;color:var(--mut)}
+details.ex{background:var(--card);border:1px solid var(--line);border-radius:16px;margin-bottom:12px}
+details.ex summary{padding:16px;font-weight:700;cursor:pointer;list-style:none;display:flex;justify-content:space-between;align-items:center;min-height:56px}
+details.ex summary::-webkit-details-marker{display:none}
+details.ex summary:after{content:'+';font-size:22px;color:var(--mut)}
+details.ex[open] summary:after{content:'–'}
+details.ex .dbody{padding:0 16px 16px}
+/* calendar */
+.calh{display:flex;align-items:center;gap:8px;margin-bottom:8px}
+.calh b{flex:1;text-align:center;font-size:18px;font-weight:800;text-transform:capitalize}
+.calh button{width:52px;height:52px;border-radius:14px;border:1.5px solid var(--line);background:var(--card);font-size:22px;cursor:pointer}
+.cal{display:grid;grid-template-columns:repeat(7,1fr);gap:4px;background:var(--card);border:1px solid var(--line);border-radius:16px;padding:8px}
+.cal .wd{font-family:'Space Mono';font-size:10px;text-align:center;color:var(--mut);padding:4px 0;text-transform:uppercase}
+.cal button{aspect-ratio:1/1.05;min-height:44px;border:1px solid transparent;border-radius:10px;background:var(--soft);cursor:pointer;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;font-weight:600;font-size:15px;padding:0}
+.cal button.o{opacity:.35}
+.cal button.td{border-color:var(--leaf);background:#e6f2d9}
+[data-theme=dark] .cal button.td{background:#24361f}
+.cal button.sel{background:var(--g9);color:#fff;border-color:var(--g9)}
+[data-theme=dark] .cal button.sel{color:#121711}
+.dots{display:flex;gap:2px;height:6px}
+.dots i{width:6px;height:6px;border-radius:50%;display:block}
+.chk{width:30px;height:30px;flex:none;accent-color:var(--cta);margin-top:2px}
+.legend{display:flex;flex-wrap:wrap;gap:10px;font-size:12px;color:var(--mut);margin:8px 2px 4px}
+.legend span{display:inline-flex;align-items:center;gap:5px}
+.legend i{width:9px;height:9px;border-radius:50%;display:inline-block}
+.done .tx b{text-decoration:line-through;opacity:.6}
+#toast{position:fixed;left:50%;bottom:calc(100px + env(safe-area-inset-bottom));transform:translateX(-50%) translateY(20px);background:#1d1f1b;color:#fff;padding:12px 18px;border-radius:12px;font-size:14.5px;font-weight:600;opacity:0;pointer-events:none;transition:.25s;z-index:90;max-width:calc(100% - 32px);text-align:center}
+#toast.on{opacity:1;transform:translateX(-50%) translateY(0)}
+.foot{text-align:center;font-size:12px;color:var(--mut);margin:26px 0 6px}
+@media (min-width:700px){h1{font-size:46px}.tiles{grid-template-columns:repeat(4,1fr)}}
+@media (max-width:360px){.stats{grid-template-columns:1fr 1fr}.bgrid.c3{grid-template-columns:1fr 1fr}}
+@media print{.top,.nav,.fab,.noprint,#sheet,.back{display:none!important}body{background:#fff;padding:0}.res{background:#fff!important;color:#000;border:2px solid #1E4620}.card,details.ex{break-inside:avoid}}
+</style>
+</head>
+<body>
+<header class="top"><div class="wrap" id="topbar"></div></header>
+<main><div class="wrap" id="view"></div></main>
+<nav class="nav noprint"><div class="in" id="nav"></div></nav>
+<div id="sheet"></div>
+<div id="toast" role="status" aria-live="polite"></div>
+<input type="file" id="impfile" accept=".json,application/json" hidden>
+<script>
+'use strict';
+/* =============== narzędzia =============== */
+const $=s=>document.querySelector(s);
+const uid=()=>Date.now().toString(36)+Math.random().toString(36).slice(2,8);
+const esc=s=>String(s==null?'':s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const num=v=>{if(v===''||v==null)return null;const n=parseFloat(String(v).replace(/\s/g,'').replace(',','.'));return isFinite(n)?n:null};
+const fmt=(n,d=1)=>n==null||!isFinite(n)?'—':Number(n).toLocaleString('pl-PL',{maximumFractionDigits:d});
+const iso=d=>d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0');
+const today=()=>iso(new Date());
+const fdate=s=>s?s.slice(0,10).split('-').reverse().join('.'):'—';
+const MON=['sty','lut','mar','kwi','maj','cze','lip','sie','wrz','paź','lis','gru'];
+const MONF=['styczeń','luty','marzec','kwiecień','maj','czerwiec','lipiec','sierpień','wrzesień','październik','listopad','grudzień'];
+const plN=(n,a,b,c)=>{n=Math.abs(n);if(n===1)return a;const d=n%10,dd=n%100;return d>=2&&d<=4&&(dd<12||dd>14)?b:c};
+function toast(m){const t=$('#toast');t.textContent=m;t.classList.add('on');clearTimeout(toast.t);toast.t=setTimeout(()=>t.classList.remove('on'),2600)}
+function download(blob,name){const a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download=name;a.rel='noopener';document.body.appendChild(a);a.click();setTimeout(()=>{URL.revokeObjectURL(a.href);a.remove()},2000)}
+
+/* =============== dane referencyjne (edytowalne) =============== */
+// pobranie jednostkowe: kg składnika na 1 t plonu głównego (z plonem ubocznym), wartości orientacyjne, zaokrąglone
+const DEF_CROPS=[
+ {n:'Pszenica ozima',N:25,P:11,K:19,y:7,u:'t ziarna',split:[[50,'Ruszenie wegetacji (BBCH 20–25)'],[30,'Strzelanie w źdźbło (BBCH 30–32)'],[20,'Liść flagowy – kłoszenie (BBCH 37–51)']]},
+ {n:'Jęczmień',N:22,P:10,K:22,y:6,u:'t ziarna',split:[[70,'Przedsiewnie / ruszenie wegetacji'],[30,'Krzewienie – strzelanie w źdźbło (BBCH 25–31)']]},
+ {n:'Żyto',N:23,P:11,K:24,y:5.5,u:'t ziarna',split:[[60,'Ruszenie wegetacji (BBCH 20–25)'],[40,'Strzelanie w źdźbło (BBCH 30–32)']]},
+ {n:'Pszenżyto',N:24,P:11,K:22,y:6,u:'t ziarna',split:[[60,'Ruszenie wegetacji (BBCH 20–25)'],[40,'Strzelanie w źdźbło (BBCH 30–32)']]},
+ {n:'Rzepak ozimy',N:55,P:25,K:50,y:4,u:'t nasion',split:[[60,'Ruszenie wegetacji'],[40,'Wzrost pędu – pąkowanie (BBCH 30–50)']]},
+ {n:'Kukurydza na ziarno',N:26,P:12,K:25,y:9,u:'t ziarna',split:[[60,'Przedsiewnie'],[40,'Faza 4–6 liści (BBCH 14–16)']]},
+ {n:'Kukurydza na kiszonkę',N:4,P:1.5,K:5,y:50,u:'t zielonki',split:[[60,'Przedsiewnie'],[40,'Faza 4–6 liści (BBCH 14–16)']]},
+ {n:'Buraki cukrowe',N:4,P:1.5,K:6,y:65,u:'t korzeni',split:[[70,'Przedsiewnie'],[30,'Faza 4–6 liści (BBCH 14–16)']]},
+ {n:'Ziemniaki',N:4,P:1.5,K:7,y:35,u:'t bulw',split:[[70,'Przed sadzeniem'],[30,'Przed zwarciem rzędów']]}
+];
+const PREV=[['Zboża (słoma zebrana)',0],['Zboża (słoma przyorana)',0],['Kukurydza',0],['Rzepak',30],['Buraki (liście przyorane)',20],['Ziemniaki',10],['Strączkowe (groch, bobik, łubin)',40],['Motylkowate wieloletnie (lucerna, koniczyna)',60],['Inny / własna wartość',0]];
+const NAT=[['Brak',0,0,'t/ha'],['Obornik bydlęcy',5,30,'t/ha'],['Obornik świński',6,30,'t/ha'],['Gnojowica bydlęca',4,50,'m³/ha'],['Gnojowica świńska',5,50,'m³/ha'],['Pomiot kurzy',20,50,'t/ha'],['Pofermentat',5,50,'m³/ha']];
+const NPROD=[['Saletra amonowa 34%',34],['RSM 32%',32],['Mocznik 46%',46],['Saletrzak 27%',27]];
+const FERTS=[['Saletra amonowa 34%',34,'kg/ha'],['RSM 32%',32,'l/ha'],['Mocznik 46%',46,'kg/ha'],['Saletrzak 27%',27,'kg/ha'],['Siarczan amonu 21%',21,'kg/ha'],['Polifoska 6',6,'kg/ha'],['Superfosfat potrójny 40%',0,'kg/ha'],['Sól potasowa 60%',0,'kg/ha'],['Wapno nawozowe',0,'t/ha'],['Obornik bydlęcy',5,'t/ha'],['Gnojowica bydlęca',4,'m³/ha'],['Gnojowica świńska',5,'m³/ha']];
+const CATS=['bardzo lekka','lekka','średnia','ciężka'];
+const CLS=['bardzo niska','niska','średnia','wysoka','bardzo wysoka'];
+const DEF_PKF=[1.5,1.3,1.0,0.5,0];
+// progi zasobności (mg/100 g gleby, metoda Egnera-Riehma dla P i K) – orientacyjne, górne granice klas 1–4
+const TH_P=[5,10,15,20];
+const TH_K={'bardzo lekka':[5,7.5,12.5,17.5],'lekka':[7.5,10,15,20],'średnia':[10,12.5,20,25],'ciężka':[12.5,15,25,30]};
+const TH_MG={'bardzo lekka':[1,2,3,5],'lekka':[2,3,5,7],'średnia':[3,5,7,9],'ciężka':[4,6,10,14]};
+// wapnowanie: [pH graniczne dla: konieczne, potrzebne, wskazane, ograniczone], dawki CaO t/ha
+const LIME={'bardzo lekka':{ph:[4.0,4.5,5.0,5.5],d:[3.0,2.0,1.0]},'lekka':{ph:[4.5,5.0,5.5,6.0],d:[3.5,2.5,1.5]},'średnia':{ph:[5.0,5.5,6.0,6.5],d:[4.5,3.0,1.7]},'ciężka':{ph:[5.5,6.0,6.5,7.0],d:[6.0,3.0,2.0]}};
+const KINDS={zabieg:['Zabieg ŚOR','#C62828'],nawozenie:['Nawożenie','#2E7D32'],lustracja:['Lustracja','#1565C0'],siew:['Siew / zbiór','#7A5232'],inne:['Inne','#D9A82B'],termin:['Termin stały','#8E6BBF']};
+const DEF_TERMS=[
+ {title:'Start wiosennego nawożenia azotem (po okresie zakazu)',md:'03-01',notes:'Data przykładowa – ustaw zgodnie z aktualnym Programem azotanowym i warunkami na polu.'},
+ {title:'Koniec jesiennego nawożenia azotem',md:'10-31',notes:'Data przykładowa – sprawdź terminy dla danej uprawy w aktualnych przepisach.'},
+ {title:'Aktualizacja planu nawożenia azotem',md:'02-01',notes:'Przegląd planów nawożenia przed sezonem.'},
+ {title:'Przegląd opryskiwacza – sprawdź datę ważności badania',md:'02-15',notes:'Ustaw zgodnie z datą na świadectwie badania.'},
+ {title:'Rzepak – wystawienie żółtych naczyń (szkodniki łodygowe)',md:'03-05',notes:'Orientacyjnie – zależnie od temperatury.'},
+ {title:'Pobranie prób glebowych po zbiorach',md:'08-20',notes:'Analiza pH, P, K, Mg co 4 lata (lub wg potrzeb).'}
+];
+
+/* =============== zapis na urządzeniu =============== */
+const KEY='agroDziennik_v1';
+let storageOK=true;
+function blank(){return{v:1,farms:[],fields:[],entries:[],sprays:[],ferts:[],events:[],crops:JSON.parse(JSON.stringify(DEF_CROPS)),pkf:DEF_PKF.slice(),terms:DEF_TERMS.map(t=>Object.assign({id:uid(),on:true},t))}}
+function normalize(o){const b=blank();if(!o||typeof o!=='object')return b;['farms','fields','entries','sprays','ferts','events'].forEach(k=>{b[k]=Array.isArray(o[k])?o[k].filter(x=>x&&typeof x==='object'):[];b[k].forEach(x=>{if(!x.id)x.id=uid()})});
+ if(Array.isArray(o.crops)&&o.crops.length)b.crops=o.crops.filter(c=>c&&c.n).map(c=>({n:String(c.n),N:num(c.N)||0,P:num(c.P)||0,K:num(c.K)||0,y:num(c.y)||0,u:c.u||'t',split:Array.isArray(c.split)&&c.split.length?c.split:[[100,'Jedna dawka']]}));
+ if(Array.isArray(o.pkf)&&o.pkf.length===5)b.pkf=o.pkf.map(x=>num(x)??0);
+ if(Array.isArray(o.terms))b.terms=o.terms.filter(t=>t&&t.title).map(t=>Object.assign({id:uid(),on:true},t));
+ return b}
+function load(){try{const s=localStorage.getItem(KEY);if(s)return normalize(JSON.parse(s))}catch(e){storageOK=false}return blank()}
+let D=load();
+function save(){try{localStorage.setItem(KEY,JSON.stringify(D));D._savedAt=Date.now();storageOK=true;return true}catch(e){storageOK=false;toast('Uwaga: nie udało się zapisać danych na urządzeniu. Zrób kopię JSON.');return false}}
+try{navigator.storage&&navigator.storage.persist&&navigator.storage.persist()}catch(e){}
+const store=(k,v)=>{try{if(v===undefined)return JSON.parse(localStorage.getItem('agro_'+k)||'null');localStorage.setItem('agro_'+k,JSON.stringify(v))}catch(e){return null}};
+function theme(t){if(t)document.documentElement.dataset.theme=t;else delete document.documentElement.dataset.theme}
+theme(store('theme'));
+
+/* =============== pomocnicze dane =============== */
+const farm=id=>D.farms.find(f=>f.id===id);
+const field=id=>D.fields.find(f=>f.id===id);
+const fieldsOf=fid=>D.fields.filter(f=>f.farmId===fid).sort((a,b)=>a.name.localeCompare(b.name,'pl'));
+function fLabel(id,short){const f=field(id);if(!f)return'— (usunięte pole)';const g=farm(f.farmId);return short||!g?f.name:g.name+' · '+f.name}
+function fieldOpts(sel,allowEmpty,emptyLabel){let h=allowEmpty?`<option value="">${esc(emptyLabel||'— wybierz —')}</option>`:'';
+ D.farms.slice().sort((a,b)=>a.name.localeCompare(b.name,'pl')).forEach(g=>{const fs=fieldsOf(g.id);if(!fs.length)return;h+=`<optgroup label="${esc(g.name)}">`+fs.map(f=>`<option value="${f.id}"${f.id===sel?' selected':''}>${esc(f.name)}${f.area?' ('+fmt(f.area,2)+' ha)':''}</option>`).join('')+'</optgroup>'});return h}
+const cropBy=n=>D.crops.find(c=>c.n.toLowerCase()===String(n||'').trim().toLowerCase());
+function nKg(r){const d=num(r.dose),c=num(r.ncont);if(d==null||c==null)return null;if(r.unit==='kg/ha')return d*c/100;if(r.unit==='l/ha')return d*1.32*c/100;return d*c}
+const year=s=>String(s||'').slice(0,4);
+
+/* =============== ikony =============== */
+const I={
+ farm:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 21V10l9-6 9 6v11"/><path d="M9 21v-6h6v6"/><path d="M3 21h18"/></svg>',
+ book:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h11a3 3 0 0 1 3 3v13H7a3 3 0 0 1-3-3z"/><path d="M4 17a3 3 0 0 1 3-3h11"/><path d="M8 8h6M8 11h4"/></svg>',
+ calc:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="2.5" width="14" height="19" rx="2.5"/><path d="M8.5 6.5h7"/><path d="M8.5 11h.01M12 11h.01M15.5 11h.01M8.5 14.5h.01M12 14.5h.01M15.5 14.5v3.5M8.5 18h.01M12 18h.01"/></svg>',
+ cal:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4.5" width="18" height="17" rx="2.5"/><path d="M3 9.5h18M8 2.5v4M16 2.5v4"/><path d="M8 14h.01M12 14h.01M16 14h.01M8 17.5h.01M12 17.5h.01"/></svg>',
+ home:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 11l9-7 9 7"/><path d="M5 10v10h14V10"/></svg>',
+ leaf:'<svg viewBox="0 0 64 64"><rect width="64" height="64" rx="15" fill="#2C5E2E"/><path d="M8 50 Q32 35 56 50" stroke="#7CB342" stroke-width="3.2" fill="none" stroke-linecap="round"/><path d="M32 43 V25" stroke="#F5F0E3" stroke-width="3.4" stroke-linecap="round"/><path d="M32 31 C31 22 24 17 15 18 C15.5 27 22.5 32 32 31Z" fill="#7CB342"/><path d="M32 27 C33 17 40 12 49 12.5 C48.5 22 41.5 27.5 32 27Z" fill="#A5D46A"/><path d="M51 30 l1.6 4 4 1.6 -4 1.6 -1.6 4 -1.6 -4 -4 -1.6 4 -1.6Z" fill="#D9A82B"/></svg>'
+};
+
+/* =============== formularz w arkuszu =============== */
+let SH=null;
+function fieldHtml(f,v){
+ const id='f_'+f.k, rq=f.req?' <i>*</i>':'', val=v==null?(f.def==null?'':f.def):v;
+ let inp='';
+ if(f.t==='select'){inp=`<select id="${id}" name="${f.k}">${typeof f.o==='string'?f.o:f.o.map(o=>{const [a,b]=Array.isArray(o)?o:[o,o];return`<option value="${esc(a)}"${String(a)===String(val)?' selected':''}>${esc(b)}</option>`}).join('')}</select>`}
+ else if(f.t==='area'||f.t==='voice'){inp=`<textarea id="${id}" name="${f.k}" rows="3" placeholder="${esc(f.ph||'')}">${esc(val)}</textarea>`+(f.t==='voice'&&(window.SpeechRecognition||window.webkitSpeechRecognition)?`<button type="button" class="btn sm mic" data-act="dictate" data-target="${id}">🎤 Dyktuj (pl)</button>`:'')}
+ else if(f.t==='num'){inp=`<input id="${id}" name="${f.k}" type="text" inputmode="decimal" autocomplete="off" value="${esc(val==null?'':String(val).replace('.',','))}" placeholder="${esc(f.ph||'')}">`}
+ else{const dl=f.list?`list="dl_${f.k}"`:'';inp=`<input id="${id}" name="${f.k}" type="${f.t||'text'}" ${dl} autocomplete="off" value="${esc(val)}" placeholder="${esc(f.ph||'')}">`+(f.list?`<datalist id="dl_${f.k}">${f.list.map(o=>`<option value="${esc(o)}">`).join('')}</datalist>`:'')}
+ return `<label class="fl" data-k="${f.k}"><span>${esc(f.l)}${rq}</span>${inp}${f.h?`<small>${esc(f.h)}</small>`:''}</label>`}
+function sheet(o){ // {title, fields, obj, note, save(vals), del, change(k,form)}
+ SH=o;const rows=[];let i=0;const fs=o.fields;
+ while(i<fs.length){const f=fs[i];if(f.half&&fs[i+1]&&fs[i+1].half){rows.push(`<div class="frow">${fieldHtml(f,o.obj?.[f.k])}${fieldHtml(fs[i+1],o.obj?.[fs[i+1].k])}</div>`);i+=2}else{rows.push(fieldHtml(f,o.obj?.[f.k]));i++}}
+ $('#sheet').innerHTML=`<div class="sh-bg" data-act="closesheet"></div><form class="sh" id="shf" novalidate><div class="sh-h"><b>${esc(o.title)}</b><button type="button" class="x" data-act="closesheet" aria-label="Zamknij">×</button></div><div class="sh-b">${o.note?`<p class="sh-note">${esc(o.note)}</p>`:''}${rows.join('')}${o.extra||''}</div><div class="sh-f">${o.del?'<button type="button" class="btn red" data-act="sheetdel">Usuń</button>':'<button type="button" class="btn" data-act="closesheet">Anuluj</button>'}<button class="btn pri" type="submit">Zapisz</button></div></form>`;
+ $('#sheet').classList.add('on');document.body.style.overflow='hidden';
+ const form=$('#shf');
+ form.addEventListener('submit',e=>{e.preventDefault();const vals={};let bad=null;
+  o.fields.forEach(f=>{const el=form.elements[f.k];if(!el)return;let v=el.value.trim();const lab=form.querySelector(`.fl[data-k="${f.k}"]`);lab.classList.remove('err');
+   if(f.t==='num'){if(v!==''&&num(v)==null){lab.classList.add('err');bad=bad||el}v=num(v)}
+   if(f.req&&(v===''||v==null)){lab.classList.add('err');bad=bad||el}vals[f.k]=v});
+  if(bad){bad.focus();toast('Uzupełnij wymagane pola (oznaczone *)');return}
+  if(o.save(vals)!==false){save();closeSheet();render();toast('Zapisano')}});
+ if(o.change)form.addEventListener('change',e=>{if(e.target.name)o.change(e.target.name,form)});
+ if(o.after)o.after(form);
+ setTimeout(()=>{const f=form.querySelector('input,select,textarea');if(f&&!o.obj&&window.innerWidth>700)f.focus()},50)}
+function closeSheet(){$('#sheet').classList.remove('on');$('#sheet').innerHTML='';document.body.style.overflow='';SH=null}
+
+/* =============== definicje formularzy =============== */
+const farmF=()=>[{k:'name',l:'Nazwa gospodarstwa / rolnik',req:1,ph:'np. Gospodarstwo Kowalski'},{k:'owner',l:'Osoba kontaktowa',ph:'imię i nazwisko'},{k:'place',l:'Miejscowość / gmina',half:1},{k:'phone',l:'Telefon',t:'tel',half:1},{k:'arimr',l:'Numer producenta ARiMR',h:'Opcjonalnie'},{k:'notes',l:'Notatki',t:'area'}];
+function editFarm(id){const g=id?farm(id):null;sheet({title:g?'Edytuj gospodarstwo':'Nowe gospodarstwo',fields:farmF(),obj:g,
+ save:v=>{if(g)Object.assign(g,v);else{const n=Object.assign({id:uid(),created:today()},v);D.farms.push(n);go('#/gospodarstwo/'+n.id)}},
+ del:g?()=>{const fs=fieldsOf(g.id);if(!confirm(`Usunąć gospodarstwo „${g.name}”${fs.length?` razem z ${fs.length} ${plN(fs.length,'polem','polami','polami')} i ich wpisami`:''}?`))return;fs.forEach(f=>delFieldData(f.id));D.farms=D.farms.filter(x=>x!==g);save();closeSheet();go('#/gospodarstwa');toast('Usunięto')}:null})}
+function delFieldData(fid){D.fields=D.fields.filter(f=>f.id!==fid);['entries','sprays','ferts','events'].forEach(k=>D[k]=D[k].filter(r=>r.fieldId!==fid))}
+const fieldF=(farmId)=>[
+ {k:'farmId',l:'Gospodarstwo',t:'select',o:D.farms.map(g=>[g.id,g.name]),def:farmId,req:1},
+ {k:'name',l:'Nazwa pola / działki',req:1,ph:'np. Za stodołą'},
+ {k:'plot',l:'Nr działki ewidencyjnej',half:1,ph:'np. 123/4'},{k:'area',l:'Powierzchnia (ha)',t:'num',req:1,half:1,ph:'0,00'},
+ {k:'crop',l:'Uprawa',list:D.crops.map(c=>c.n),half:1},{k:'prev',l:'Przedplon',list:PREV.map(p=>p[0]),half:1},
+ {k:'yield',l:'Plon planowany (t/ha)',t:'num',half:1},{k:'cat',l:'Kategoria agronomiczna',t:'select',o:[['','—'],...CATS.map(c=>[c,c])],half:1},
+ {k:'bon',l:'Klasa bonitacyjna',t:'select',o:['','I','II','IIIa','IIIb','IVa','IVb','V','VI'].map(x=>[x,x||'—']),half:1},{k:'adate',l:'Data analizy gleby',t:'date',half:1},
+ {k:'ph',l:'pH (KCl)',t:'num',half:1},{k:'p',l:'P₂O₅ (mg/100 g)',t:'num',half:1},
+ {k:'k',l:'K₂O (mg/100 g)',t:'num',half:1},{k:'mg',l:'MgO (mg/100 g)',t:'num',half:1},
+ {k:'notes',l:'Notatki',t:'area'}];
+function editField(id,farmId){const f=id?field(id):null;if(!D.farms.length){toast('Najpierw dodaj gospodarstwo');return editFarm()}
+ sheet({title:f?'Edytuj pole':'Nowe pole',fields:fieldF(farmId||f?.farmId||D.farms[0].id),obj:f,
+  change:(k,form)=>{if(k==='crop'){const c=cropBy(form.elements.crop.value);if(c&&!form.elements.yield.value)form.elements.yield.value=String(c.y).replace('.',',')}},
+  save:v=>{if(f)Object.assign(f,v);else{const n=Object.assign({id:uid(),created:today()},v);D.fields.push(n);go('#/pole/'+n.id)}},
+  del:f?()=>{if(!confirm(`Usunąć pole „${f.name}” razem z jego wpisami, zabiegami i terminami?`))return;const g=f.farmId;delFieldData(f.id);save();closeSheet();go('#/gospodarstwo/'+g);toast('Usunięto')}:null})}
+const SEV=[['','—'],['brak','Brak / pojedynczo'],['poniżej','Poniżej progu szkodliwości'],['prog','W okolicy progu'],['powyzej','Przekroczony próg – zalecany zabieg']];
+function editEntry(id,pre){const r=id?D.entries.find(x=>x.id===id):null;if(!D.fields.length){toast('Najpierw dodaj pole');return go('#/gospodarstwa')}
+ sheet({title:r?'Edytuj lustrację':'Nowa lustracja / wizyta',obj:r||Object.assign({date:today()},pre),fields:[
+  {k:'fieldId',l:'Pole',t:'select',o:fieldOpts(r?.fieldId||pre?.fieldId,true),req:1},
+  {k:'date',l:'Data',t:'date',req:1,half:1},{k:'bbch',l:'Faza BBCH',half:1,ph:'np. 31',t:'text'},
+  {k:'obs',l:'Obserwacje',t:'area',ph:'stan łanu, obsada, przezimowanie, wilgotność gleby…'},
+  {k:'pests',l:'Agrofagi (szkodniki, choroby, chwasty)',ph:'np. słodyszek rzepakowy, mączniak'},
+  {k:'sev',l:'Nasilenie',t:'select',o:SEV},
+  {k:'note',l:'Notatka / zalecenie dla rolnika',t:'area'},
+  {k:'voice',l:'Notatka głosowa – tekst',t:'voice',ph:'Wklej tutaj transkrypcję notatki głosowej'}],
+  save:v=>{if(r)Object.assign(r,v);else D.entries.push(Object.assign({id:uid()},v))},
+  del:r?()=>{if(!confirm('Usunąć ten wpis?'))return;D.entries=D.entries.filter(x=>x!==r);save();closeSheet();render();toast('Usunięto')}:null})}
+const usedProducts=()=>[...new Set(D.sprays.map(s=>s.product).filter(Boolean))].sort((a,b)=>a.localeCompare(b,'pl'));
+function editSpray(id,pre){const r=id?D.sprays.find(x=>x.id===id):null;if(!D.fields.length){toast('Najpierw dodaj pole');return go('#/gospodarstwa')}
+ let init=r||Object.assign({date:today(),unit:'l/ha'},pre);if(!r&&init.fieldId){const f=field(init.fieldId);if(f){init.crop=init.crop||f.crop;init.area=init.area??f.area}}
+ sheet({title:r?'Edytuj zabieg ŚOR':'Nowy zabieg ochrony roślin',obj:init,note:'Pola oznaczone * to dane wymagane w ewidencji zabiegów ochrony roślin.',fields:[
+  {k:'fieldId',l:'Działka / pole',t:'select',o:fieldOpts(init.fieldId,true),req:1},
+  {k:'date',l:'Data zabiegu',t:'date',req:1,half:1},{k:'area',l:'Powierzchnia (ha)',t:'num',req:1,half:1},
+  {k:'crop',l:'Uprawa',req:1,list:D.crops.map(c=>c.n)},
+  {k:'product',l:'Nazwa środka ochrony roślin',req:1,list:usedProducts(),ph:'nazwa handlowa'},
+  {k:'dose',l:'Dawka',t:'num',req:1,half:1},{k:'unit',l:'Jednostka',t:'select',o:['l/ha','kg/ha','ml/ha','g/ha'],half:1},
+  {k:'reason',l:'Przyczyna zabiegu (agrofag)',req:1,ph:'np. chwasty dwuliścienne, septorioza'},
+  {k:'operator',l:'Osoba wykonująca zabieg',req:1},
+  {k:'bbch',l:'Faza BBCH',half:1},{k:'water',l:'Ilość wody (l/ha)',t:'num',half:1},
+  {k:'notes',l:'Uwagi (pogoda, mieszanina, skuteczność)',t:'area'}],
+  change:(k,form)=>{if(k==='fieldId'){const f=field(form.elements.fieldId.value);if(f){if(f.crop)form.elements.crop.value=f.crop;if(f.area!=null)form.elements.area.value=String(f.area).replace('.',',')}}},
+  save:v=>{if(r)Object.assign(r,v);else D.sprays.push(Object.assign({id:uid()},v));if(pre&&pre.eventId){const ev=D.events.find(e=>e.id===pre.eventId);if(ev)ev.done=true}},
+  del:r?()=>{if(!confirm('Usunąć ten zabieg z ewidencji?'))return;D.sprays=D.sprays.filter(x=>x!==r);save();closeSheet();render();toast('Usunięto')}:null})}
+function editFert(id,pre){const r=id?D.ferts.find(x=>x.id===id):null;if(!D.fields.length){toast('Najpierw dodaj pole');return go('#/gospodarstwa')}
+ const init=r||Object.assign({date:today(),unit:'kg/ha'},pre);
+ sheet({title:r?'Edytuj nawożenie':'Nowe nawożenie',obj:init,fields:[
+  {k:'fieldId',l:'Pole',t:'select',o:fieldOpts(init.fieldId,true),req:1},
+  {k:'date',l:'Data',t:'date',req:1},
+  {k:'product',l:'Nawóz',req:1,list:FERTS.map(f=>f[0])},
+  {k:'dose',l:'Dawka',t:'num',req:1,half:1},{k:'unit',l:'Jednostka',t:'select',o:['kg/ha','l/ha','t/ha','m³/ha'],half:1},
+  {k:'ncont',l:'Zawartość N',t:'num',h:'Nawozy mineralne: % N. Nawozy naturalne (t/ha, m³/ha): kg N na 1 t lub 1 m³. Dla l/ha przyjęto gęstość RSM 1,32 kg/l.'},
+  {k:'operator',l:'Osoba wykonująca'},
+  {k:'notes',l:'Uwagi',t:'area'}],
+  change:(k,form)=>{if(k==='product'){const p=FERTS.find(x=>x[0].toLowerCase()===form.elements.product.value.trim().toLowerCase());if(p){form.elements.ncont.value=p[1]?String(p[1]):'';form.elements.unit.value=p[2]}}},
+  save:v=>{if(r)Object.assign(r,v);else D.ferts.push(Object.assign({id:uid()},v));if(pre&&pre.eventId){const ev=D.events.find(e=>e.id===pre.eventId);if(ev)ev.done=true}},
+  del:r?()=>{if(!confirm('Usunąć to nawożenie?'))return;D.ferts=D.ferts.filter(x=>x!==r);save();closeSheet();render();toast('Usunięto')}:null})}
+function editEvent(id,pre){const r=id?D.events.find(x=>x.id===id):null;const init=r||Object.assign({date:CAL.sel||today(),kind:'zabieg',remind:'1'},pre);
+ sheet({title:r?'Edytuj termin':'Nowy termin / zabieg planowany',obj:init,fields:[
+  {k:'title',l:'Co zaplanować',req:1,ph:'np. Fungicyd T1, saletra 2. dawka'},
+  {k:'kind',l:'Rodzaj',t:'select',o:Object.entries(KINDS).filter(([k])=>k!=='termin').map(([k,v])=>[k,v[0]])},
+  {k:'fieldId',l:'Pole',t:'select',o:fieldOpts(init.fieldId,true,'— ogólne / bez pola —')},
+  {k:'date',l:'Data',t:'date',req:1,half:1},{k:'time',l:'Godzina',t:'time',half:1},
+  {k:'remind',l:'Przypomnienie w kalendarzu telefonu',t:'select',o:[['0','Bez przypomnienia'],['1','1 dzień wcześniej'],['2','2 dni wcześniej'],['3','3 dni wcześniej'],['7','Tydzień wcześniej']]},
+  {k:'notes',l:'Notatki',t:'area'}],
+  save:v=>{if(r)Object.assign(r,v);else D.events.push(Object.assign({id:uid(),done:false},v))},
+  del:r?()=>{if(!confirm('Usunąć ten termin?'))return;D.events=D.events.filter(x=>x!==r);save();closeSheet();render();toast('Usunięto')}:null})}
+function editTerm(id){const r=id?D.terms.find(x=>x.id===id):null;const y=new Date().getFullYear();
+ sheet({title:r?'Edytuj termin stały':'Nowy termin stały (co roku)',obj:r?Object.assign({},r,{date:y+'-'+r.md,on:r.on?'1':'0'}):{date:today(),on:'1'},note:'Termin stały powtarza się co roku. Daty ustaw samodzielnie zgodnie z aktualnymi przepisami i zaleceniami.',fields:[
+  {k:'title',l:'Nazwa',req:1},{k:'date',l:'Dzień i miesiąc (rok bez znaczenia)',t:'date',req:1},
+  {k:'on',l:'Pokazuj w kalendarzu',t:'select',o:[['1','Tak'],['0','Nie']]},{k:'notes',l:'Notatki',t:'area'}],
+  save:v=>{const o={title:v.title,md:v.date.slice(5),on:v.on==='1',notes:v.notes};if(r)Object.assign(r,o);else D.terms.push(Object.assign({id:uid()},o))},
+  del:r?()=>{if(!confirm('Usunąć ten termin stały?'))return;D.terms=D.terms.filter(x=>x!==r);save();closeSheet();render();toast('Usunięto')}:null})}
+
+/* =============== router =============== */
+function go(h){if(location.hash===h)render();else location.hash=h}
+function topBar(title,sub,back){$('#topbar').innerHTML=(back?`<a class="bk" href="${back}" aria-label="Wstecz">←</a>`:`<svg class="lg" viewBox="0 0 64 64">${I.leaf.replace(/^<svg[^>]*>|<\/svg>$/g,'')}</svg>`)+`<div class="ttl"><b>${esc(title)}</b><small>${esc(sub||'AgronomAI PRO')}</small></div><button class="tb" data-act="theme" aria-label="Tryb nocny/dzienny">${document.documentElement.dataset.theme==='dark'?'☀':'☾'}</button>`}
+function nav(cur){const L=[['#/','Start',I.home],['#/gospodarstwa','Pola',I.farm],['#/dziennik','Dziennik',I.book],['#/kalkulator','Nawożenie',I.calc],['#/kalendarz','Kalendarz',I.cal]];
+ $('#nav').innerHTML=L.map(([h,t,ic])=>`<a href="${h}" class="${cur===h?'on':''}">${ic}<span>${t}</span></a>`).join('')}
+function render(){const h=location.hash||'#/';const [p,q]=h.slice(1).split('?');const parts=p.split('/').filter(Boolean);
+ const fab=document.querySelector('.fab');if(fab)fab.remove();
+ const V=$('#view');window.scrollTo(0,0);
+ try{switch(parts[0]){
+  case 'gospodarstwa':nav('#/gospodarstwa');V.innerHTML=vFarms();break;
+  case 'gospodarstwo':nav('#/gospodarstwa');V.innerHTML=vFarm(parts[1]);break;
+  case 'pole':nav('#/gospodarstwa');V.innerHTML=vField(parts[1]);break;
+  case 'dziennik':nav('#/dziennik');if(q){const s=new URLSearchParams(q);if(s.get('t'))DZ.t=s.get('t');if(s.has('f'))DZ.f=s.get('f')}V.innerHTML=vDz();addFab();break;
+  case 'kalkulator':nav('#/kalkulator');if(q){const s=new URLSearchParams(q);if(s.get('f'))calcFromField(s.get('f'))}V.innerHTML=vCalc();calcUpd();break;
+  case 'kalendarz':nav('#/kalendarz');V.innerHTML=vCal();addFab('Termin','event');break;
+  case 'kopia':nav('');V.innerHTML=vBackup();break;
+  default:nav('#/');V.innerHTML=vHome()}}catch(e){console.error(e);V.innerHTML='<div class="card"><h3>Coś poszło nie tak</h3><p>Odśwież stronę. Dane są bezpieczne na urządzeniu.</p></div>'}}
+function addFab(label,act){const b=document.createElement('button');b.className='fab noprint';const m={lus:['Lustracja','entry'],zab:['Zabieg','spray'],naw:['Nawożenie','fert']};const [l,a]=label?[label,act]:m[DZ.t];b.innerHTML='＋ '+l;b.dataset.act='add-'+a;document.body.appendChild(b)}
+window.addEventListener('hashchange',()=>{closeSheet();render()});
+
+/* =============== widoki =============== */
+function vHome(){topBar('Dziennik polowy PRO','AgronomAI PRO · moduł');
+ const y=String(new Date().getFullYear());const ha=D.fields.reduce((s,f)=>s+(num(f.area)||0),0);
+ const ny=[...D.entries,...D.sprays,...D.ferts].filter(r=>year(r.date)===y).length;
+ const up=upcoming(5);
+ return `<a class="back" href="../app/">← Wróć do AgronomAI PRO</a>
+ <span class="pill">Moduł PRO · dane zapisane na tym urządzeniu</span>
+ <h1>Dziennik polowy <em>PRO</em></h1>
+ <p class="lead">Gospodarstwa i pola klientów, lustracje, ewidencja zabiegów ŚOR, kalkulator nawożenia i kalendarz terminów – w jednym miejscu, także bez zasięgu.</p>
+ <div class="stats"><div class="stat"><b>${D.farms.length}</b><small>Gosp.</small></div><div class="stat"><b>${D.fields.length}</b><small>Pola</small></div><div class="stat"><b>${fmt(ha,1)}</b><small>ha</small></div><div class="stat"><b>${ny}</b><small>Wpisy ${y}</small></div></div>
+ <span class="k">Moduły</span>
+ <div class="tiles">
+  <a class="tile" href="#/gospodarstwa"><span class="cnt">${D.farms.length}</span><span class="ic" style="background:#2C5E2E">${I.farm}</span><b>Gospodarstwa i pola</b><p>Klienci, działki, uprawy i wyniki analizy gleby</p></a>
+  <a class="tile" href="#/dziennik"><span class="cnt">${D.entries.length+D.sprays.length+D.ferts.length}</span><span class="ic" style="background:#1565C0">${I.book}</span><b>Dziennik polowy</b><p>Lustracje, ewidencja zabiegów ŚOR, nawożenie</p></a>
+  <a class="tile" href="#/kalkulator"><span class="ic" style="background:#B8860B">${I.calc}</span><b>Kalkulator nawożenia</b><p>Dawka N, P, K i wapnowanie w kg/ha i na pole</p></a>
+  <a class="tile" href="#/kalendarz"><span class="cnt">${up.length}</span><span class="ic" style="background:#C62828">${I.cal}</span><b>Kalendarz zabiegów</b><p>Plan zabiegów, przypomnienia, eksport .ics</p></a>
+ </div>
+ <span class="k">Najbliższe terminy</span>
+ ${up.length?`<div class="items">${up.map(evItem).join('')}</div>`:`<div class="empty"><b>Brak zaplanowanych terminów</b>Dodaj zabieg w kalendarzu – przypomnienie trafi do telefonu przez plik .ics.</div>`}
+ <span class="k">Bezpieczeństwo danych</span>
+ <div class="card gold"><h3>Kopia zapasowa</h3><p class="lead" style="margin-bottom:12px">Dane są przechowywane tylko w tej przeglądarce. Regularnie zapisuj kopię JSON – przyda się przy zmianie telefonu.${storageOK?'':' <b style="color:var(--red)">Zapis w pamięci urządzenia jest zablokowany – zrób kopię teraz.</b>'}</p>
+ <div class="bgrid"><button class="btn dk" data-act="export-json">⬇ Zapisz kopię</button><a class="btn" href="#/kopia">Kopia i eksport</a></div></div>
+ <p class="foot">AgronomAI PRO · Dziennik polowy PRO + Kalkulator nawożenia</p>`}
+function vFarms(){topBar('Gospodarstwa i pola','Klienci doradcy','#/');
+ const list=D.farms.slice().sort((a,b)=>a.name.localeCompare(b.name,'pl'));
+ return `<div class="bgrid" style="margin-bottom:14px"><button class="btn pri" data-act="add-farm">＋ Gospodarstwo</button><button class="btn" data-act="add-field">＋ Pole</button></div>
+ ${list.length?`<div class="items">${list.map(g=>{const fs=fieldsOf(g.id);const ha=fs.reduce((s,f)=>s+(num(f.area)||0),0);
+  return `<a class="item" href="#/gospodarstwo/${g.id}" style="text-decoration:none;color:inherit"><span class="dt" style="background:#e6f2d9;color:#1E4620"><b>${fs.length}</b><small>pól</small></span><span class="tx"><b>${esc(g.name)}</b><p>${esc([g.place,g.owner].filter(Boolean).join(' · ')||'—')}</p><span class="chip g">${fmt(ha,2)} ha</span>${[...new Set(fs.map(f=>f.crop).filter(Boolean))].slice(0,3).map(c=>`<span class="chip">${esc(c)}</span>`).join('')}</span><span class="ar">›</span></a>`}).join('')}</div>`
+ :`<div class="empty"><b>Zacznij od pierwszego gospodarstwa</b>Dodaj klienta, a potem jego pola z uprawą, przedplonem i wynikami analizy gleby.</div>`}`}
+function vFarm(id){const g=farm(id);if(!g){topBar('Gospodarstwo','','#/gospodarstwa');return '<div class="empty"><b>Nie znaleziono gospodarstwa</b></div>'}
+ topBar(g.name,'Gospodarstwo','#/gospodarstwa');const fs=fieldsOf(id);const ha=fs.reduce((s,f)=>s+(num(f.area)||0),0);
+ return `<div class="card acc"><div class="kv"><div><small>Kontakt</small><b>${esc(g.owner||'—')}</b></div><div><small>Telefon</small><b>${g.phone?`<a href="tel:${esc(g.phone.replace(/\s/g,''))}">${esc(g.phone)}</a>`:'—'}</b></div><div><small>Miejscowość</small><b>${esc(g.place||'—')}</b></div><div><small>Nr ARiMR</small><b>${esc(g.arimr||'—')}</b></div><div><small>Pola</small><b>${fs.length}</b></div><div><small>Powierzchnia</small><b>${fmt(ha,2)} ha</b></div></div>${g.notes?`<p style="margin-top:10px;font-size:14px">${esc(g.notes)}</p>`:''}
+ <div class="bgrid" style="margin-top:12px"><button class="btn sm" data-act="edit-farm" data-id="${g.id}">Edytuj</button><a class="btn sm" href="#/dziennik?f=&t=zab" data-act="dz-farm" data-id="${g.id}">Zabiegi gosp.</a></div></div>
+ <button class="btn pri full" data-act="add-field" data-farm="${g.id}" style="margin:4px 0 14px">＋ Dodaj pole</button>
+ ${fs.length?`<div class="items">${fs.map(fieldItem).join('')}</div>`:`<div class="empty"><b>Brak pól</b>Dodaj pierwsze pole tego gospodarstwa.</div>`}`}
+function fieldItem(f){const ch=[f.crop&&`<span class="chip g">${esc(f.crop)}</span>`,f.ph!=null&&f.ph!==''&&`<span class="chip">pH ${fmt(num(f.ph),1)}</span>`,f.cat&&`<span class="chip">${esc(f.cat)}</span>`].filter(Boolean).join('');
+ return `<a class="item" href="#/pole/${f.id}" style="text-decoration:none;color:inherit"><span class="dt"><b style="font-size:15px">${fmt(num(f.area),2)}</b><small>ha</small></span><span class="tx"><b>${esc(f.name)}</b><p>${esc([f.plot&&'dz. '+f.plot,f.prev&&'po: '+f.prev,f.yield&&fmt(num(f.yield),1)+' t/ha'].filter(Boolean).join(' · ')||'—')}</p>${ch}</span><span class="ar">›</span></a>`}
+function vField(id){const f=field(id);if(!f){topBar('Pole','','#/gospodarstwa');return '<div class="empty"><b>Nie znaleziono pola</b></div>'}
+ const g=farm(f.farmId);topBar(f.name,g?g.name:'Pole','#/gospodarstwo/'+f.farmId);
+ const y=String(new Date().getFullYear());const nAp=D.ferts.filter(r=>r.fieldId===id&&year(r.date)===y).reduce((s,r)=>s+(nKg(r)||0),0);
+ const hist=[...D.entries.filter(r=>r.fieldId===id).map(r=>({r,t:'lus'})),...D.sprays.filter(r=>r.fieldId===id).map(r=>({r,t:'zab'})),...D.ferts.filter(r=>r.fieldId===id).map(r=>({r,t:'naw'}))].sort((a,b)=>(b.r.date||'').localeCompare(a.r.date||'')).slice(0,12);
+ const cls=soilCls(f);
+ return `<div class="card acc"><div class="kv">
+ <div><small>Uprawa</small><b>${esc(f.crop||'—')}</b></div><div><small>Powierzchnia</small><b>${fmt(num(f.area),2)} ha</b></div>
+ <div><small>Przedplon</small><b>${esc(f.prev||'—')}</b></div><div><small>Plon planowany</small><b>${f.yield!=null&&f.yield!==''?fmt(num(f.yield),1)+' t/ha':'—'}</b></div>
+ <div><small>Nr działki</small><b>${esc(f.plot||'—')}</b></div><div><small>Gleba</small><b>${esc([f.cat,f.bon&&'kl. '+f.bon].filter(Boolean).join(', ')||'—')}</b></div></div>
+ ${f.notes?`<p style="margin-top:10px;font-size:14px">${esc(f.notes)}</p>`:''}
+ <button class="btn sm full" style="margin-top:12px" data-act="edit-field" data-id="${f.id}">Edytuj pole</button></div>
+ <div class="card"><h3>Analiza gleby ${f.adate?`<span class="chip">${fdate(f.adate)}</span>`:''}</h3>
+ <div class="kv" style="grid-template-columns:repeat(4,1fr)"><div><small>pH</small><b>${fmt(num(f.ph),1)}</b></div><div><small>P₂O₅</small><b>${fmt(num(f.p),1)}</b></div><div><small>K₂O</small><b>${fmt(num(f.k),1)}</b></div><div><small>MgO</small><b>${fmt(num(f.mg),1)}</b></div></div>
+ ${cls?`<p style="font-size:13px;color:var(--mut);margin-top:8px">Zasobność (orientacyjnie): P – ${cls.p||'—'}, K – ${cls.k||'—'}, Mg – ${cls.mg||'—'} · mg/100 g gleby</p>`:''}</div>
+ ${f.plan?`<div class="card gold"><h3>Plan nawożenia ${f.plan.year||''}</h3><p style="font-size:14px">${esc(f.plan.crop)} · ${fmt(f.plan.y,1)} t/ha → <b>${fmt(f.plan.N,0)} kg N/ha</b>, ${fmt(f.plan.P,0)} kg P₂O₅/ha, ${fmt(f.plan.K,0)} kg K₂O/ha${f.plan.CaO?`, wapnowanie ${fmt(f.plan.CaO,1)} t CaO/ha`:''}</p>
+ <p style="font-size:14px;margin-top:6px">Zastosowano w ${y}: <b>${fmt(nAp,0)} kg N/ha</b> z planowanych ${fmt(f.plan.N,0)}</p>
+ <div class="bar" style="height:10px;background:var(--soft);border-radius:9px;margin-top:8px;overflow:hidden"><i style="display:block;height:100%;width:${Math.min(100,f.plan.N?nAp/f.plan.N*100:0)}%;background:var(--leaf)"></i></div></div>`:''}
+ <div class="bgrid c3" style="margin:4px 0 8px"><button class="btn pri sm" data-act="add-entry" data-field="${f.id}">＋ Lustracja</button><button class="btn pri sm" data-act="add-spray" data-field="${f.id}">＋ Zabieg</button><button class="btn pri sm" data-act="add-fert" data-field="${f.id}">＋ Nawóz</button></div>
+ <div class="bgrid" style="margin-bottom:6px"><a class="btn gd sm" href="#/kalkulator?f=${f.id}">Oblicz nawożenie</a><button class="btn sm" data-act="add-event" data-field="${f.id}">＋ Termin</button></div>
+ <span class="k">Historia pola</span>
+ ${hist.length?`<div class="items">${hist.map(h=>recItem(h.r,h.t,true)).join('')}</div>`:'<div class="empty"><b>Brak wpisów</b>Dodaj pierwszą lustrację lub zabieg.</div>'}`}
+function soilCls(f){const c=f.cat;if(!c&&f.p==null)return null;const o={};
+ if(num(f.p)!=null)o.p=CLS[clsIdx(num(f.p),TH_P)];if(c&&num(f.k)!=null)o.k=CLS[clsIdx(num(f.k),TH_K[c])];if(c&&num(f.mg)!=null)o.mg=CLS[clsIdx(num(f.mg),TH_MG[c])];return Object.keys(o).length?o:null}
+function clsIdx(v,th){for(let i=0;i<4;i++)if(v<=th[i])return i;return 4}
+
+/* ---- dziennik ---- */
+const DZ={t:'lus',f:'',from:'',to:'',q:''};
+function recItem(r,t,short){const d=r.date||'';const dd=d?`<span class="dt"><b>${+d.slice(8,10)}</b><small>${MON[+d.slice(5,7)-1]||''} ${d.slice(2,4)}</small></span>`:'<span class="dt">—</span>';
+ let b='',p='',ch='';
+ if(t==='lus'){b=r.pests?esc(r.pests):'Lustracja';p=esc([r.obs,r.note].filter(Boolean).join(' · ').slice(0,220));ch=(r.bbch?`<span class="chip b">BBCH ${esc(r.bbch)}</span>`:'')+(r.sev?`<span class="chip ${r.sev==='powyzej'?'r':r.sev==='prog'?'y':'g'}">${esc((SEV.find(s=>s[0]===r.sev)||['',''])[1])}</span>`:'')+(r.voice?'<span class="chip">🎤 notatka</span>':'')}
+ if(t==='zab'){b=esc(r.product)+' · '+fmt(num(r.dose),3)+' '+esc(r.unit||'');p=esc(r.reason||'')+(r.operator?' · '+esc(r.operator):'');ch=`<span class="chip r">ŚOR</span><span class="chip">${fmt(num(r.area),2)} ha</span>${r.crop?`<span class="chip g">${esc(r.crop)}</span>`:''}${r.bbch?`<span class="chip b">BBCH ${esc(r.bbch)}</span>`:''}`}
+ if(t==='naw'){const n=nKg(r);b=esc(r.product)+' · '+fmt(num(r.dose),2)+' '+esc(r.unit||'');p=esc(r.notes||'');ch=`<span class="chip g">Nawożenie</span>${n!=null?`<span class="chip y">${fmt(n,1)} kg N/ha</span>`:''}`}
+ const where=short?'':`<p style="font-weight:600;color:var(--ink)">${esc(fLabel(r.fieldId))}</p>`;
+ return `<button class="item" data-act="open-${t}" data-id="${r.id}">${dd}<span class="tx"><b>${b}</b>${where}${p?`<p>${p}</p>`:''}${ch}</span><span class="ar">›</span></button>`}
+function dzRows(){const src={lus:D.entries,zab:D.sprays,naw:D.ferts}[DZ.t];const q=DZ.q.trim().toLowerCase();
+ let fids=null;if(DZ.f&&DZ.f.startsWith('g:'))fids=new Set(fieldsOf(DZ.f.slice(2)).map(f=>f.id));
+ return src.filter(r=>(!DZ.f||(fids?fids.has(r.fieldId):r.fieldId===DZ.f))&&(!DZ.from||(r.date||'')>=DZ.from)&&(!DZ.to||(r.date||'')<=DZ.to)&&(!q||JSON.stringify(r).toLowerCase().includes(q)||fLabel(r.fieldId).toLowerCase().includes(q))).sort((a,b)=>(b.date||'').localeCompare(a.date||''))}
+function vDz(){topBar('Dziennik polowy','Lustracje · zabiegi · nawożenie','#/');
+ const fo=`<option value="">Wszystkie pola</option>`+D.farms.map(g=>`<option value="g:${g.id}"${DZ.f==='g:'+g.id?' selected':''}>▸ ${esc(g.name)} (całe gospodarstwo)</option>`).join('')+fieldOpts(DZ.f,false);
+ return `<div class="tabs" role="tablist">${[['lus','Lustracje'],['zab','Zabiegi ŚOR'],['naw','Nawożenie']].map(([k,l])=>`<button role="tab" class="${DZ.t===k?'on':''}" data-act="dztab" data-t="${k}">${l}</button>`).join('')}</div>
+ <div class="filt"><label class="fl"><span>Pole</span><select class="dzf" data-k="f">${fo}</select></label>
+ <div class="frow"><label class="fl"><span>Od</span><input type="date" class="dzf" data-k="from" value="${DZ.from}"></label><label class="fl"><span>Do</span><input type="date" class="dzf" data-k="to" value="${DZ.to}"></label></div>
+ <label class="fl" style="margin-bottom:0"><span>Szukaj</span><input type="search" class="dzf" data-k="q" value="${esc(DZ.q)}" placeholder="środek, agrofag, notatka…"></label></div>
+ <div id="dzlist">${dzList()}</div>`}
+function dzList(){const rows=dzRows();const tot=DZ.t==='zab'?rows.reduce((s,r)=>s+(num(r.area)||0),0):null;
+ return `<div class="sum"><span>${rows.length} ${plN(rows.length,'wpis','wpisy','wpisów')}${tot!=null?` · ${fmt(tot,2)} ha zabiegów`:''}</span><button class="btn sm" data-act="csv" ${rows.length?'':'disabled'}>⬇ CSV</button></div>
+ ${DZ.t==='zab'?'<p style="font-size:12.5px;color:var(--mut);margin:-4px 2px 10px">Ewidencja zawiera: datę, uprawę, działkę i powierzchnię, nazwę środka, dawkę, przyczynę zabiegu i osobę wykonującą.</p>':''}
+ ${rows.length?`<div class="items">${rows.map(r=>recItem(r,DZ.t)).join('')}</div>`:`<div class="empty"><b>Brak wpisów</b>${D.fields.length?'Dodaj wpis przyciskiem ＋ na dole ekranu.':'Najpierw dodaj gospodarstwo i pole.'}</div>`}`}
+function csvOut(){const rows=dzRows();const n=v=>v==null||v===''?'':String(v).replace('.',',');let H,R,name;
+ const base=r=>{const f=field(r.fieldId),g=f?farm(f.farmId):null;return[g?g.name:'',f?f.name:'',f?f.plot||'':'']};
+ if(DZ.t==='zab'){H=['Data zabiegu','Gospodarstwo','Pole','Nr działki','Uprawa','Powierzchnia zabiegu (ha)','Nazwa środka ochrony roślin','Dawka','Jednostka','Przyczyna zabiegu (agrofag)','Osoba wykonująca','Faza BBCH','Woda (l/ha)','Uwagi'];
+  R=rows.map(r=>[r.date,...base(r),r.crop,n(r.area),r.product,n(r.dose),r.unit,r.reason,r.operator,r.bbch,n(r.water),r.notes]);name='ewidencja_zabiegow_SOR'}
+ else if(DZ.t==='naw'){H=['Data','Gospodarstwo','Pole','Nr działki','Nawóz','Dawka','Jednostka','Zawartość N','kg N/ha','Osoba wykonująca','Uwagi'];
+  R=rows.map(r=>{const k=nKg(r);return[r.date,...base(r),r.product,n(r.dose),r.unit,n(r.ncont),k==null?'':n(Math.round(k*10)/10),r.operator,r.notes]});name='nawozenie'}
+ else{H=['Data','Gospodarstwo','Pole','Nr działki','Uprawa','Faza BBCH','Obserwacje','Agrofagi','Nasilenie','Notatka','Notatka głosowa'];
+  R=rows.map(r=>{const f=field(r.fieldId);return[r.date,...base(r),f?f.crop||'':'',r.bbch,r.obs,r.pests,(SEV.find(s=>s[0]===r.sev)||['',''])[1],r.note,r.voice]});name='lustracje'}
+ const s='\ufeff'+[H,...R].map(r=>r.map(c=>{c=c==null?'':String(c);return /[;"\n\r]/.test(c)?'"'+c.replace(/"/g,'""')+'"':c}).join(';')).join('\r\n');
+ download(new Blob([s],{type:'text/csv;charset=utf-8'}),`${name}_${today()}.csv`);toast('Wyeksportowano CSV ('+rows.length+')')}
+
+/* ---- kalkulator ---- */
+const C={fieldId:'',crop:'Pszenica ozima',y:'7',area:'',prev:PREV[0][0],prevN:'0',nat:'Brak',natDose:'',natN:'',natR:'',other:'0',prod:NPROD[0][0],cat:'średnia',ph:'',p:'',k:'',mg:'',clsP:'',clsK:''};
+function calcFromField(fid){const f=field(fid);if(!f)return;C.fieldId=fid;const c=cropBy(f.crop);if(c)C.crop=c.n;C.y=f.yield!=null&&f.yield!==''?String(f.yield).replace('.',','):(c?String(c.y).replace('.',','):C.y);C.area=f.area!=null?String(f.area).replace('.',','):'';
+ const pv=PREV.find(p=>p[0].toLowerCase()===String(f.prev||'').toLowerCase());if(pv){C.prev=pv[0];C.prevN=String(pv[1])}
+ if(f.cat)C.cat=f.cat;['ph','p','k','mg'].forEach(k=>C[k]=f[k]!=null?String(f[k]).replace('.',','):'');C.clsP='';C.clsK=''}
+function ci(k,l,o={}){const v=C[k]??'';if(o.sel)return `<label class="fl"><span>${l}</span><select data-c="${k}">${o.sel.map(x=>{const[a,b]=Array.isArray(x)?x:[x,x];return`<option value="${esc(a)}"${String(a)===String(v)?' selected':''}>${esc(b)}</option>`}).join('')}</select>${o.h?`<small>${o.h}</small>`:''}</label>`;
+ return `<label class="fl"><span>${l}</span><input data-c="${k}" type="text" inputmode="decimal" autocomplete="off" value="${esc(v)}" placeholder="${o.ph||''}">${o.h?`<small>${o.h}</small>`:''}</label>`}
+const WARN='Wynik orientacyjny. Sprawdź z aktualnymi zaleceniami (IUNG, OSChR) i Programem azotanowym; maks. 170 kg N/ha/rok z nawozów naturalnych.';
+function vCalc(){topBar('Kalkulator nawożenia','N · P · K · wapnowanie','#/');
+ const fo=`<option value="">— bez pola (obliczenie ręczne) —</option>`+fieldOpts(C.fieldId,false);
+ return `<div class="warn" style="margin-bottom:12px">${WARN}</div>
+ <div class="card"><h3>1. Uprawa i plon</h3>
+ <label class="fl"><span>Pole</span><select data-c="fieldId">${fo}</select><small>Wybór pola uzupełnia uprawę, plon, powierzchnię i wyniki analizy gleby.</small></label>
+ ${ci('crop','Uprawa',{sel:D.crops.map(c=>c.n)})}
+ <div class="frow">${ci('y','Plon planowany (t/ha)')}${ci('area','Powierzchnia pola (ha)')}</div></div>
+ <div class="card"><h3>2. Azot – bilans</h3>
+ <div class="frow">${ci('prev','Przedplon',{sel:PREV.map(p=>p[0])})}${ci('prevN','Wpływ przedplonu (kg N/ha)')}</div>
+ ${ci('nat','Nawóz naturalny w tym sezonie',{sel:NAT.map(n=>n[0])})}
+ <div class="frow3">${ci('natDose','Dawka (t lub m³/ha)')}${ci('natN','kg N w 1 t/m³')}${ci('natR','Działanie w 1. roku (%)')}</div>
+ ${ci('other','Inne korekty (kg N/ha)',{h:'Np. N<sub>min</sub> wiosną, poplon, nawożenie jesienne. Wartość odejmowana od potrzeb.'})}
+ ${ci('prod','Nawóz azotowy do przeliczenia',{sel:NPROD.map(p=>p[0])})}</div>
+ <div id="resN"></div>
+ <div class="card"><h3>3. Fosfor, potas, magnez i pH</h3>
+ ${ci('cat','Kategoria agronomiczna gleby',{sel:CATS})}
+ <div class="frow">${ci('ph','pH (KCl)')}${ci('mg','MgO (mg/100 g)')}</div>
+ <div class="frow">${ci('p','P₂O₅ (mg/100 g)')}${ci('k','K₂O (mg/100 g)')}</div>
+ <div class="frow">${ci('clsP','Klasa zasobności P',{sel:[['','auto'],...CLS.map((c,i)=>[String(i),c])]})}${ci('clsK','Klasa zasobności K',{sel:[['','auto'],...CLS.map((c,i)=>[String(i),c])]})}</div></div>
+ <div id="resPK"></div>
+ <details class="ex noprint"><summary>Tabela pobrania jednostkowego (edytowalna)</summary><div class="dbody" id="uptab">${upTable()}</div></details>
+ <div class="warn" style="margin:4px 0 12px">${WARN}</div>
+ <div class="bgrid noprint"><button class="btn dk" data-act="calc-save" ${C.fieldId?'':'disabled'}>Zapisz plan dla pola</button><button class="btn" data-act="calc-plan">Zaplanuj dawki</button></div>
+ <button class="btn full noprint" style="margin-top:10px" data-act="print">🖨 Drukuj / zapisz PDF</button>`}
+function upTable(){return `<p style="font-size:12.5px;color:var(--mut);margin-bottom:8px">kg składnika na 1 t plonu (z plonem ubocznym). Wartości orientacyjne – dostosuj do własnych danych lub zaleceń IUNG.</p><div class="tsc"><table class="t"><tr><th>Uprawa</th><th class="n">N</th><th class="n">P₂O₅</th><th class="n">K₂O</th><th></th></tr>
+ ${D.crops.map((c,i)=>`<tr><td><input class="l" data-up="${i}" data-f="n" value="${esc(c.n)}" style="min-width:120px"></td>${['N','P','K'].map(k=>`<td><input data-up="${i}" data-f="${k}" inputmode="decimal" value="${String(c[k]).replace('.',',')}" style="width:58px"></td>`).join('')}<td><button class="btn sm red" data-act="up-del" data-i="${i}" aria-label="Usuń">×</button></td></tr>`).join('')}</table></div>
+ <p style="font-size:12.5px;color:var(--mut);margin:12px 0 6px">Współczynnik korekty P i K wg klasy zasobności (× pobranie):</p>
+ <div class="tsc"><table class="t"><tr>${CLS.map(c=>`<th class="n">${c}</th>`).join('')}</tr><tr>${D.pkf.map((v,i)=>`<td><input data-pkf="${i}" inputmode="decimal" value="${String(v).replace('.',',')}" style="width:58px"></td>`).join('')}</tr></table></div>
+ <div class="bgrid" style="margin-top:12px"><button class="btn sm" data-act="up-add">＋ Uprawa</button><button class="btn sm" data-act="up-reset">Przywróć domyślne</button></div>`}
+function calc(){const crop=cropBy(C.crop)||D.crops[0];const y=num(C.y)||0,area=num(C.area);
+ const upt=y*crop.N, prevN=num(C.prevN)||0, natDose=num(C.natDose)||0, natN=num(C.natN)||0, natR=num(C.natR)||0, other=num(C.other)||0;
+ const natTot=natDose*natN, natEff=natTot*natR/100;
+ const raw=upt-prevN-natEff-other;const N=Math.max(0,Math.round(raw/5)*5);
+ const prod=NPROD.find(p=>p[0]===C.prod)||NPROD[0];
+ const splits=crop.split.map(([pct,term])=>{const n=N*pct/100;const kg=n/(prod[1]/100);return{pct,term,n,kg,tot:area?kg*area:null}});
+ const p=num(C.p),k=num(C.k),mg=num(C.mg),ph=num(C.ph);
+ const iP=C.clsP!==''?+C.clsP:(p!=null?clsIdx(p,TH_P):2), iK=C.clsK!==''?+C.clsK:(k!=null?clsIdx(k,TH_K[C.cat]):2);
+ const P=Math.round(y*crop.P*D.pkf[iP]/5)*5, K=Math.round(y*crop.K*D.pkf[iK]/5)*5;
+ const iMg=mg!=null?clsIdx(mg,TH_MG[C.cat]):null;
+ let lime=null;if(ph!=null){const L=LIME[C.cat];const lv=ph<=L.ph[0]?0:ph<=L.ph[1]?1:ph<=L.ph[2]?2:ph<=L.ph[3]?3:4;lime={lv,txt:['konieczne','potrzebne','wskazane','ograniczone','zbędne'][lv],CaO:lv<3?L.d[lv]:0}}
+ return{crop,y,area,upt,prevN,natTot,natEff,other,raw,N,prod,splits,P,K,iP,iK,iMg,pAuto:C.clsP===''&&p==null,kAuto:C.clsK===''&&k==null,lime}}
+function calcUpd(){const r=calc();const A=r.area;const t=v=>A?fmt(v*A,0)+' kg':'—';
+ const rsm=r.prod[0].startsWith('RSM');
+ $('#resN').innerHTML=`<div class="res"><span class="lb">Dawka azotu · ${esc(r.crop.n)}</span><div class="big">${fmt(r.N,0)}<small>kg N/ha</small></div>
+ <div class="eq">${fmt(r.y,1)} t/ha × ${fmt(r.crop.N,1)} kg N/t = <b>${fmt(r.upt,0)}</b><br>− przedplon ${fmt(r.prevN,0)} − nawozy naturalne ${fmt(r.natEff,0)} − korekty ${fmt(r.other,0)}<br>= ${fmt(Math.max(0,r.raw),0)} → zaokrąglone do 5 kg</div>
+ ${A?`<div class="eq">Na całe pole (${fmt(A,2)} ha): <b>${fmt(r.N*A,0)} kg N</b></div>`:''}</div>
+ ${r.natTot>170?`<div class="alert">Nawozy naturalne: ${fmt(r.natTot,0)} kg N/ha – przekroczono limit 170 kg N/ha/rok!</div>`:''}
+ ${r.natTot>0&&r.natTot<=170?`<p style="font-size:13px;color:var(--mut);margin:-4px 2px 12px">Nawozy naturalne: ${fmt(r.natTot,0)} kg N/ha ogółem (limit 170 kg N/ha/rok), w bilansie ${fmt(r.natEff,0)} kg N/ha.</p>`:''}
+ <div class="card"><h3>Dawki dzielone – ${esc(r.prod[0])}</h3><div class="tsc"><table class="t"><tr><th>Termin</th><th class="n">kg N/ha</th><th class="n">${rsm?'kg (l)/ha':'kg/ha'}</th><th class="n">Na pole</th></tr>
+ ${r.splits.map(s=>`<tr><td>${s.pct}% · ${esc(s.term)}</td><td class="n">${fmt(s.n,0)}</td><td class="n"><b>${fmt(s.kg,0)}</b>${rsm?`<br><small>${fmt(s.kg/1.32,0)} l</small>`:''}</td><td class="n">${t(s.kg)}</td></tr>`).join('')}
+ <tr><td><b>Razem</b></td><td class="n"><b>${fmt(r.N,0)}</b></td><td class="n"><b>${fmt(r.N/(r.prod[1]/100),0)}</b></td><td class="n"><b>${A?fmt(r.N/(r.prod[1]/100)*A/1000,2)+' t':'—'}</b></td></tr></table></div>
+ <p style="font-size:12.5px;color:var(--mut);margin-top:8px">Podział orientacyjny – dostosuj do stanu łanu, przezimowania i pogody.</p>
+ <span class="k" style="margin-top:14px">Pełna dawka w innych nawozach</span><div class="tsc"><table class="t"><tr><th>Nawóz</th><th class="n">kg/ha</th><th class="n">Na pole</th></tr>
+ ${NPROD.map(p=>{const kg=r.N/(p[1]/100);return`<tr><td>${esc(p[0])}</td><td class="n">${fmt(kg,0)}${p[0].startsWith('RSM')?` <small>(${fmt(kg/1.32,0)} l)</small>`:''}</td><td class="n">${A?fmt(kg*A/1000,2)+' t':'—'}</td></tr>`}).join('')}</table></div></div>`;
+ const L=r.lime;
+ $('#resPK').innerHTML=`<div class="card acc"><h3>Fosfor i potas</h3>
+ <div class="pkg"><div><small>P₂O₅</small><b>${fmt(r.P,0)}</b><small>kg/ha</small></div><div><small>K₂O</small><b>${fmt(r.K,0)}</b><small>kg/ha</small></div><div><small>MgO</small><b style="font-size:15px;line-height:1.6">${r.iMg!=null?CLS[r.iMg]:'—'}</b><small>zasobność</small></div></div>
+ <table class="t" style="margin-top:10px"><tr><td>Zasobność P: <b>${CLS[r.iP]}</b>${r.pAuto?' <small>(brak analizy – przyjęto średnią)</small>':''}</td><td class="n">× ${fmt(D.pkf[r.iP],2)}</td></tr><tr><td>Zasobność K: <b>${CLS[r.iK]}</b>${r.kAuto?' <small>(brak analizy – przyjęto średnią)</small>':''}</td><td class="n">× ${fmt(D.pkf[r.iK],2)}</td></tr>
+ <tr><td>Superfosfat potrójny 40%</td><td class="n"><b>${fmt(r.P/0.4,0)} kg/ha</b>${A?`<br><small>${fmt(r.P/0.4*A,0)} kg na pole</small>`:''}</td></tr>
+ <tr><td>Sól potasowa 60%</td><td class="n"><b>${fmt(r.K/0.6,0)} kg/ha</b>${A?`<br><small>${fmt(r.K/0.6*A,0)} kg na pole</small>`:''}</td></tr></table>
+ ${r.iMg!=null&&r.iMg<=1?'<p style="font-size:13px;margin-top:8px">Niska zawartość Mg – rozważ wapno magnezowe lub nawóz z magnezem.</p>':''}</div>
+ <div class="card gold"><h3>Wapnowanie</h3>${L?`<p style="font-size:15px">Potrzeby wapnowania (gleba ${esc(C.cat)}, pH ${fmt(num(C.ph),1)}): <b>${L.txt}</b></p>
+ ${L.CaO?`<div class="pkg" style="grid-template-columns:1fr 1fr"><div><small>Dawka CaO</small><b>${fmt(L.CaO,1)}</b><small>t/ha</small></div><div><small>Na pole</small><b>${A?fmt(L.CaO*A,1):'—'}</b><small>t CaO</small></div></div><p style="font-size:12.5px;color:var(--mut);margin-top:8px">Dawkę nawozu wapniowego przelicz wg zawartości CaO w produkcie (np. 50% CaO → ${fmt(L.CaO/0.5,1)} t/ha).</p>`:`<p style="font-size:13.5px;color:var(--mut);margin-top:4px">${L.lv===3?'Wapnowanie ograniczone – ewentualnie dawka podtrzymująca.':'Wapnowanie zbędne przy obecnym pH.'}</p>`}`:'<p style="font-size:14px;color:var(--mut)">Podaj pH (KCl) i kategorię agronomiczną gleby.</p>'}</div>`;
+ return r}
+function onCalcInput(e){const el=e.target;const k=el.dataset.c;if(k){C[k]=el.value;
+  if(k==='fieldId'){if(el.value)calcFromField(el.value);else C.fieldId='';$('#view').innerHTML=vCalc();calcUpd();return}
+  if(k==='crop'){const c=cropBy(el.value);if(c&&e.type==='change'){C.y=String(c.y).replace('.',',');const yi=document.querySelector('[data-c="y"]');if(yi)yi.value=C.y}}
+  if(k==='prev'&&e.type==='change'){const p=PREV.find(x=>x[0]===el.value);if(p){C.prevN=String(p[1]);document.querySelector('[data-c="prevN"]').value=C.prevN}}
+  if(k==='nat'&&e.type==='change'){const n=NAT.find(x=>x[0]===el.value);if(n){C.natN=n[1]?String(n[1]):'';C.natR=n[2]?String(n[2]):'';if(!n[1])C.natDose='';['natN','natR','natDose'].forEach(x=>document.querySelector(`[data-c="${x}"]`).value=C[x])}}
+  calcUpd();return}
+ if(el.dataset.up!=null){const c=D.crops[+el.dataset.up];if(!c)return;const f=el.dataset.f;if(f==='n'){if(el.value.trim())c.n=el.value.trim()}else c[f]=num(el.value)??0;save();if(e.type==='change'&&f==='n'){C.crop=cropBy(C.crop)?C.crop:D.crops[0].n;$('#view').innerHTML=vCalc()}calcUpd();return}
+ if(el.dataset.pkf!=null){D.pkf[+el.dataset.pkf]=num(el.value)??0;save();calcUpd()}}
+
+/* ---- kalendarz ---- */
+const CAL={y:new Date().getFullYear(),m:new Date().getMonth(),sel:today(),f:''};
+function termsFor(y){return D.terms.filter(t=>t.on).map(t=>({id:'t_'+t.id,tid:t.id,title:t.title,date:y+'-'+t.md,kind:'termin',notes:t.notes,term:true}))}
+function evsInRange(a,b){const out=D.events.filter(e=>e.date>=a&&e.date<=b&&(!CAL.f||e.fieldId===CAL.f));const ya=+a.slice(0,4),yb=+b.slice(0,4);if(!CAL.f)for(let y=ya;y<=yb;y++)out.push(...termsFor(y).filter(e=>e.date>=a&&e.date<=b));return out.sort((x,y)=>(x.date+(x.time||'')).localeCompare(y.date+(y.time||'')))}
+function upcoming(n){const a=today();const d=new Date();d.setDate(d.getDate()+60);const keep=CAL.f;CAL.f='';const r=evsInRange(a,iso(d)).filter(e=>!e.done).slice(0,n);CAL.f=keep;return r}
+function evItem(e){const d=e.date;const K=KINDS[e.kind]||KINDS.inne;
+ const dd=`<span class="dt" style="border-left:4px solid ${K[1]}"><b>${+d.slice(8,10)}</b><small>${MON[+d.slice(5,7)-1]}</small></span>`;
+ const act=!e.term&&!e.done&&(e.kind==='zabieg'||e.kind==='nawozenie')?`<button class="btn sm" style="margin-top:8px" data-act="ev-rec" data-id="${e.id}">${e.kind==='zabieg'?'Wpisz do ewidencji':'Wpisz nawożenie'}</button>`:'';
+ return `<div class="item${e.done?' done':''}" data-act="${e.term?'open-term':'open-ev'}" data-id="${e.term?e.tid:e.id}">${!e.term?`<input type="checkbox" class="chk" data-act="ev-done" data-id="${e.id}" ${e.done?'checked':''} aria-label="Wykonane">`:''}${dd}<span class="tx"><b>${esc(e.title)}</b><p>${esc([e.time,e.fieldId?fLabel(e.fieldId):'',e.notes].filter(Boolean).join(' · '))}</p><span class="chip" style="border-color:${K[1]};color:${K[1]}">${K[0]}</span>${e.remind&&e.remind!=='0'?`<span class="chip">🔔 ${e.remind} d</span>`:''}${act}</span></div>`}
+function vCal(){topBar('Kalendarz zabiegów','Plan · przypomnienia · .ics','#/');
+ const {y,m}=CAL;const first=new Date(y,m,1);const off=(first.getDay()+6)%7;const start=new Date(y,m,1-off);
+ const a=iso(start);const endD=new Date(start);endD.setDate(endD.getDate()+41);const evs=evsInRange(a,iso(endD));const by={};evs.forEach(e=>(by[e.date]=by[e.date]||[]).push(e));
+ let cells='';for(let i=0;i<42;i++){const d=new Date(start);d.setDate(d.getDate()+i);const s=iso(d);const es=by[s]||[];
+  cells+=`<button class="${d.getMonth()!==m?'o ':''}${s===today()?'td ':''}${s===CAL.sel?'sel':''}" data-act="cal-day" data-d="${s}" aria-label="${fdate(s)}">${d.getDate()}<span class="dots">${es.slice(0,3).map(e=>`<i style="background:${(KINDS[e.kind]||KINDS.inne)[1]}"></i>`).join('')}</span></button>`}
+ const dayE=evsInRange(CAL.sel,CAL.sel);const up=(()=>{const d=new Date();d.setDate(d.getDate()+90);return evsInRange(today(),iso(d)).filter(e=>!e.done)})();
+ return `<div class="filt"><label class="fl" style="margin-bottom:0"><span>Pole</span><select data-act="cal-f" id="calf">${`<option value="">Wszystkie pola + terminy stałe</option>`+fieldOpts(CAL.f,false)}</select></label></div>
+ <div class="calh"><button data-act="cal-prev" aria-label="Poprzedni miesiąc">‹</button><b>${MONF[m]} ${y}</b><button data-act="cal-next" aria-label="Następny miesiąc">›</button></div>
+ <div class="cal">${['pn','wt','śr','cz','pt','sb','nd'].map(w=>`<span class="wd">${w}</span>`).join('')}${cells}</div>
+ <div class="legend">${Object.values(KINDS).map(k=>`<span><i style="background:${k[1]}"></i>${k[0]}</span>`).join('')}</div>
+ <span class="k">${fdate(CAL.sel)}</span>
+ ${dayE.length?`<div class="items">${dayE.map(evItem).join('')}</div>`:`<div class="empty" style="padding:16px">Brak terminów tego dnia</div>`}
+ <span class="k">Najbliższe 90 dni</span>
+ ${up.length?`<div class="items">${up.map(evItem).join('')}</div>`:'<div class="empty" style="padding:16px">Brak zaplanowanych terminów</div>'}
+ <div class="card gold" style="margin-top:16px"><h3>Eksport do kalendarza telefonu</h3><p style="font-size:13.5px;color:var(--mut);margin-bottom:10px">Pobierz plik .ics i otwórz go – terminy z przypomnieniami trafią do Kalendarza Google, iPhone lub Outlook.${CAL.f?' Eksport obejmie wybrane pole.':''}</p>
+ <div class="bgrid"><button class="btn dk" data-act="ics">📅 Pobierz .ics</button><button class="btn" data-act="add-event">＋ Termin</button></div></div>
+ <details class="ex"><summary>Terminy stałe (co roku, edytowalne)</summary><div class="dbody"><p style="font-size:12.5px;color:var(--mut);margin-bottom:10px">Daty są przykładowe. Ustaw je zgodnie z aktualnymi przepisami (np. Programem azotanowym) i warunkami w regionie.</p>
+ <div class="items">${D.terms.map(t=>`<button class="item" data-act="open-term" data-id="${t.id}"><span class="dt" style="border-left:4px solid #8E6BBF"><b>${+t.md.slice(3)}</b><small>${MON[+t.md.slice(0,2)-1]}</small></span><span class="tx"><b>${esc(t.title)}</b><p>${esc(t.notes||'')}</p>${t.on?'':'<span class="chip">ukryty</span>'}</span><span class="ar">›</span></button>`).join('')}</div>
+ <button class="btn full" style="margin-top:10px" data-act="add-term">＋ Termin stały</button></div></details>`}
+function icsOut(){const L=['BEGIN:VCALENDAR','VERSION:2.0','PRODID:-//AgronomAI PRO//Dziennik polowy PRO//PL','CALSCALE:GREGORIAN','METHOD:PUBLISH','X-WR-CALNAME:AgronomAI – zabiegi i terminy','X-WR-TIMEZONE:Europe/Warsaw'];
+ const e=s=>String(s||'').replace(/\\/g,'\\\\').replace(/;/g,'\\;').replace(/,/g,'\\,').replace(/\r?\n/g,'\\n');
+ const stamp=new Date().toISOString().replace(/[-:]/g,'').replace(/\.\d+Z$/,'Z');
+ const nd=s=>{const d=new Date(s+'T12:00:00');d.setDate(d.getDate()+1);return iso(d).replace(/-/g,'')};
+ let n=0;
+ D.events.filter(v=>!CAL.f||v.fieldId===CAL.f).forEach(v=>{if(!v.date)return;n++;const K=KINDS[v.kind]||KINDS.inne;
+  L.push('BEGIN:VEVENT','UID:'+v.id+'@agronomai-pro','DTSTAMP:'+stamp);
+  if(v.time){const t=v.time.replace(':','')+'00';const h=(+v.time.slice(0,2)+1);L.push('DTSTART;TZID=Europe/Warsaw:'+v.date.replace(/-/g,'')+'T'+t);L.push('DTEND;TZID=Europe/Warsaw:'+v.date.replace(/-/g,'')+'T'+(h<24?String(h).padStart(2,'0')+v.time.slice(3,5)+'00':'235900'))}
+  else L.push('DTSTART;VALUE=DATE:'+v.date.replace(/-/g,''),'DTEND;VALUE=DATE:'+nd(v.date));
+  L.push('SUMMARY:'+e(K[0]+': '+v.title+(v.fieldId?' – '+fLabel(v.fieldId):'')),'DESCRIPTION:'+e([v.fieldId?fLabel(v.fieldId):'',v.notes].filter(Boolean).join('\n')),'CATEGORIES:'+e(K[0]));
+  if(v.done)L.push('STATUS:CONFIRMED');
+  if(v.remind&&v.remind!=='0')L.push('BEGIN:VALARM','ACTION:DISPLAY','DESCRIPTION:'+e(v.title),'TRIGGER:-P'+v.remind+'D','END:VALARM');
+  L.push('END:VEVENT')});
+ if(!CAL.f){const y=new Date().getFullYear();D.terms.filter(t=>t.on).forEach(t=>{n++;const d=y+'-'+t.md;L.push('BEGIN:VEVENT','UID:term-'+t.id+'@agronomai-pro','DTSTAMP:'+stamp,'DTSTART;VALUE=DATE:'+d.replace(/-/g,''),'DTEND;VALUE=DATE:'+nd(d),'RRULE:FREQ=YEARLY','SUMMARY:'+e(t.title),'DESCRIPTION:'+e(t.notes||''),'CATEGORIES:'+e('Termin stały'),'BEGIN:VALARM','ACTION:DISPLAY','DESCRIPTION:'+e(t.title),'TRIGGER:-P3D','END:VALARM','END:VEVENT')})}
+ L.push('END:VCALENDAR');
+ const enc=new TextEncoder();const fold=l=>{if(enc.encode(l).length<=74)return l;let out='',cur='',first=true;for(const ch of l){const lim=first?74:73;if(enc.encode(cur+ch).length>lim){out+=(first?'':'\r\n ')+cur;cur=ch;first=false}else cur+=ch}return out+(first?'':'\r\n ')+cur};
+ if(!n){toast('Brak terminów do eksportu');return}
+ download(new Blob([L.map(fold).join('\r\n')+'\r\n'],{type:'text/calendar;charset=utf-8'}),`agronomai_kalendarz_${today()}.ics`);toast('Pobrano plik .ics ('+n+')')}
+
+/* ---- kopia ---- */
+function vBackup(){topBar('Kopia i eksport','Dane na tym urządzeniu','#/');
+ const sz=(()=>{try{return(JSON.stringify(D).length/1024).toFixed(0)}catch(e){return'?'}})();
+ return `<div class="card gold"><h3>Kopia zapasowa (JSON)</h3><p class="lead" style="margin-bottom:12px">Pełna kopia gospodarstw, pól, wpisów, zabiegów, terminów i Twoich tabel. Zapisz ją na Dysku Google, w mailu lub na komputerze. Rozmiar: ~${sz} KB.</p>
+ <div class="bgrid"><button class="btn dk" data-act="export-json">⬇ Zapisz kopię</button><button class="btn" data-act="import-json">⬆ Wczytaj kopię</button></div></div>
+ <div class="card"><h3>Eksport CSV (Excel)</h3><p class="lead" style="margin-bottom:12px">Arkusze do kontroli i dla rolnika. Separator „;”, polskie znaki (UTF-8).</p>
+ <div class="items"><button class="btn full" data-act="csv-all" data-t="zab">⬇ Ewidencja zabiegów ŚOR</button><button class="btn full" data-act="csv-all" data-t="lus">⬇ Lustracje</button><button class="btn full" data-act="csv-all" data-t="naw">⬇ Nawożenie</button><button class="btn full" data-act="csv-fields">⬇ Pola i analizy gleby</button></div></div>
+ <div class="card"><h3>Instalacja na telefonie</h3><p class="lead" style="margin-bottom:0">Android (Chrome): menu ⋮ → „Dodaj do ekranu głównego”. iPhone (Safari): Udostępnij → „Do ekranu początkowego”. Moduł działa także bez internetu.</p></div>
+ <div class="card"><h3>Usuń wszystkie dane</h3><p class="lead" style="margin-bottom:12px">Nieodwracalne. Najpierw zapisz kopię.</p><button class="btn red full" data-act="wipe">Usuń dane z tego urządzenia</button></div>`}
+function exportJson(){const o=Object.assign({app:'AgronomAI PRO – Dziennik polowy PRO',exported:new Date().toISOString()},D);delete o._savedAt;
+ download(new Blob([JSON.stringify(o,null,1)],{type:'application/json'}),`agronomai_dziennik_kopia_${today()}.json`);toast('Zapisano kopię JSON')}
+$('#impfile').addEventListener('change',e=>{const f=e.target.files[0];e.target.value='';if(!f)return;const rd=new FileReader();
+ rd.onload=()=>{try{const o=JSON.parse(rd.result);if(!o||!Array.isArray(o.farms))throw 0;
+  if(!confirm(`Wczytać kopię (${o.farms.length} gosp., ${(o.fields||[]).length} pól)? Obecne dane zostaną zastąpione.`))return;D=normalize(o);save();go('#/');toast('Wczytano kopię')}catch(err){toast('To nie jest poprawny plik kopii')}};rd.readAsText(f)});
+function csvFields(){const n=v=>v==null||v===''?'':String(v).replace('.',',');const H=['Gospodarstwo','Pole','Nr działki','Powierzchnia (ha)','Uprawa','Przedplon','Plon planowany (t/ha)','Kategoria agronomiczna','Klasa bonitacyjna','pH','P2O5 (mg/100 g)','K2O (mg/100 g)','MgO (mg/100 g)','Data analizy','Notatki'];
+ const R=D.fields.map(f=>{const g=farm(f.farmId);return[g?g.name:'',f.name,f.plot,n(f.area),f.crop,f.prev,n(f.yield),f.cat,f.bon,n(f.ph),n(f.p),n(f.k),n(f.mg),f.adate,f.notes]});
+ const s='\ufeff'+[H,...R].map(r=>r.map(c=>{c=c==null?'':String(c);return /[;"\n\r]/.test(c)?'"'+c.replace(/"/g,'""')+'"':c}).join(';')).join('\r\n');download(new Blob([s],{type:'text/csv;charset=utf-8'}),`pola_${today()}.csv`);toast('Wyeksportowano CSV')}
+
+/* =============== akcje =============== */
+const ACT={
+ closesheet:()=>closeSheet(), sheetdel:()=>SH&&SH.del&&SH.del(),
+ theme:()=>{const t=document.documentElement.dataset.theme==='dark'?null:'dark';store('theme',t);theme(t);render()},
+ 'add-farm':()=>editFarm(), 'edit-farm':el=>editFarm(el.dataset.id),
+ 'add-field':el=>editField(null,el.dataset.farm), 'edit-field':el=>editField(el.dataset.id),
+ 'add-entry':el=>editEntry(null,{fieldId:el.dataset.field||(DZ.f&&!DZ.f.startsWith('g:')?DZ.f:'')}),
+ 'add-spray':el=>editSpray(null,{fieldId:el.dataset.field||(DZ.f&&!DZ.f.startsWith('g:')?DZ.f:'')}),
+ 'add-fert':el=>editFert(null,{fieldId:el.dataset.field||(DZ.f&&!DZ.f.startsWith('g:')?DZ.f:'')}),
+ 'add-event':el=>editEvent(null,{fieldId:el.dataset.field||CAL.f||''}),
+ 'open-lus':el=>editEntry(el.dataset.id),'open-zab':el=>editSpray(el.dataset.id),'open-naw':el=>editFert(el.dataset.id),
+ 'open-ev':el=>editEvent(el.dataset.id),'open-term':el=>editTerm(el.dataset.id),'add-term':()=>editTerm(),
+ 'ev-done':(el,e)=>{e.stopPropagation();const v=D.events.find(x=>x.id===el.dataset.id);if(v){v.done=el.checked;save();setTimeout(render,150);toast(v.done?'Oznaczono jako wykonane':'Przywrócono')}},
+ 'ev-rec':(el,e)=>{e.stopPropagation();const v=D.events.find(x=>x.id===el.dataset.id);if(!v)return;const pre={fieldId:v.fieldId,date:v.date<=today()?v.date:today(),eventId:v.id,notes:v.notes};if(v.kind==='zabieg')editSpray(null,Object.assign(pre,{product:v.title}));else editFert(null,pre)},
+ dztab:el=>{DZ.t=el.dataset.t;render()},
+ 'dz-farm':(el,e)=>{e.preventDefault();DZ.f='g:'+el.dataset.id;DZ.t='zab';go('#/dziennik')},
+ csv:()=>csvOut(), 'csv-all':el=>{const s={...DZ};Object.assign(DZ,{t:el.dataset.t,f:'',from:'',to:'',q:''});csvOut();Object.assign(DZ,s)}, 'csv-fields':()=>csvFields(),
+ 'export-json':()=>exportJson(),'import-json':()=>$('#impfile').click(),
+ wipe:()=>{if(!confirm('Na pewno usunąć wszystkie dane modułu z tego urządzenia?'))return;if(!confirm('Ostatnie potwierdzenie: dane zostaną usunięte bezpowrotnie.'))return;D=blank();save();go('#/');toast('Dane usunięte')},
+ 'cal-prev':()=>{CAL.m--;if(CAL.m<0){CAL.m=11;CAL.y--}render()},'cal-next':()=>{CAL.m++;if(CAL.m>11){CAL.m=0;CAL.y++}render()},
+ 'cal-day':el=>{CAL.sel=el.dataset.d;const d=new Date(CAL.sel+'T12:00:00');CAL.y=d.getFullYear();CAL.m=d.getMonth();render();const k=document.querySelectorAll('.k')[0];k&&k.scrollIntoView({behavior:'smooth',block:'start'})},
+ ics:()=>icsOut(), print:()=>window.print(),
+ 'up-add':()=>{D.crops.push({n:'Nowa uprawa '+(D.crops.length+1),N:20,P:10,K:20,y:5,u:'t',split:[[60,'Pierwsza dawka'],[40,'Druga dawka']]});save();rerenderCalcKeepOpen()},
+ 'up-del':el=>{if(D.crops.length<=1)return;const c=D.crops[+el.dataset.i];if(!confirm(`Usunąć „${c.n}” z tabeli?`))return;D.crops.splice(+el.dataset.i,1);save();rerenderCalcKeepOpen()},
+ 'up-reset':()=>{if(!confirm('Przywrócić domyślną tabelę pobrania i współczynniki?'))return;D.crops=JSON.parse(JSON.stringify(DEF_CROPS));D.pkf=DEF_PKF.slice();save();rerenderCalcKeepOpen()},
+ 'calc-save':()=>{const f=field(C.fieldId);if(!f)return;const r=calc();f.plan={year:new Date().getFullYear(),date:today(),crop:r.crop.n,y:r.y,N:r.N,P:r.P,K:r.K,CaO:r.lime?r.lime.CaO:0,prod:r.prod[0],splits:r.splits.map(s=>({pct:s.pct,term:s.term,n:Math.round(s.n),kg:Math.round(s.kg)}))};save();toast('Plan zapisany w karcie pola')},
+ 'calc-plan':()=>{const r=calc();if(!D.fields.length){toast('Najpierw dodaj pole');return}
+  const fs=r.splits.map((s,i)=>({k:'d'+i,l:`${s.pct}% · ${s.term} – ${fmt(s.kg,0)} kg/ha`,t:'date'}));
+  sheet({title:'Zaplanuj dawki w kalendarzu',note:`${r.crop.n}: ${fmt(r.N,0)} kg N/ha jako ${r.prod[0]}. Podaj daty – puste pominiemy.`,obj:{fieldId:C.fieldId},fields:[{k:'fieldId',l:'Pole',t:'select',o:fieldOpts(C.fieldId,true),req:1},...fs],
+   save:v=>{let n=0;r.splits.forEach((s,i)=>{if(v['d'+i]){D.events.push({id:uid(),title:`${r.prod[0]} – ${fmt(s.kg,0)} kg/ha (${fmt(s.n,0)} kg N)`,kind:'nawozenie',fieldId:v.fieldId,date:v['d'+i],remind:'1',notes:s.term,done:false});n++}});if(!n){toast('Podaj co najmniej jedną datę');return false}}})}
+};
+function rerenderCalcKeepOpen(){$('#view').innerHTML=vCalc();const d=document.querySelector('details.ex');if(d)d.open=true;if(!cropBy(C.crop))C.crop=D.crops[0].n;calcUpd()}
+document.addEventListener('click',e=>{const el=e.target.closest('[data-act]');if(!el)return;const a=el.dataset.act;if(a==='cal-f')return;
+ const fn=ACT[a];if(fn)fn(el,e)});
+document.addEventListener('input',e=>{if(e.target.closest('#view')&&location.hash.startsWith('#/kalkulator'))onCalcInput(e)
+ ;if(e.target.classList.contains('dzf')&&e.target.dataset.k==='q'){DZ.q=e.target.value;$('#dzlist').innerHTML=dzList()}});
+document.addEventListener('change',e=>{const t=e.target;if(t.closest('#view')&&location.hash.startsWith('#/kalkulator')){onCalcInput(e);return}
+ if(t.classList.contains('dzf')){DZ[t.dataset.k]=t.value;$('#dzlist').innerHTML=dzList()}
+ if(t.id==='calf'){CAL.f=t.value;render()}});
+document.addEventListener('click',e=>{const b=e.target.closest('[data-act="dictate"]');if(!b)return;const SR=window.SpeechRecognition||window.webkitSpeechRecognition;if(!SR)return;
+ try{const r=new SR();r.lang='pl-PL';r.interimResults=false;const ta=document.getElementById(b.dataset.target);b.textContent='● Słucham…';
+  r.onresult=ev=>{const t=Array.from(ev.results).map(x=>x[0].transcript).join(' ');ta.value=(ta.value?ta.value+' ':'')+t};r.onend=()=>{b.textContent='🎤 Dyktuj (pl)'};r.onerror=()=>{b.textContent='🎤 Dyktuj (pl)';toast('Dyktowanie niedostępne – wklej tekst')};r.start()}catch(err){toast('Dyktowanie niedostępne – wklej tekst')}});
+document.addEventListener('keydown',e=>{if(e.key==='Escape'&&SH)closeSheet()});
+
+render();
+if('serviceWorker' in navigator&&location.protocol==='https:')navigator.serviceWorker.register('sw.js').catch(()=>{});
+</script>
+</body></html>

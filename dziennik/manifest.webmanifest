@@ -1,0 +1,17 @@
+{
+ "name": "Dziennik polowy PRO – AgronomAI",
+ "short_name": "Dziennik PRO",
+ "lang": "pl",
+ "start_url": "./",
+ "scope": "./",
+ "display": "standalone",
+ "orientation": "portrait",
+ "background_color": "#F5F0E3",
+ "theme_color": "#1E4620",
+ "description": "Dziennik polowy, ewidencja zabiegów ŚOR, kalkulator nawożenia i kalendarz dla doradcy rolniczego",
+ "icons": [
+  {"src": "../app/icon-192.png", "sizes": "192x192", "type": "image/png", "purpose": "any maskable"},
+  {"src": "../app/icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any maskable"},
+  {"src": "../app/icon.svg", "sizes": "any", "type": "image/svg+xml"}
+ ]
+}
