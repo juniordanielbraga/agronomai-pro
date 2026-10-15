@@ -1,0 +1,57 @@
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+.ia{--nv:#1E4620;--nv2:#2C5E2E;--or:#D9A82B;--g:#13a10e;--y:#FFD54A;--tx:#1a1f2b;--mu:#5b6475;--ln:#e3e7ee;font-family:Poppins,system-ui,sans-serif;color:var(--tx);background:#f3f5f8;min-height:100vh;padding-bottom:32px;line-height:1.5;-webkit-font-smoothing:antialiased}
+.ia *{box-sizing:border-box}.ia .w{max-width:480px;margin:0 auto;padding:0 16px}
+.ia .top{background:var(--nv);color:#fff;padding:9px 0 10px;position:sticky;top:0;z-index:5;box-shadow:0 2px 10px rgba(13,23,48,.25)}
+.ia .pbt{display:flex;justify-content:space-between;align-items:center;gap:10px;font-size:12px;font-weight:500}
+.ia .pbt span{white-space:nowrap;overflow:hidden;text-overflow:ellipsis;opacity:.92}.ia .pbt b{color:var(--y);font-weight:700}
+.ia .pb{height:6px;background:rgba(255,255,255,.14);border-radius:99px;overflow:hidden;margin-top:6px}
+.ia .pb i{display:block;height:100%;background:linear-gradient(90deg,#D9A82B,#FFD54A);border-radius:99px;animation:ia-fill 1.4s ease-out forwards}
+.ia .stp{font-size:11px;opacity:.65;margin-top:5px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.ia .warn{background:#fff6e0;color:#7a5200;text-align:center;font-weight:600;font-size:12px;padding:7px 12px;border-bottom:1px solid #f3dfa6}
+.ia h1{font-size:clamp(21px,5.8vw,28px);line-height:1.22;font-weight:800;letter-spacing:-.01em;margin:18px 0 8px;text-align:center}.ia h1 em{color:var(--or);font-style:normal}
+.ia .sub{text-align:center;color:var(--mu);font-size:14px;margin:0 0 12px}
+.ia .card{background:#fff;border:1px solid var(--ln);border-radius:14px;padding:16px;margin:12px 0;box-shadow:0 1px 2px rgba(20,33,61,.04)}
+.ia .box{display:block;width:56%;max-width:210px;margin:4px auto}
+.ia p{font-size:14.5px;margin:8px 0;color:#2a3140}.ia .hl{background:linear-gradient(transparent 62%,#ffe2c9 62%);font-weight:600}
+.ia ul.ok{list-style:none;padding:0;margin:4px 0}.ia ul.ok li{padding:8px 0 8px 28px;position:relative;font-size:14px;line-height:1.4;border-bottom:1px solid #f0f2f6}.ia ul.ok li:last-child{border:0}
+.ia ul.ok li:before{content:'';position:absolute;left:0;top:10px;width:18px;height:18px;border-radius:5px;background:var(--nv) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Cpath d='M4 8.3l2.6 2.6L12 5.5' fill='none' stroke='%23ffd27a' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E") center/14px no-repeat}
+.ia table{width:100%;border-collapse:collapse;font-size:13.5px}.ia td{padding:9px 4px;border-bottom:1px solid #f0f2f6}.ia tr:last-child td{border:0}.ia td:last-child{text-align:right;font-weight:700;color:var(--g)}
+.ia .price{text-align:center;padding:18px 16px}
+.ia .val{font-size:13px;color:var(--mu)}.ia .val s{color:#8a93a6}
+.ia .price .p{font-size:40px;font-weight:800;color:var(--tx);line-height:1.1;letter-spacing:-.02em;margin:2px 0}
+.ia .price .sv{display:inline-block;background:#e8f6ea;color:#0e7a0a;font-weight:600;font-size:12px;border-radius:99px;padding:3px 10px}
+.ia .tm{display:flex;align-items:center;justify-content:center;gap:6px;font-weight:600;font-size:12.5px;color:#b42318;margin:12px 0 10px}
+.ia .tm b{font-variant-numeric:tabular-nums;background:#fdecea;border-radius:6px;padding:1px 7px}
+.ia .yes{display:flex;align-items:center;justify-content:center;gap:8px;width:100%;min-height:52px;border:0;cursor:pointer;background:linear-gradient(180deg,#18b012,#0f8a08);color:#fff;font:inherit;font-weight:700;font-size:clamp(14.5px,4.3vw,17px);letter-spacing:.005em;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;padding:0 16px;border-radius:12px;box-shadow:0 6px 16px rgba(15,138,8,.28);animation:ia-glow 2s infinite;-webkit-tap-highlight-color:transparent}
+.ia .yes:active{transform:translateY(1px)}.ia .yes:after{content:'→';font-weight:700}
+.ia .game .yes{background:var(--nv);box-shadow:0 6px 16px rgba(20,33,61,.25);animation:none}.ia .game .yes:after{content:''}
+.ia .one{font-size:11.5px;color:var(--mu);margin-top:7px}
+.ia .no{display:block;width:100%;background:none;border:0;color:#8a93a6;font:inherit;font-size:12.5px;text-decoration:underline;text-underline-offset:3px;margin:14px 0 4px;cursor:pointer;line-height:1.4}
+.ia .g30{display:flex;flex-wrap:wrap;gap:6px 14px;align-items:center;justify-content:center;font-size:11.5px;color:var(--mu);margin-top:12px;padding-top:12px;border-top:1px solid #f0f2f6}
+.ia .game{text-align:center}.ia .hide{display:none}
+.ia .big{font-size:40px;font-weight:800;color:var(--or);letter-spacing:-.02em;line-height:1.1}
+.ia .lbl{font-size:13px;font-weight:600;color:var(--mu)}
+@keyframes ia-fill{from{width:0}}@keyframes ia-glow{0%,100%{box-shadow:0 6px 16px rgba(15,138,8,.28)}50%{box-shadow:0 6px 24px rgba(15,138,8,.5)}}
+</style><style>.ia .dfy{display:grid;gap:10px;margin:6px 0}.ia .dfy>div{display:flex;gap:12px;align-items:flex-start}.ia .dfy>div>div{display:block}
+.ia .dfy i{font-style:normal;flex:none;width:30px;height:30px;border-radius:50%;background:#D9A82B;color:#fff;font-weight:800;display:flex;align-items:center;justify-content:center;font-size:15px}
+.ia .dfy b{display:block;font-size:14.5px;color:#1E4620}.ia .dfy span{font-size:13px;color:#5b6475}
+.ia .vs{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:6px}.ia .vs div{border-radius:12px;padding:12px;font-size:13px;line-height:1.4}
+.ia .vs .a{background:#f3f5f8;color:#5b6475}.ia .vs .b{background:#1E4620;color:#fff}.ia .vs b{display:block;font-size:14px;margin-bottom:4px}
+.ia .shot{display:block;width:100%;border-radius:12px;border:1px solid #e3e7ee}.ia .lnk{display:block;text-align:center;font-weight:700;color:#D9A82B;margin-top:8px;font-size:14px}
+.ia .badge{display:inline-block;background:#fff1ea;color:#D9A82B;font-weight:800;font-size:11.5px;letter-spacing:1px;border-radius:99px;padding:4px 10px;margin-bottom:6px}</style><style>.ia .vsl{position:relative;border-radius:14px;overflow:hidden;background:#163518;margin:12px 0;box-shadow:0 6px 18px rgba(20,33,61,.25)}
+.ia .vsl video{display:block;width:100%;aspect-ratio:4/5;object-fit:cover;background:#163518}
+.ia .snd{position:absolute;left:50%;bottom:16px;transform:translateX(-50%);border:0;border-radius:99px;background:#D9A82B;color:#fff;font:inherit;font-weight:700;font-size:14px;padding:10px 18px;box-shadow:0 6px 16px rgba(0,0,0,.35);white-space:nowrap}
+.ia .hrs{display:flex;align-items:center;gap:14px}.ia .hrs>b{font-size:38px;font-weight:800;color:#D9A82B;line-height:1;white-space:nowrap}.ia .hrs span{font-size:13.5px;color:#5b6475}
+.ia .nag{display:inline-block;background:#e8f6ea;color:#0e7a0a;font-weight:800;font-size:12px;letter-spacing:.5px;border-radius:99px;padding:4px 12px;margin:2px auto 8px}</style><div class="ia"><div class="top"><div class="w"><div class="pbt"><span>⏳ Preparando tu AgronomIA PRO…</span><b>88%</b></div><div class="pb"><i style="width:88%"></i></div><div class="stp">Paso 3 de 3 · no cierres esta página o pierdes esta oferta</div></div></div><div class="warn">⚠️ ATENCIÓN: esta oferta aparece una sola vez; si cierras la página, no vuelve</div><div class="w">
+<h1>Una última sorpresa: <em>raspa y mira</em></h1><p class="sub">Te queda una tarjeta para raspar: es para el calendario del agrónomo de todo 2027.</p>
+<div class="card game"><div style="position:relative;width:280px;height:150px;margin:0 auto;border-radius:14px;overflow:hidden;background:#fff;border:2px solid #1E4620;box-shadow:0 6px 18px rgba(0,0,0,.18)"><div style="position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center"><div class="lbl">Tu descuento</div><div class="big">-{discount}</div></div><canvas id="zd" width="280" height="150" style="position:absolute;inset:0;touch-action:none;cursor:pointer"></canvas></div><div class="one">👆 raspa con el dedo</div></div>
+<div id="rev3" class="hide"><div class="card" style="text-align:center"><span class="nag">🎉 GANASTE: -{discount}</span><h2 style="font-size:21px;line-height:1.25;margin:4px 0 6px">Toda tu campaña ordenada <em style="color:#D9A82B;font-style:normal">mes por mes</em></h2></div>
+<img class="box" src="{product-image}" alt="{product-title}">
+<div class="card"><ul class="ok"><li>12 meses de labores: cosecha gruesa y fina, ciclos PV y OI, zonas tropicales y pasturas</li><li>Los registros y papeles de cada momento del año</li><li>Qué revisar en el organismo oficial y en el seguro antes de cada siembra</li><li>Una checklist y espacio para notas en cada mes</li></ul></div>
+<div class="card price"><div class="val">Valor: <s>{compare}</s></div><div class="p">{price}</div><div class="sv">Ahorras {savings} · pago único</div><div class="tm">⏱ La oferta vence en <b>{timer}</b></div><button class="yes" data-pp-accept>Sí, quiero el Calendario</button><div class="one">🔒 Un clic · no vuelves a cargar la tarjeta</div><div class="g30"><span>🛡️ Garantía de 30 días</span><span>⚡ Acceso inmediato por correo</span></div></div></div>
+<button class="no" data-pp-decline>No, gracias: me salto el descuento</button>
+<script>(function(){var c=document.getElementById('zd'),x=c.getContext('2d'),d=false,done=false;var gr=x.createLinearGradient(0,0,280,150);gr.addColorStop(0,'#1E4620');gr.addColorStop(1,'#2C5E2E');x.fillStyle=gr;x.fillRect(0,0,280,150);x.strokeStyle='rgba(255,210,122,.12)';x.lineWidth=10;for(var k=-150;k<430;k+=24){x.beginPath();x.moveTo(k,0);x.lineTo(k+150,150);x.stroke()}x.fillStyle='#FFD54A';x.font='600 18px Poppins,sans-serif';x.textAlign='center';x.fillText('RASPA AQUÍ',140,80);x.font='500 12px Poppins,sans-serif';x.fillStyle='rgba(255,255,255,.7)';x.fillText('desliza el dedo',140,102);x.globalCompositeOperation='destination-out';
+function s(e){if(!d)return;var r=c.getBoundingClientRect(),p=e.touches?e.touches[0]:e;x.beginPath();x.arc(p.clientX-r.left,p.clientY-r.top,22,0,7);x.fill();chk();e.preventDefault()}
+function chk(){if(done)return;var a=x.getImageData(0,0,280,150).data,n=0;for(var i=3;i<a.length;i+=16)if(a[i]==0)n++;if(n>a.length/16*.45){done=true;c.style.transition='opacity .5s';c.style.opacity=0;var r=document.getElementById('rev3');r.classList.remove('hide');r.scrollIntoView({behavior:'smooth'})}}
+['mousedown','touchstart'].forEach(function(v){c.addEventListener(v,function(e){d=true;s(e)})});['mousemove','touchmove'].forEach(function(v){c.addEventListener(v,s)});['mouseup','touchend','mouseleave'].forEach(function(v){c.addEventListener(v,function(){d=false})});})()</script></div></div>
