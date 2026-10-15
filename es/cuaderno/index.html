@@ -1,0 +1,804 @@
+<!doctype html>
+<html lang="es"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="robots" content="noindex,nofollow">
+<meta name="apple-mobile-web-app-capable" content="yes"><meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="Cuaderno de campo"><meta name="theme-color" content="#1E4620">
+<meta name="description" content="Cuaderno de campo PRO: productores y lotes, recorridas, registro de aplicaciones de fitosanitarios con reingreso y carencia, registro de fertilización, calculadora estimativa de N-P-K y cal, y calendario.">
+<link rel="manifest" href="manifest.webmanifest"><link rel="icon" href="../app/icon.svg" type="image/svg+xml"><link rel="apple-touch-icon" href="../app/icon-192.png">
+<title>Cuaderno de campo PRO — AgronomIA PRO</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&family=Space+Mono:wght@400;700&family=Fraunces:ital,opsz,wght@1,9..144,600&display=swap" rel="stylesheet">
+<style>
+:root{--g9:#1E4620;--g8:#2C5E2E;--leaf:#7CB342;--cta:#2E7D32;--gold:#D9A82B;--red:#C62828;--blue:#1565C0;
+--bg:#F5F0E3;--grid:rgba(30,70,32,.055);--card:#fff;--ink:#1d1f1b;--mut:#62614f;--line:#e2dac3;--soft:#f3eedf;--onp:#fff;--warnbg:#fff6dc;--warnln:#ecd58a;--warntx:#5d4a14}
+[data-theme=dark]{--bg:#121711;--grid:rgba(165,212,106,.05);--card:#1b2219;--ink:#eef2e8;--mut:#a3ab98;--line:#2f3a2a;--soft:#222b1f;--g9:#a5d46a;--g8:#a5d46a;--cta:#4f9a3f;--warnbg:#2a2715;--warnln:#4a4320;--warntx:#eadca8}
+*{box-sizing:border-box;margin:0;padding:0}
+html{-webkit-text-size-adjust:100%}
+body{font-family:Poppins,system-ui,sans-serif;color:var(--ink);font-size:16px;line-height:1.5;min-height:100vh;overflow-x:hidden;
+background-color:var(--bg);background-image:linear-gradient(var(--grid) 1px,transparent 1px),linear-gradient(90deg,var(--grid) 1px,transparent 1px);background-size:28px 28px;
+padding-bottom:calc(84px + env(safe-area-inset-bottom))}
+button,input,select,textarea{font:inherit;color:inherit}
+a{color:inherit}
+.mono,.k,.pill,.chip,.cnt{font-family:'Space Mono',monospace}
+.wrap{max-width:720px;margin:0 auto;padding:0 16px}
+/* top bar */
+.top{position:sticky;top:0;z-index:20;background:var(--g9);color:#fff;padding:calc(10px + env(safe-area-inset-top)) 0 10px}
+[data-theme=dark] .top{background:#17351a}
+.top .wrap{display:flex;align-items:center;gap:10px}
+.top .bk{width:44px;height:44px;border-radius:12px;border:1px solid rgba(255,255,255,.25);background:rgba(255,255,255,.08);color:#fff;font-size:22px;display:flex;align-items:center;justify-content:center;cursor:pointer;flex:none;text-decoration:none}
+.top .ttl{flex:1;min-width:0}
+.top .ttl b{display:block;font-size:17px;font-weight:700;letter-spacing:-.2px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.top .ttl small{display:block;font-family:'Space Mono';font-size:10px;letter-spacing:1.8px;opacity:.75;text-transform:uppercase;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.top svg.lg{width:40px;height:40px;border-radius:10px;flex:none}
+.top .tb{width:44px;height:44px;border-radius:12px;border:1px solid rgba(255,255,255,.25);background:rgba(255,255,255,.08);color:#fff;font-size:18px;cursor:pointer;flex:none}
+main{padding:16px 0 24px}
+.back{display:inline-flex;align-items:center;gap:6px;font-weight:600;font-size:14.5px;color:var(--g8);text-decoration:none;padding:10px 0;min-height:44px}
+.pill{display:inline-flex;align-items:center;gap:8px;font-size:10.5px;letter-spacing:1.6px;border:1px solid var(--line);background:var(--card);border-radius:99px;padding:6px 12px;text-transform:uppercase}
+.pill:before{content:'';width:7px;height:7px;border-radius:50%;background:#3FA34D;box-shadow:0 0 0 3px rgba(63,163,77,.18);flex:none}
+h1{font-size:36px;line-height:1.05;font-weight:800;letter-spacing:-1.2px;margin:12px 0 8px}
+h1 em{font-family:Fraunces,Georgia,serif;font-style:italic;font-weight:600;color:var(--gold);letter-spacing:-.5px}
+h2{font-size:22px;font-weight:800;letter-spacing:-.5px;line-height:1.2}
+h3{font-size:16.5px;font-weight:700}
+.lead{color:var(--mut);font-size:15px;margin-bottom:16px}
+.k{font-size:10.5px;letter-spacing:1.8px;color:var(--mut);text-transform:uppercase;display:block;margin:22px 0 8px}
+.stats{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin:14px 0 6px}
+.stat{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:10px 6px;text-align:center;min-width:0}
+.stat b{display:block;font-size:21px;font-weight:800;letter-spacing:-.5px;line-height:1.1;overflow-wrap:anywhere}
+.stat small{font-family:'Space Mono';font-size:9px;letter-spacing:1px;color:var(--mut);text-transform:uppercase}
+.tiles{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.tile{background:var(--card);border:1px solid var(--line);border-radius:18px;padding:16px 14px 14px;text-decoration:none;color:var(--ink);display:flex;flex-direction:column;gap:8px;min-height:168px;box-shadow:0 2px 0 rgba(30,70,32,.04);position:relative;overflow:hidden;min-width:0}
+.tile:active{transform:scale(.98)}
+.tile .ic{width:52px;height:52px;border-radius:14px;display:flex;align-items:center;justify-content:center;color:#fff}
+.tile .ic svg{width:28px;height:28px}
+.tile b{font-size:17px;font-weight:700;line-height:1.2;letter-spacing:-.2px}
+.tile p{font-size:12.5px;color:var(--mut);line-height:1.4}
+.tile .cnt{position:absolute;top:14px;right:12px;font-size:11px;background:var(--soft);border-radius:99px;padding:2px 9px;color:var(--mut)}
+.card{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:16px;margin-bottom:12px}
+.card.acc{border-left:5px solid var(--leaf)}
+.card.gold{border-left:5px solid var(--gold)}
+.card.redl{border-left:5px solid var(--red)}
+.card h3{margin-bottom:6px}
+.btn{min-height:52px;border:1.5px solid var(--line);background:var(--card);border-radius:14px;padding:12px 16px;font-weight:600;font-size:15.5px;cursor:pointer;display:inline-flex;align-items:center;justify-content:center;gap:8px;text-decoration:none;color:var(--ink);text-align:center;line-height:1.2}
+.btn:active{transform:scale(.98)}
+.btn:disabled{opacity:.5;cursor:default}
+.btn.pri{background:var(--cta);border-color:var(--cta);color:#fff}
+.btn.dk{background:#1E4620;border-color:#1E4620;color:#fff}
+.btn.gd{background:var(--gold);border-color:var(--gold);color:#2a2105}
+.btn.red{color:var(--red);border-color:rgba(198,40,40,.35)}
+.btn.sm{min-height:44px;padding:8px 12px;font-size:14px;border-radius:12px}
+.btn.full{width:100%}
+.bgrid{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.bgrid.c3{grid-template-columns:1fr 1fr 1fr}
+.items{display:grid;gap:10px}
+.item{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:14px;display:flex;gap:12px;align-items:flex-start;cursor:pointer;text-align:left;width:100%;min-width:0}
+.item:active{background:var(--soft)}
+.item .dt{flex:none;width:52px;text-align:center;border-radius:10px;background:var(--soft);padding:6px 2px;font-family:'Space Mono';line-height:1.1}
+.item .dt b{display:block;font-size:19px}.item .dt small{font-size:10px;text-transform:uppercase;color:var(--mut)}
+.item .tx{flex:1;min-width:0}
+.item .tx b{display:block;font-size:15.5px;font-weight:700;line-height:1.3;overflow-wrap:anywhere}
+.item .tx p{font-size:13.5px;color:var(--mut);margin-top:2px;overflow-wrap:anywhere}
+.item .ar{flex:none;color:var(--mut);font-size:20px;align-self:center}
+.chip{display:inline-block;font-size:10.5px;letter-spacing:.8px;border:1px solid var(--line);background:var(--soft);border-radius:99px;padding:2px 9px;color:var(--mut);text-transform:uppercase;margin:4px 4px 0 0;white-space:nowrap;max-width:100%;overflow:hidden;text-overflow:ellipsis;vertical-align:top}
+.chip.g{background:#e6f2d9;border-color:#cfe5b6;color:#2C5E2E}.chip.r{background:#fde7e5;border-color:#f6c3be;color:#9b1c1c}.chip.y{background:#fbf0cf;border-color:#efd78c;color:#6b5210}.chip.b{background:#e3eefb;border-color:#bdd5f2;color:#0f4c96}
+[data-theme=dark] .chip.g,[data-theme=dark] .chip.r,[data-theme=dark] .chip.y,[data-theme=dark] .chip.b{background:var(--soft);border-color:var(--line);color:var(--ink)}
+.empty{text-align:center;color:var(--mut);padding:26px 16px;border:2px dashed var(--line);border-radius:16px;font-size:14.5px}
+.empty b{display:block;color:var(--ink);font-size:16px;margin-bottom:4px}
+.warn{background:var(--warnbg);border:1px solid var(--warnln);color:var(--warntx);border-radius:14px;padding:12px 14px;font-size:13.5px;line-height:1.45;display:flex;gap:10px}
+.warn:before{content:'!';flex:none;width:22px;height:22px;border-radius:50%;background:var(--gold);color:#2a2105;font-weight:800;display:flex;align-items:center;justify-content:center;font-size:13px;margin-top:1px}
+.warn.disc{font-weight:600}
+.alert{background:#fde7e5;border:1px solid #f1b3ac;color:#8c1b14;border-radius:12px;padding:10px 12px;font-size:13.5px;margin-top:10px;font-weight:600}
+[data-theme=dark] .alert{background:#3a1c19;border-color:#6b2a24;color:#ffcfc9}
+.kv{display:grid;grid-template-columns:1fr 1fr;gap:8px 12px;font-size:14px}
+.kv div{min-width:0;overflow-wrap:anywhere}
+.kv div small{display:block;font-family:'Space Mono';font-size:10px;letter-spacing:1px;text-transform:uppercase;color:var(--mut)}
+.kv div b{font-weight:700}
+/* forms */
+.fl{display:block;margin-bottom:12px;min-width:0}
+.fl>span{display:block;font-weight:600;font-size:14px;margin-bottom:5px}
+.fl>span i{font-style:normal;color:var(--red)}
+.fl small{display:block;color:var(--mut);font-size:12.5px;margin-top:4px}
+.fl input,.fl select,.fl textarea,.inp{width:100%;min-width:0;min-height:52px;border:1.5px solid var(--line);border-radius:12px;padding:12px 13px;font-size:16px;background:var(--soft);color:var(--ink);-webkit-appearance:none;appearance:none}
+.fl select,.inp.sel{background-image:linear-gradient(45deg,transparent 50%,var(--mut) 50%),linear-gradient(135deg,var(--mut) 50%,transparent 50%);background-position:calc(100% - 20px) 50%,calc(100% - 14px) 50%;background-size:6px 6px;background-repeat:no-repeat;padding-right:36px;text-overflow:ellipsis}
+.fl textarea{min-height:96px;resize:vertical;line-height:1.45}
+.fl input:focus,.fl select:focus,.fl textarea:focus,.inp:focus{outline:3px solid rgba(124,179,66,.55);border-color:var(--leaf);background:var(--card)}
+.fl.err input,.fl.err select,.fl.err textarea{border-color:var(--red);background:#fff3f2}
+.frow{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:10px}
+.frow3{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr) minmax(0,1fr);gap:8px}
+.mic{margin-top:8px}
+.prev{background:var(--card);border:1px dashed var(--line);border-radius:12px;padding:10px 12px;font-size:13.5px;margin:-2px 0 12px}
+.prev b{color:var(--g8)}
+/* sheet */
+#sheet{position:fixed;inset:0;z-index:60;display:none}
+#sheet.on{display:block}
+.sh-bg{position:absolute;inset:0;background:rgba(10,20,10,.55)}
+.sh{position:absolute;left:0;right:0;bottom:0;max-height:94vh;background:var(--bg);border-radius:22px 22px 0 0;display:flex;flex-direction:column;max-width:720px;margin:0 auto;box-shadow:0 -10px 40px rgba(0,0,0,.25)}
+.sh-h{display:flex;align-items:center;gap:10px;padding:16px 16px 10px;border-bottom:1px solid var(--line)}
+.sh-h b{flex:1;font-size:18px;font-weight:800;letter-spacing:-.3px}
+.sh-h .x{width:44px;height:44px;border-radius:12px;border:1px solid var(--line);background:var(--card);font-size:24px;cursor:pointer;line-height:1}
+.sh-b{overflow:auto;padding:14px 16px 6px;flex:1}
+.sh-f{display:flex;gap:10px;padding:12px 16px calc(12px + env(safe-area-inset-bottom));border-top:1px solid var(--line);background:var(--card)}
+.sh-f .btn{flex:1}
+.sh-note{font-size:12.5px;color:var(--mut);margin:-2px 0 12px}
+.sh-b .warn{margin-bottom:12px}
+/* tabs, filters */
+.tabs{display:grid;grid-template-columns:repeat(3,1fr);gap:6px;background:var(--soft);border:1px solid var(--line);border-radius:14px;padding:4px;margin-bottom:12px}
+.tabs button{min-height:46px;border:0;background:transparent;border-radius:11px;font-weight:600;font-size:14px;cursor:pointer;color:var(--mut)}
+.tabs button.on{background:var(--card);color:var(--ink);box-shadow:0 1px 4px rgba(0,0,0,.08)}
+.filt{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:12px;margin-bottom:12px}
+.filt .fl{margin-bottom:8px}
+.filt .fl>span{font-size:12.5px;margin-bottom:3px}
+.filt .fl input,.filt .fl select{min-height:46px;padding:9px 11px;font-size:15px}
+.sum{font-size:13.5px;color:var(--mut);margin:4px 2px 10px;display:flex;justify-content:space-between;gap:8px;align-items:center}
+.fab{position:fixed;right:16px;bottom:calc(92px + env(safe-area-inset-bottom));z-index:30;min-height:60px;border-radius:30px;padding:0 22px;border:0;background:var(--gold);color:#2a2105;font-weight:800;font-size:16px;box-shadow:0 8px 24px rgba(30,70,32,.3);cursor:pointer;display:flex;align-items:center;gap:8px}
+/* bottom nav */
+.nav{position:fixed;left:0;right:0;bottom:0;z-index:40;background:var(--card);border-top:1px solid var(--line);padding-bottom:env(safe-area-inset-bottom)}
+.nav .in{max-width:720px;margin:0 auto;display:grid;grid-template-columns:repeat(5,1fr)}
+.nav a{min-height:68px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:3px;text-decoration:none;color:var(--mut);font-size:11px;font-weight:600}
+.nav a svg{width:25px;height:25px}
+.nav a.on{color:var(--cta)}
+[data-theme=dark] .nav a.on{color:#a5d46a}
+.nav a.on svg{stroke-width:2.4}
+/* calc */
+.res{background:var(--g9);color:#fff;border-radius:18px;padding:18px 16px;margin-bottom:12px}
+[data-theme=dark] .res{background:#17351a}
+.res .big{font-size:52px;font-weight:800;letter-spacing:-2px;line-height:1}
+.res .big small{font-size:18px;letter-spacing:0;font-weight:600;opacity:.85;margin-left:4px}
+.res .lb{font-family:'Space Mono';font-size:10.5px;letter-spacing:1.6px;text-transform:uppercase;opacity:.8}
+.res .eq{font-size:13px;opacity:.9;margin-top:10px;line-height:1.6;font-family:'Space Mono';overflow-wrap:anywhere}
+.res .eq b{color:#ffd56a}
+.res .disc{margin-top:12px;font-size:12.5px;font-weight:600;background:rgba(255,255,255,.1);border-radius:10px;padding:8px 10px;color:#ffe9a8}
+table.t{width:100%;border-collapse:collapse;font-size:14px}
+table.t th{font-family:'Space Mono';font-size:10px;letter-spacing:1px;text-transform:uppercase;color:var(--mut);text-align:left;font-weight:700;padding:6px 4px;border-bottom:1.5px solid var(--line)}
+table.t td{padding:9px 4px;border-bottom:1px solid var(--line);vertical-align:top}
+table.t td.n,table.t th.n{text-align:right;white-space:nowrap;font-variant-numeric:tabular-nums}
+table.t tr:last-child td{border-bottom:0}
+table.t input{width:100%;min-height:44px;border:1.5px solid var(--line);border-radius:10px;padding:6px 8px;background:var(--soft);font-size:15px;text-align:right}
+table.t input.l{text-align:left}
+.tsc{overflow-x:auto;margin:0 -4px;padding:0 4px;max-width:100%}
+.pkg{display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;margin-top:8px}
+.pkg div{background:var(--soft);border:1px solid var(--line);border-radius:12px;padding:10px 6px;text-align:center;min-width:0}
+.pkg b{display:block;font-size:22px;font-weight:800;letter-spacing:-.5px;overflow-wrap:anywhere}
+.pkg small{font-family:'Space Mono';font-size:9.5px;letter-spacing:.8px;text-transform:uppercase;color:var(--mut)}
+details.ex{background:var(--card);border:1px solid var(--line);border-radius:16px;margin-bottom:12px}
+details.ex summary{padding:16px;font-weight:700;cursor:pointer;list-style:none;display:flex;justify-content:space-between;align-items:center;min-height:56px;gap:8px}
+details.ex summary::-webkit-details-marker{display:none}
+details.ex summary:after{content:'+';font-size:22px;color:var(--mut)}
+details.ex[open] summary:after{content:'–'}
+details.ex .dbody{padding:0 16px 16px}
+/* calendar */
+.calh{display:flex;align-items:center;gap:8px;margin-bottom:8px}
+.calh b{flex:1;text-align:center;font-size:18px;font-weight:800}
+.calh button{width:52px;height:52px;border-radius:14px;border:1.5px solid var(--line);background:var(--card);font-size:22px;cursor:pointer}
+.cal{display:grid;grid-template-columns:repeat(7,minmax(0,1fr));gap:4px;background:var(--card);border:1px solid var(--line);border-radius:16px;padding:8px}
+.cal .wd{font-family:'Space Mono';font-size:10px;text-align:center;color:var(--mut);padding:4px 0;text-transform:uppercase}
+.cal button{aspect-ratio:1/1.05;min-height:44px;border:1px solid transparent;border-radius:10px;background:var(--soft);cursor:pointer;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;font-weight:600;font-size:15px;padding:0}
+.cal button.o{opacity:.35}
+.cal button.td{border-color:var(--leaf);background:#e6f2d9}
+[data-theme=dark] .cal button.td{background:#24361f}
+.cal button.sel{background:var(--g9);color:#fff;border-color:var(--g9)}
+[data-theme=dark] .cal button.sel{color:#121711}
+.dots{display:flex;gap:2px;height:6px}
+.dots i{width:6px;height:6px;border-radius:50%;display:block}
+.chk{width:30px;height:30px;flex:none;accent-color:var(--cta);margin-top:2px}
+.legend{display:flex;flex-wrap:wrap;gap:6px 10px;font-size:12px;color:var(--mut);margin:8px 2px 4px}
+.legend span{display:inline-flex;align-items:center;gap:5px}
+.legend i{width:9px;height:9px;border-radius:50%;display:inline-block}
+.done .tx b{text-decoration:line-through;opacity:.6}
+#toast{position:fixed;left:50%;bottom:calc(100px + env(safe-area-inset-bottom));transform:translateX(-50%) translateY(20px);background:#1d1f1b;color:#fff;padding:12px 18px;border-radius:12px;font-size:14.5px;font-weight:600;opacity:0;pointer-events:none;transition:.25s;z-index:90;max-width:calc(100% - 32px);text-align:center}
+#toast.on{opacity:1;transform:translateX(-50%) translateY(0)}
+.foot{text-align:center;font-size:12px;color:var(--mut);margin:26px 0 6px}
+@media (min-width:700px){h1{font-size:46px}.tiles{grid-template-columns:repeat(4,1fr)}}
+@media (max-width:360px){.stats{grid-template-columns:1fr 1fr}.bgrid.c3{grid-template-columns:1fr 1fr}}
+@media print{.top,.nav,.fab,.noprint,#sheet,.back{display:none!important}body{background:#fff;padding:0}.res{background:#fff!important;color:#000;border:2px solid #1E4620}.res .disc{color:#000}.card,details.ex{break-inside:avoid}}
+</style>
+</head>
+<body>
+<header class="top"><div class="wrap" id="topbar"></div></header>
+<main><div class="wrap" id="view"></div></main>
+<nav class="nav noprint"><div class="in" id="nav"></div></nav>
+<div id="sheet"></div>
+<div id="toast" role="status" aria-live="polite"></div>
+<input type="file" id="impfile" accept=".json,application/json" hidden>
+<script>
+'use strict';
+/* =============== utilidades =============== */
+const $=s=>document.querySelector(s);
+const uid=()=>Date.now().toString(36)+Math.random().toString(36).slice(2,8);
+const esc=s=>String(s==null?'':s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+// acepta coma o punto decimal: "1,5" · "1.5" · "1.234,5" · "1,234.5"
+const num=v=>{if(v===''||v==null)return null;if(typeof v==='number')return isFinite(v)?v:null;let s=String(v).replace(/[\s$]/g,'');if(!s)return null;
+ const lc=s.lastIndexOf(','),ld=s.lastIndexOf('.');
+ if(lc>-1&&ld>-1){s=lc>ld?s.replace(/\./g,'').replace(',','.'):s.replace(/,/g,'')}
+ else if(lc>-1){s=(s.match(/,/g).length>1)?s.replace(/,/g,''):s.replace(',','.')}
+ if(!/^[-+]?(\d+\.?\d*|\.\d+)$/.test(s))return null;const n=parseFloat(s);return isFinite(n)?n:null};
+const LOC='es';
+const fmt=(n,d=1)=>n==null||!isFinite(n)?'—':Number(n).toLocaleString(LOC,{maximumFractionDigits:d});
+const money=n=>n==null||!isFinite(n)?'—':'$'+Number(n).toLocaleString(LOC,{minimumFractionDigits:2,maximumFractionDigits:2});
+const dc=v=>v==null||v===''?'':(typeof v==='number'?String(v).replace('.',','):String(v)); // número con coma decimal para el CSV
+const iso=d=>d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0');
+const today=()=>iso(new Date());
+const MON=['ene','feb','mar','abr','may','jun','jul','ago','sep','oct','nov','dic'];
+const MONF=['Enero','Febrero','Marzo','Abril','Mayo','Junio','Julio','Agosto','Septiembre','Octubre','Noviembre','Diciembre'];
+const fdate=s=>{if(!s)return'—';const p=String(s).slice(0,10).split('-');if(p.length<3)return s;return (+p[2])+' '+MON[+p[1]-1]+' '+p[0]};
+const dmy=s=>{if(!s)return'';const p=String(s).slice(0,10).split('-');return p.length<3?s:p[2]+'/'+p[1]+'/'+p[0]};
+const ftime=t=>{if(!t)return'';const [h,m]=t.split(':').map(Number);if(isNaN(h))return t;return String(h).padStart(2,'0')+':'+String(m||0).padStart(2,'0')};
+const pl=(n,a,b)=>Math.abs(n)===1?a:b;
+const addDays=(s,n)=>{const d=new Date(s+'T12:00:00');d.setDate(d.getDate()+n);return iso(d)};
+function toast(m){const t=$('#toast');t.textContent=m;t.classList.add('on');clearTimeout(toast.t);toast.t=setTimeout(()=>t.classList.remove('on'),2600)}
+function download(blob,name){const a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download=name;a.rel='noopener';document.body.appendChild(a);a.click();setTimeout(()=>{URL.revokeObjectURL(a.href);a.remove()},2000)}
+
+/* =============== datos de referencia (editables, solo estimaciones) =============== */
+// N = kg de N por tonelada de rinde objetivo (estimación simplificada); P/K = kg de P2O5 / K2O extraídos por tonelada cosechada.
+// Valores orientativos de tablas técnicas, redondeados. SOLO ESTIMACIONES: el usuario puede editar cada valor.
+const DEF_CROPS=[
+ {n:'Maíz (grano)',u:'t/ha',y:9,N:18,P:6.6,K:4.8,split:[[30,'Presiembra / siembra'],[70,'Refertilización V5–V8']]},
+ {n:'Maíz (silaje)',u:'t MV/ha',y:45,N:3.8,P:1.8,K:4,split:[[30,'Presiembra / siembra'],[70,'Refertilización V5–V8']]},
+ {n:'Soja',u:'t/ha',y:3.5,N:0,P:12,K:19,split:[[100,'Normalmente sin N (leguminosa: se inocula)']]},
+ {n:'Trigo',u:'t/ha',y:4.5,N:30,P:8.3,K:5,split:[[50,'A la siembra'],[50,'Macollaje (Z2.1–Z3.0)']]},
+ {n:'Girasol',u:'t/ha',y:2.5,N:40,P:13,K:7,split:[[100,'Presiembra / siembra']]},
+ {n:'Sorgo granífero',u:'t/ha',y:7,N:18,P:7,K:5,split:[[50,'Presiembra'],[50,'Refertilización, 5–6 hojas']]},
+ {n:'Arroz',u:'t/ha',y:7,N:15,P:6,K:4,split:[[30,'Siembra'],[40,'Macollaje'],[30,'Primordio floral']]},
+ {n:'Caña de azúcar',u:'t/ha',y:90,N:1,P:0.6,K:1.3,split:[[40,'Plantación / rebrote'],[60,'60–90 días después']]},
+ {n:'Café (grano oro)',u:'t/ha',y:1.5,N:35,P:6,K:50,split:[[50,'Inicio de las lluvias'],[50,'Mitad de las lluvias']]},
+ {n:'Papa',u:'t/ha',y:35,N:5,P:1.3,K:6,split:[[40,'Plantación'],[60,'Aporque / fraccionado en el ciclo']]},
+ {n:'Pasturas (alfalfa)',u:'t MS/ha',y:10,N:0,P:6,K:25,split:[[100,'Normalmente sin N en alfalfa implantada']]},
+ {n:'Pasturas (gramíneas)',u:'t MS/ha',y:8,N:25,P:7,K:25,split:[[50,'Inicio del rebrote'],[50,'Después del primer corte / pastoreo']]},
+ {n:'Otro / personalizado',u:'t/ha',y:1,N:0,P:0,K:0,split:[[100,'Aplicación única']]}
+];
+// aporte de N del antecesor, kg N/ha: ESTIMACIONES típicas, reemplázalas por el valor de tu zona
+const PREV=[['Sin aporte',0],['Soja',35],['Alfalfa, buena implantación',110],['Alfalfa, implantación regular o pobre',55],['Otra leguminosa (trébol, arveja…)',45],['Cultivo de cobertura con leguminosa',20],['Maíz, sorgo o cereal de invierno',0],['Valor propio',0]];
+// abonos orgánicos: [nombre, kg N total estimado por unidad, % disponible estimado el 1.er año, unidad]: usa el análisis de tu abono
+const MAN=[['Ninguno',0,0,''],['Estiércol bovino de lechería, sólido',5,35,'t'],['Estiércol bovino de engorde, sólido',6,25,'t'],['Efluente de lechería, líquido',3,40,'m³'],['Purín de cerdo',5.4,70,'m³'],['Cama de pollo / gallinaza',27.5,50,'t'],['Personalizado / análisis de laboratorio',0,0,'unidad']];
+// fuentes de N: [nombre, %N, densidad kg/L (líquidos) o 0]
+const NPROD=[['Urea 46-0-0',46,0],['UAN 32 %',32,1.32],['UAN 28 %',28,1.28],['Sulfato de amonio 21-0-0-24S',21,0],['Nitrato de amonio 34-0-0',34,0]];
+// presets del registro de fertilización: [nombre, grado, unidad, densidad kg/L] (solo composición, sin dosis)
+const FERTS=[['Urea','46-0-0','kg/ha'],['UAN 32 %','32-0-0','L/ha',1.32],['UAN 28 %','28-0-0','L/ha',1.28],['Fosfato diamónico (DAP)','18-46-0','kg/ha'],['Fosfato monoamónico (MAP)','11-52-0','kg/ha'],['Superfosfato triple (SPT)','0-46-0','kg/ha'],['Cloruro de potasio (KCl)','0-0-60','kg/ha'],['Sulfato de amonio (21-0-0-24S)','21-0-0','kg/ha'],['Nitrato de amonio','34-0-0','kg/ha'],['Cal agrícola','0-0-0','t/ha'],['Dolomita','0-0-0','t/ha'],['Cama de pollo (tal cual, est.)','3-3-2','t/ha']];
+const CLS=['Muy bajo','Bajo','Óptimo','Alto','Muy alto'];
+const DEF_PKF=[1.5,1.25,1.0,0.5,0];
+const KINDS={spray:['Aplicación fitosanitaria','#C62828'],fert:['Fertilización','#2E7D32'],scout:['Recorrida','#1565C0'],plant:['Siembra / cosecha','#7A5232'],other:['Otro','#D9A82B'],term:['Fecha anual','#8E6BBF'],rei:['Fin del reingreso','#E65100'],phi:['Fin de carencia','#AD1457'],visit:['Próxima visita','#00838F']};
+const ORG='organismo oficial de tu país (SENASA, SENASICA, SENAVE, ICA…)';
+const DEF_TERMS=[
+ {title:'Matrícula de aplicador / asesor: revisar vencimiento',md:'01-15',notes:'Fecha de ejemplo: ajústala al vencimiento de tu matrícula y a lo que pide el '+ORG+'.'},
+ {title:'Actualizar el plan de fertilización',md:'02-01',notes:'Revisar los planes antes de la campaña.'},
+ {title:'Calibración de la pulverizadora y revisión de picos',md:'03-15',notes:'Calibrar antes de la primera aplicación de la campaña.'},
+ {title:'Muestreo de suelo poscosecha',md:'10-01',notes:'pH, P, K, MO: cada 2–4 años o cuando haga falta.'},
+ {title:'Revisar y archivar el registro de aplicaciones y las recetas agronómicas',md:'12-15',notes:'Los plazos de archivo varían según el país: consulta al '+ORG+'.'}
+];
+const SEV=[['','—'],['none','Nula / trazas'],['below','Debajo del umbral de daño'],['near','Cerca del umbral de daño'],['above','Sobre el umbral: conviene actuar']];
+const RATEU=['L/ha','mL/ha','kg/ha','g/ha'];
+const WIND=['','N','NE','E','SE','S','SO','O','NO','Calma','Variable'];
+const STAGES=['VE','V2','V4','V6','V8','V10','VT','R1','R2','R3','R4','R5','R6','R7','Z1.3','Z2.1','Z2.2','Z3.0','Z3.1','Z3.9','Z4.9','Z6.5','Presiembra','Emergencia','Floración','Llenado de grano','Madurez'];
+const METHODS=['Al voleo','Al voleo, incorporado','En bandas','Arrancador / en la línea de siembra','Inyectado','Al costado de la línea (refertilización)','En cobertura','Fertirriego','Foliar','Dosis variable'];
+const TIMING=['Barbecho','Presiembra','A la siembra','Durante el ciclo','Poscosecha'];
+const DISC='Solo es una estimación. Contrástala con tu análisis de suelo, las recomendaciones técnicas de tu zona y la etiqueta de cada producto.';
+const LABEL='La dosis, el período de reingreso y el de carencia salen de la etiqueta del producto y de la receta agronómica. Lo que debe tener el registro varía según el país: consulta al '+ORG+'.';
+
+/* =============== guardado en el dispositivo =============== */
+const KEY='agrocuaderno_es_v1';
+let storageOK=true;
+function blank(){return{v:1,farms:[],fields:[],entries:[],sprays:[],ferts:[],events:[],crops:JSON.parse(JSON.stringify(DEF_CROPS)),pkf:DEF_PKF.slice(),terms:DEF_TERMS.map(t=>Object.assign({id:uid(),on:true},t))}}
+function normalize(o){const b=blank();if(!o||typeof o!=='object')return b;['farms','fields','entries','sprays','ferts','events'].forEach(k=>{b[k]=Array.isArray(o[k])?o[k].filter(x=>x&&typeof x==='object'):[];b[k].forEach(x=>{if(!x.id)x.id=uid()})});
+ if(Array.isArray(o.crops)&&o.crops.length)b.crops=o.crops.filter(c=>c&&c.n).map(c=>({n:String(c.n),u:c.u||'t/ha',y:num(c.y)||0,N:num(c.N)||0,P:num(c.P)||0,K:num(c.K)||0,split:Array.isArray(c.split)&&c.split.length?c.split:[[100,'Aplicación única']]}));
+ if(Array.isArray(o.pkf)&&o.pkf.length===5)b.pkf=o.pkf.map(x=>num(x)??0);
+ if(Array.isArray(o.terms))b.terms=o.terms.filter(t=>t&&t.title).map(t=>Object.assign({id:uid(),on:true},t));
+ return b}
+function load(){try{const s=localStorage.getItem(KEY);if(s)return normalize(JSON.parse(s))}catch(e){storageOK=false}return blank()}
+let D=load();
+function save(){try{localStorage.setItem(KEY,JSON.stringify(D));storageOK=true;return true}catch(e){storageOK=false;toast('Atención: no se pudieron guardar los datos en este dispositivo. Exporta una copia JSON.');return false}}
+try{navigator.storage&&navigator.storage.persist&&navigator.storage.persist().catch(()=>{})}catch(e){}
+const store=(k,v)=>{try{if(v===undefined)return JSON.parse(localStorage.getItem('agrocuaderno_es_'+k)||'null');localStorage.setItem('agrocuaderno_es_'+k,JSON.stringify(v))}catch(e){return null}};
+function theme(t){if(t)document.documentElement.dataset.theme=t;else delete document.documentElement.dataset.theme}
+theme(store('theme'));
+
+/* =============== ayudas de datos =============== */
+const farm=id=>D.farms.find(f=>f.id===id);
+const field=id=>D.fields.find(f=>f.id===id);
+const gName=g=>g?(g.farmName?g.name+' – '+g.farmName:g.name):'';
+const fieldsOf=fid=>D.fields.filter(f=>f.farmId===fid).sort((a,b)=>a.name.localeCompare(b.name,'es'));
+function fLabel(id,short){const f=field(id);if(!f)return'— (lote borrado)';const g=farm(f.farmId);return short||!g?f.name:g.name+' · '+f.name}
+function fieldOpts(sel,allowEmpty,emptyLabel){let h=allowEmpty?`<option value="">${esc(emptyLabel||'— elegir —')}</option>`:'';
+ D.farms.slice().sort((a,b)=>a.name.localeCompare(b.name,'es')).forEach(g=>{const fs=fieldsOf(g.id);if(!fs.length)return;h+=`<optgroup label="${esc(gName(g))}">`+fs.map(f=>`<option value="${f.id}"${f.id===sel?' selected':''}>${esc(f.name)}${f.area!=null&&f.area!==''?' ('+fmt(num(f.area),1)+' ha)':''}</option>`).join('')+'</optgroup>'});return h}
+const cropBy=n=>D.crops.find(c=>c.n.toLowerCase()===String(n||'').trim().toLowerCase());
+const year=s=>String(s||'').slice(0,4);
+// nutrientes del fertilizante en kg/ha a partir del grado "N-P-K"
+function fertKg(r){const rate=num(r.rate);if(rate==null)return null;const a=String(r.analysis||'').split(/[-–\s]+/).map(num);if(!a.length||a[0]==null)return null;
+ let kg=null;if(r.unit==='kg/ha')kg=rate;else if(r.unit==='t/ha')kg=rate*1000;else if(r.unit==='L/ha'){const d=num(r.dens);if(d==null)return null;kg=rate*d}else return null;
+ return{N:kg*(a[0]||0)/100,P:kg*(a[1]||0)/100,K:kg*(a[2]||0)/100}}
+const totUnit=u=>String(u||'').replace('/ha','');
+function sprayTotal(r){const t=num(r.total);if(t!=null)return t;const a=num(r.rate),b=num(r.area);return a!=null&&b!=null?a*b:null}
+function fertTotal(r){const t=num(r.total);if(t!=null)return t;const a=num(r.rate),b=num(r.area);return a!=null&&b!=null?a*b:null}
+// fin del reingreso: desde la hora de fin (o de inicio); sin hora cargada, por prudencia desde el fin del día de la aplicación
+function reiEnd(r){const h=num(r.rei);if(h==null||!r.date)return null;const t=r.end||r.start;const d=new Date(r.date+'T'+(t||'23:59')+':00');if(isNaN(d))return null;d.setTime(d.getTime()+h*3600000);return{d,approx:!t}}
+function phiClear(r){const p=num(r.phi);if(p==null||!r.date)return null;return addDays(r.date,Math.ceil(p))}
+const hm=d=>String(d.getHours()).padStart(2,'0')+':'+String(d.getMinutes()).padStart(2,'0');
+const fdt=d=>fdate(iso(d))+' '+ftime(hm(d));
+
+/* =============== íconos =============== */
+const I={
+ farm:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 21V10l9-6 9 6v11"/><path d="M9 21v-6h6v6"/><path d="M3 21h18"/></svg>',
+ book:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h11a3 3 0 0 1 3 3v13H7a3 3 0 0 1-3-3z"/><path d="M4 17a3 3 0 0 1 3-3h11"/><path d="M8 8h6M8 11h4"/></svg>',
+ calc:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="2.5" width="14" height="19" rx="2.5"/><path d="M8.5 6.5h7"/><path d="M8.5 11h.01M12 11h.01M15.5 11h.01M8.5 14.5h.01M12 14.5h.01M15.5 14.5v3.5M8.5 18h.01M12 18h.01"/></svg>',
+ cal:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4.5" width="18" height="17" rx="2.5"/><path d="M3 9.5h18M8 2.5v4M16 2.5v4"/><path d="M8 14h.01M12 14h.01M16 14h.01M8 17.5h.01M12 17.5h.01"/></svg>',
+ home:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 11l9-7 9 7"/><path d="M5 10v10h14V10"/></svg>',
+ leaf:'<svg viewBox="0 0 64 64"><rect width="64" height="64" rx="15" fill="#2C5E2E"/><path d="M8 50 Q32 35 56 50" stroke="#7CB342" stroke-width="3.2" fill="none" stroke-linecap="round"/><path d="M32 43 V25" stroke="#F5F0E3" stroke-width="3.4" stroke-linecap="round"/><path d="M32 31 C31 22 24 17 15 18 C15.5 27 22.5 32 32 31Z" fill="#7CB342"/><path d="M32 27 C33 17 40 12 49 12.5 C48.5 22 41.5 27.5 32 27Z" fill="#A5D46A"/><path d="M51 30 l1.6 4 4 1.6 -4 1.6 -1.6 4 -1.6 -4 -4 -1.6 4 -1.6Z" fill="#D9A82B"/></svg>'
+};
+
+/* =============== formulario en hoja inferior =============== */
+let SH=null;
+const DLANG=(navigator.language||'').toLowerCase().startsWith('es')?navigator.language:'es-MX';
+function fieldHtml(f,v){
+ const id='f_'+f.k, rq=f.req?' <i>*</i>':'', val=v==null?(f.def==null?'':f.def):v;
+ let inp='';
+ if(f.t==='select'){inp=`<select id="${id}" name="${f.k}">${typeof f.o==='string'?f.o:f.o.map(o=>{const [a,b]=Array.isArray(o)?o:[o,o];return`<option value="${esc(a)}"${String(a)===String(val)?' selected':''}>${esc(b)}</option>`}).join('')}</select>`}
+ else if(f.t==='area'||f.t==='voice'){inp=`<textarea id="${id}" name="${f.k}" rows="3" placeholder="${esc(f.ph||'')}">${esc(val)}</textarea>`+(f.t==='voice'&&(window.SpeechRecognition||window.webkitSpeechRecognition)?`<button type="button" class="btn sm mic" data-act="dictate" data-target="${id}">🎤 Dictar</button>`:'')}
+ else if(f.t==='num'){inp=`<input id="${id}" name="${f.k}" type="text" inputmode="decimal" autocomplete="off" value="${esc(val==null?'':dc(val))}" placeholder="${esc(f.ph||'')}">`}
+ else{const dl=f.list?`list="dl_${f.k}"`:'';inp=`<input id="${id}" name="${f.k}" type="${f.t||'text'}" ${dl} autocomplete="off" value="${esc(val)}" placeholder="${esc(f.ph||'')}">`+(f.list?`<datalist id="dl_${f.k}">${f.list.map(o=>`<option value="${esc(o)}">`).join('')}</datalist>`:'')}
+ return `<label class="fl" data-k="${f.k}"><span>${esc(f.l)}${rq}</span>${inp}${f.h?`<small>${esc(f.h)}</small>`:''}</label>`}
+function sheet(o){ // {title, fields, obj, note, warn, save(vals), del, change(k,form), after(form)}
+ SH=o;const rows=[];let i=0;const fs=o.fields;
+ while(i<fs.length){const f=fs[i];let grp;if(f.half&&fs[i+1]&&fs[i+1].half){grp=[f,fs[i+1]];rows.push(`<div class="frow">${fieldHtml(f,o.obj?.[f.k])}${fieldHtml(fs[i+1],o.obj?.[fs[i+1].k])}</div>`);i+=2}else{grp=[f];rows.push(fieldHtml(f,o.obj?.[f.k]));i++}
+  grp.forEach(x=>{if(x.afterHtml)rows.push(x.afterHtml)})}
+ $('#sheet').innerHTML=`<div class="sh-bg" data-act="closesheet"></div><form class="sh" id="shf" novalidate><div class="sh-h"><b>${esc(o.title)}</b><button type="button" class="x" data-act="closesheet" aria-label="Cerrar">×</button></div><div class="sh-b">${o.warn?`<div class="warn">${esc(o.warn)}</div>`:''}${o.note?`<p class="sh-note">${esc(o.note)}</p>`:''}${rows.join('')}${o.extra||''}</div><div class="sh-f">${o.del?'<button type="button" class="btn red" data-act="sheetdel">Borrar</button>':'<button type="button" class="btn" data-act="closesheet">Cancelar</button>'}<button class="btn pri" type="submit">Guardar</button></div></form>`;
+ $('#sheet').classList.add('on');document.body.style.overflow='hidden';
+ const form=$('#shf');
+ form.addEventListener('submit',e=>{e.preventDefault();const vals={};let bad=null;
+  o.fields.forEach(f=>{const el=form.elements[f.k];if(!el)return;let v=el.value.trim();const lab=form.querySelector(`.fl[data-k="${f.k}"]`);lab.classList.remove('err');
+   if(f.t==='num'){if(v!==''&&num(v)==null){lab.classList.add('err');bad=bad||el}v=num(v)}
+   if(f.req&&(v===''||v==null)){lab.classList.add('err');bad=bad||el}vals[f.k]=v});
+  if(bad){bad.focus();toast('Completa los campos obligatorios (marcados con *)');return}
+  if(o.save(vals,form)!==false){save();closeSheet();render();toast('Guardado')}});
+ if(o.change)form.addEventListener('change',e=>{if(e.target.name)o.change(e.target.name,form)});
+ if(o.after)o.after(form);
+ setTimeout(()=>{const f=form.querySelector('input,select,textarea');if(f&&!o.obj&&window.innerWidth>700)f.focus()},50)}
+function closeSheet(){$('#sheet').classList.remove('on');$('#sheet').innerHTML='';document.body.style.overflow='';SH=null}
+
+/* =============== definición de formularios =============== */
+const farmF=()=>[{k:'name',l:'Productor',req:1,ph:'ej. Hnos. Benítez'},{k:'farmName',l:'Establecimiento / empresa',ph:'ej. Agropecuaria Don Ernesto'},
+ {k:'county',l:'Localidad / municipio',half:1,ph:'ej. Pergamino'},{k:'state',l:'Provincia / estado / depto.',half:1,ph:'ej. Itapúa'},
+ {k:'phone',l:'Teléfono',t:'tel',half:1},{k:'email',l:'Correo',t:'email',half:1},
+ {k:'fsaFarm',l:'N.º de registro del productor',h:'Opcional: el que use tu país (RENSPA, RFC, RUC…).'},{k:'notes',l:'Notas',t:'area'}];
+function editFarm(id){const g=id?farm(id):null;sheet({title:g?'Editar productor':'Nuevo productor',fields:farmF(),obj:g,
+ save:v=>{if(g)Object.assign(g,v);else{const n=Object.assign({id:uid(),created:today()},v);D.farms.push(n);go('#/grower/'+n.id)}},
+ del:g?()=>{const fs=fieldsOf(g.id);if(!confirm(`¿Borrar al productor «${g.name}»${fs.length?` junto con ${fs.length} ${pl(fs.length,'lote','lotes')} y todos sus registros`:''}?`))return;fs.forEach(f=>delFieldData(f.id));D.farms=D.farms.filter(x=>x!==g);save();closeSheet();go('#/growers');toast('Borrado')}:null})}
+function delFieldData(fid){D.fields=D.fields.filter(f=>f.id!==fid);['entries','sprays','ferts','events'].forEach(k=>D[k]=D[k].filter(r=>r.fieldId!==fid))}
+const fieldF=(farmId)=>[
+ {k:'farmId',l:'Productor',t:'select',o:D.farms.map(g=>[g.id,gName(g)]),def:farmId,req:1},
+ {k:'name',l:'Nombre del lote',req:1,ph:'ej. Lote 7, La Loma, El Bajo'},
+ {k:'tract',l:'Catastro / partida',half:1,ph:'opcional'},{k:'clu',l:'Código interno',half:1,ph:'opcional'},
+ {k:'area',l:'Hectáreas',t:'num',req:1,half:1,ph:'0,0'},{k:'crop',l:'Cultivo',list:D.crops.map(c=>c.n),half:1},
+ {k:'hybrid',l:'Híbrido / variedad',half:1},{k:'yield',l:'Rinde objetivo',t:'num',half:1,h:'En la unidad del cultivo (t/ha, t MS/ha…)'},
+ {k:'prev',l:'Cultivo antecesor',list:PREV.map(p=>p[0])},
+ {k:'adate',l:'Fecha del análisis de suelo',t:'date',half:1},{k:'ph',l:'pH del suelo',t:'num',half:1},
+ {k:'p',l:'P (ppm)',t:'num',half:1,h:'Bray-1 / Mehlich-3 / Olsen'},{k:'k',l:'K (ppm)',t:'num',half:1},
+ {k:'om',l:'Materia orgánica (%)',t:'num',half:1},{k:'cec',l:'CIC (cmol/kg)',t:'num',half:1},
+ {k:'notes',l:'Notas',t:'area'}];
+function editField(id,farmId){const f=id?field(id):null;if(!D.farms.length){toast('Primero agrega un productor');return editFarm()}
+ sheet({title:f?'Editar lote':'Nuevo lote',fields:fieldF(farmId||f?.farmId||D.farms[0].id),obj:f,
+  change:(k,form)=>{if(k==='crop'){const c=cropBy(form.elements.crop.value);if(c&&!form.elements.yield.value)form.elements.yield.value=dc(c.y)}},
+  save:v=>{if(f)Object.assign(f,v);else{const n=Object.assign({id:uid(),created:today()},v);D.fields.push(n);go('#/field/'+n.id)}},
+  del:f?()=>{if(!confirm(`¿Borrar el lote «${f.name}» con todas sus recorridas, aplicaciones, fertilizaciones y eventos?`))return;const g=f.farmId;delFieldData(f.id);save();closeSheet();go('#/grower/'+g);toast('Borrado')}:null})}
+function editEntry(id,pre){const r=id?D.entries.find(x=>x.id===id):null;if(!D.fields.length){toast('Primero agrega un lote');return go('#/growers')}
+ let init=r||Object.assign({date:today()},pre);if(!r&&init.fieldId){const f=field(init.fieldId);if(f&&!init.crop)init.crop=f.crop}
+ sheet({title:r?'Editar recorrida':'Nueva recorrida',obj:init,fields:[
+  {k:'fieldId',l:'Lote',t:'select',o:fieldOpts(init.fieldId,true),req:1},
+  {k:'date',l:'Fecha',t:'date',req:1,half:1},{k:'crop',l:'Cultivo',list:D.crops.map(c=>c.n),half:1},
+  {k:'stage',l:'Estado fenológico',list:STAGES,ph:'ej. V6, R3, Z3.1'},
+  {k:'obs',l:'Observaciones',t:'area',ph:'plantas logradas, estado del cultivo, humedad del suelo, emergencia…'},
+  {k:'pests',l:'Plaga / enfermedad / maleza',ph:'ej. roya asiática, amaranto, cogollero'},
+  {k:'sev',l:'Severidad',t:'select',o:SEV},
+  {k:'photo',l:'Referencia de fotos',ph:'ej. IMG_2041–2045, esquina NE'},
+  {k:'note',l:'Recomendación / nota para el productor',t:'area'},
+  {k:'next',l:'Próxima visita',t:'date',h:'Aparece en el calendario y en el archivo .ics.'},
+  {k:'voice',l:'Nota de voz (texto)',t:'voice',ph:'Pega o dicta aquí tu nota de voz'}],
+  change:(k,form)=>{if(k==='fieldId'){const f=field(form.elements.fieldId.value);if(f&&f.crop&&!form.elements.crop.value)form.elements.crop.value=f.crop}},
+  save:v=>{if(r)Object.assign(r,v);else D.entries.push(Object.assign({id:uid()},v))},
+  del:r?()=>{if(!confirm('¿Borrar esta recorrida?'))return;D.entries=D.entries.filter(x=>x!==r);save();closeSheet();render();toast('Borrado')}:null})}
+const usedProducts=()=>[...new Set(D.sprays.map(s=>s.product).filter(Boolean))].sort((a,b)=>a.localeCompare(b,'es'));
+const usedPeople=k=>[...new Set(D.sprays.map(s=>s[k]).filter(Boolean))];
+function sprayPreview(form){const g=n=>form.elements[n]?form.elements[n].value.trim():'';const r={date:g('date'),start:g('start'),end:g('end'),rei:g('rei'),phi:g('phi'),rate:g('rate'),area:g('area'),total:g('total'),unit:g('unit')};
+ const re=reiEnd(r),ph=phiClear(r),tot=sprayTotal(r);const out=[];
+ if(tot!=null)out.push(`Total aplicado: <b>${fmt(tot,2)} ${esc(totUnit(r.unit))}</b>${num(r.total)==null?' (dosis × ha)':''}`);
+ if(re)out.push(`Fin del reingreso: <b>${fdt(re.d)}</b>${re.approx?' (sin hora cargada: se cuenta desde el fin del día)':''}`);
+ if(ph)out.push(`Fin de carencia (se puede cosechar desde): <b>${fdate(ph)}</b>`);
+ const el=form.querySelector('#sprprev');if(el){el.innerHTML=out.length?out.join('<br>'):'Ingresa dosis, hectáreas, reingreso y carencia para ver totales y fechas.'}}
+function editSpray(id,pre){const r=id?D.sprays.find(x=>x.id===id):null;if(!D.fields.length){toast('Primero agrega un lote');return go('#/growers')}
+ let init=r||Object.assign({date:today(),unit:'L/ha',rup:'no'},pre);if(!r&&init.fieldId){const f=field(init.fieldId);if(f){init.crop=init.crop||f.crop;init.area=init.area??f.area}}
+ const last=!r&&D.sprays.length?D.sprays[D.sprays.length-1]:null;if(last){init.applicator=init.applicator||last.applicator;init.license=init.license||last.license}
+ sheet({title:r?'Editar aplicación':'Nueva aplicación de fitosanitario',obj:init,warn:LABEL,note:'Los campos con * son necesarios para un registro de aplicaciones completo. Para productos de uso restringido suele exigirse además la receta agronómica y la matrícula del aplicador.',fields:[
+  {k:'fieldId',l:'Lote / ubicación',t:'select',o:fieldOpts(init.fieldId,true),req:1},
+  {k:'date',l:'Fecha de aplicación',t:'date',req:1,half:1},{k:'rup',l:'¿Uso restringido?',t:'select',o:[['no','No'],['yes','Sí, uso restringido']],half:1},
+  {k:'start',l:'Hora de inicio',t:'time',half:1},{k:'end',l:'Hora de fin',t:'time',half:1},
+  {k:'applicator',l:'Aplicador (nombre)',req:1,list:usedPeople('applicator')},
+  {k:'license',l:'Matrícula / habilitación del aplicador',list:usedPeople('license'),h:'Obligatoria para productos de uso restringido.'},
+  {k:'receta',l:'N.º de receta agronómica',h:'Si tu país la exige, anótala siempre.'},
+  {k:'crop',l:'Cultivo / sitio',req:1,list:D.crops.map(c=>c.n),half:1},{k:'area',l:'Hectáreas tratadas',t:'num',req:1,half:1},
+  {k:'product',l:'Producto (nombre comercial)',req:1,list:usedProducts(),ph:'como figura en la etiqueta'},
+  {k:'epa',l:'N.º de registro del producto',req:1,ph:'ej. 12.345',h:'Figura en la etiqueta (registro oficial de tu país).'},
+  {k:'rate',l:'Dosis por hectárea (etiqueta)',t:'num',req:1,half:1},{k:'unit',l:'Unidad',t:'select',o:RATEU,half:1},
+  {k:'total',l:'Cantidad total aplicada',t:'num',half:1,h:'Vacío = dosis × ha'},{k:'carrier',l:'Volumen de caldo (L/ha)',t:'num',half:1},
+  {k:'target',l:'Plaga / maleza / enfermedad objetivo',req:1,ph:'ej. amaranto, roya asiática'},
+  {k:'rei',l:'Reingreso (horas, etiqueta)',t:'num',half:1},{k:'phi',l:'Carencia (días, etiqueta)',t:'num',half:1,afterHtml:'<div class="prev" id="sprprev"></div>'},
+  {k:'wind',l:'Viento (km/h)',t:'num',half:1},{k:'windDir',l:'Dirección del viento',t:'select',o:WIND.map(w=>[w,w||'—']),half:1},
+  {k:'temp',l:'Temperatura (°C)',t:'num',half:1},{k:'equip',l:'Equipo',half:1,ph:'ej. pulverizadora de 28 m'},
+  {k:'notes',l:'Notas (mezcla de tanque, coadyuvantes, clima, eficacia)',t:'area'}],
+  change:(k,form)=>{if(k==='fieldId'){const f=field(form.elements.fieldId.value);if(f){if(f.crop)form.elements.crop.value=f.crop;if(f.area!=null)form.elements.area.value=dc(f.area)}}sprayPreview(form)},
+  after:form=>{form.addEventListener('input',()=>sprayPreview(form));sprayPreview(form)},
+  save:(v)=>{if(v.rup==='yes'&&!v.license){toast('Uso restringido: anota la matrícula del aplicador');const el=document.querySelector('#f_license');el&&el.focus();return false}
+   if(r)Object.assign(r,v);else D.sprays.push(Object.assign({id:uid()},v));if(pre&&pre.eventId){const ev=D.events.find(e=>e.id===pre.eventId);if(ev)ev.done=true}},
+  del:r?()=>{if(!confirm('¿Borrar este registro de aplicación?'))return;D.sprays=D.sprays.filter(x=>x!==r);save();closeSheet();render();toast('Borrado')}:null})}
+function fertPreview(form){const g=n=>form.elements[n]?form.elements[n].value.trim():'';const r={rate:g('rate'),unit:g('unit'),dens:g('dens'),analysis:g('analysis'),area:g('area'),total:g('total')};
+ const n=fertKg(r),t=fertTotal(r);const out=[];if(t!=null)out.push(`Total: <b>${fmt(t,2)} ${esc(totUnit(r.unit))}</b>${num(r.total)==null?' (dosis × ha)':''}`);
+ if(n)out.push(`Nutrientes: <b>${fmt(n.N,1)} N – ${fmt(n.P,1)} P₂O₅ – ${fmt(n.K,1)} K₂O</b> kg/ha`);else if(r.unit==='L/ha'&&!num(r.dens))out.push('Ingresa la densidad (kg/L) para pasar el líquido a kg de nutriente.');
+ const el=form.querySelector('#fertprev');if(el)el.innerHTML=out.length?out.join('<br>'):'Ingresa grado, dosis y hectáreas para ver los totales.'}
+function editFert(id,pre){const r=id?D.ferts.find(x=>x.id===id):null;if(!D.fields.length){toast('Primero agrega un lote');return go('#/growers')}
+ const init=r||Object.assign({date:today(),unit:'kg/ha'},pre);if(!r&&init.fieldId){const f=field(init.fieldId);if(f&&init.area==null)init.area=f.area}
+ sheet({title:r?'Editar fertilización':'Nueva fertilización',obj:init,fields:[
+  {k:'fieldId',l:'Lote',t:'select',o:fieldOpts(init.fieldId,true),req:1},
+  {k:'date',l:'Fecha',t:'date',req:1,half:1},{k:'area',l:'Hectáreas',t:'num',req:1,half:1},
+  {k:'product',l:'Producto',req:1,list:FERTS.map(f=>f[0])},
+  {k:'analysis',l:'Grado (N-P-K)',ph:'ej. 18-46-0',half:1},{k:'dens',l:'Densidad (kg/L)',t:'num',half:1,h:'Solo líquidos'},
+  {k:'rate',l:'Dosis',t:'num',req:1,half:1},{k:'unit',l:'Unidad',t:'select',o:['kg/ha','L/ha','t/ha'],half:1},
+  {k:'total',l:'Total aplicado',t:'num',half:1,h:'Vacío = dosis × ha'},{k:'cost',l:'Costo ($, opcional)',t:'num',half:1,afterHtml:'<div class="prev" id="fertprev"></div>'},
+  {k:'method',l:'Forma de aplicación (4R)',t:'select',o:[['','—'],...METHODS.map(m=>[m,m])],half:1},{k:'timing',l:'Momento (4R)',t:'select',o:[['','—'],...TIMING.map(m=>[m,m])],half:1},
+  {k:'operator',l:'Aplicado por'},
+  {k:'notes',l:'Notas',t:'area'}],
+  change:(k,form)=>{if(k==='product'){const p=FERTS.find(x=>x[0].toLowerCase()===form.elements.product.value.trim().toLowerCase());if(p){form.elements.analysis.value=p[1];form.elements.unit.value=p[2];form.elements.dens.value=p[3]?dc(p[3]):''}}
+   if(k==='fieldId'){const f=field(form.elements.fieldId.value);if(f&&f.area!=null&&!form.elements.area.value)form.elements.area.value=dc(f.area)}fertPreview(form)},
+  after:form=>{form.addEventListener('input',()=>fertPreview(form));fertPreview(form)},
+  save:v=>{if(r)Object.assign(r,v);else D.ferts.push(Object.assign({id:uid()},v));if(pre&&pre.eventId){const ev=D.events.find(e=>e.id===pre.eventId);if(ev)ev.done=true}},
+  del:r?()=>{if(!confirm('¿Borrar este registro de fertilización?'))return;D.ferts=D.ferts.filter(x=>x!==r);save();closeSheet();render();toast('Borrado')}:null})}
+function editEvent(id,pre){const r=id?D.events.find(x=>x.id===id):null;const init=r||Object.assign({date:CAL.sel||today(),kind:'spray',remind:'1'},pre);
+ sheet({title:r?'Editar evento':'Nuevo evento / tarea',obj:init,fields:[
+  {k:'title',l:'Qué planificar',req:1,ph:'ej. Fungicida en R3, refertilización con UAN'},
+  {k:'kind',l:'Tipo',t:'select',o:Object.entries(KINDS).filter(([k])=>!['term','rei','phi','visit'].includes(k)).map(([k,v])=>[k,v[0]])},
+  {k:'fieldId',l:'Lote',t:'select',o:fieldOpts(init.fieldId,true,'— general / sin lote —')},
+  {k:'date',l:'Fecha',t:'date',req:1,half:1},{k:'time',l:'Hora',t:'time',half:1},
+  {k:'remind',l:'Recordatorio en el calendario del celular',t:'select',o:[['0','Sin recordatorio'],['1','1 día antes'],['2','2 días antes'],['3','3 días antes'],['7','1 semana antes']]},
+  {k:'notes',l:'Notas',t:'area'}],
+  save:v=>{if(r)Object.assign(r,v);else D.events.push(Object.assign({id:uid(),done:false},v))},
+  del:r?()=>{if(!confirm('¿Borrar este evento?'))return;D.events=D.events.filter(x=>x!==r);save();closeSheet();render();toast('Borrado')}:null})}
+function editTerm(id){const r=id?D.terms.find(x=>x.id===id):null;const y=new Date().getFullYear();
+ sheet({title:r?'Editar fecha anual':'Nueva fecha anual (todos los años)',obj:r?Object.assign({},r,{date:y+'-'+r.md,on:r.on?'1':'0'}):{date:today(),on:'1'},note:'Una fecha anual se repite todos los años. Ajústala según la normativa vigente y las recomendaciones de tu zona.',fields:[
+  {k:'title',l:'Nombre',req:1},{k:'date',l:'Mes y día (el año no se usa)',t:'date',req:1},
+  {k:'on',l:'Mostrar en el calendario',t:'select',o:[['1','Sí'],['0','No']]},{k:'notes',l:'Notas',t:'area'}],
+  save:v=>{const o={title:v.title,md:v.date.slice(5),on:v.on==='1',notes:v.notes};if(r)Object.assign(r,o);else D.terms.push(Object.assign({id:uid()},o))},
+  del:r?()=>{if(!confirm('¿Borrar esta fecha anual?'))return;D.terms=D.terms.filter(x=>x!==r);save();closeSheet();render();toast('Borrado')}:null})}
+
+/* =============== rutas =============== */
+function go(h){if(location.hash===h)render();else location.hash=h}
+function topBar(title,sub,back){$('#topbar').innerHTML=(back?`<a class="bk" href="${back}" aria-label="Volver">←</a>`:`<svg class="lg" viewBox="0 0 64 64">${I.leaf.replace(/^<svg[^>]*>|<\/svg>$/g,'')}</svg>`)+`<div class="ttl"><b>${esc(title)}</b><small>${esc(sub||'AgronomIA PRO')}</small></div><button class="tb" data-act="theme" aria-label="Cambiar modo oscuro">${document.documentElement.dataset.theme==='dark'?'☀':'☾'}</button>`}
+function nav(cur){const L=[['#/','Inicio',I.home],['#/growers','Lotes',I.farm],['#/journal','Cuaderno',I.book],['#/calculator','N-P-K',I.calc],['#/calendar','Calendario',I.cal]];
+ $('#nav').innerHTML=L.map(([h,t,ic])=>`<a href="${h}" class="${cur===h?'on':''}">${ic}<span>${t}</span></a>`).join('')}
+function render(){const h=location.hash||'#/';const [p,q]=h.slice(1).split('?');const parts=p.split('/').filter(Boolean);
+ const fab=document.querySelector('.fab');if(fab)fab.remove();
+ const V=$('#view');window.scrollTo(0,0);
+ try{switch(parts[0]){
+  case 'growers':nav('#/growers');V.innerHTML=vFarms();break;
+  case 'grower':nav('#/growers');V.innerHTML=vFarm(parts[1]);break;
+  case 'field':nav('#/growers');V.innerHTML=vField(parts[1]);break;
+  case 'journal':nav('#/journal');if(q){const s=new URLSearchParams(q);if(s.get('t'))DZ.t=s.get('t');if(s.has('f'))DZ.f=s.get('f')}V.innerHTML=vDz();addFab();break;
+  case 'calculator':nav('#/calculator');if(q){const s=new URLSearchParams(q);if(s.get('f'))calcFromField(s.get('f'))}V.innerHTML=vCalc();calcUpd();break;
+  case 'calendar':nav('#/calendar');V.innerHTML=vCal();addFab('Evento','event');break;
+  case 'backup':nav('');V.innerHTML=vBackup();break;
+  default:nav('#/');V.innerHTML=vHome()}}catch(e){console.error(e);V.innerHTML='<div class="card"><h3>Algo salió mal</h3><p>Recarga la página. Tus datos siguen guardados en este dispositivo.</p></div>'}}
+function addFab(label,act){const b=document.createElement('button');b.className='fab noprint';const m={sc:['Recorrida','entry'],pe:['Aplicación','spray'],fe:['Fertilización','fert']};const [l,a]=label?[label,act]:m[DZ.t];b.innerHTML='＋ '+l;b.dataset.act='add-'+a;document.body.appendChild(b)}
+window.addEventListener('hashchange',()=>{closeSheet();render()});
+
+/* =============== vistas =============== */
+function activeIntervals(){const now=new Date(),t=today();return D.sprays.map(r=>({r,re:reiEnd(r),ph:phiClear(r)})).filter(x=>(x.re&&x.re.d>now)||(x.ph&&x.ph>t)).sort((a,b)=>(a.r.date||'').localeCompare(b.r.date||''))}
+function vHome(){topBar('Cuaderno de campo PRO','AgronomIA PRO · módulo');
+ const y=String(new Date().getFullYear());const ha=D.fields.reduce((s,f)=>s+(num(f.area)||0),0);
+ const ny=[...D.entries,...D.sprays,...D.ferts].filter(r=>year(r.date)===y).length;
+ const up=upcoming(5);const ai=activeIntervals();
+ return `<a class="back" href="../app/">← Volver a AgronomIA PRO</a>
+ <span class="pill">Módulo PRO · los datos quedan en este dispositivo</span>
+ <h1>Cuaderno de campo <em>PRO</em></h1>
+ <p class="lead">Productores y lotes, recorridas, registro de aplicaciones de fitosanitarios con reingreso y carencia, registro de fertilización, calculadora estimativa de N-P-K y cal, y calendario: todo en un solo lugar, incluso sin señal.</p>
+ <div class="stats"><div class="stat"><b>${D.farms.length}</b><small>Productores</small></div><div class="stat"><b>${D.fields.length}</b><small>Lotes</small></div><div class="stat"><b>${fmt(ha,0)}</b><small>Hectáreas</small></div><div class="stat"><b>${ny}</b><small>Reg. ${y}</small></div></div>
+ <span class="k">Módulos</span>
+ <div class="tiles">
+  <a class="tile" href="#/growers"><span class="cnt">${D.farms.length}</span><span class="ic" style="background:#2C5E2E">${I.farm}</span><b>Productores y lotes</b><p>Productores, hectáreas, cultivos, híbridos y análisis de suelo</p></a>
+  <a class="tile" href="#/journal"><span class="cnt">${D.entries.length+D.sprays.length+D.ferts.length}</span><span class="ic" style="background:#1565C0">${I.book}</span><b>Cuaderno de campo</b><p>Recorridas, registro de aplicaciones y de fertilización</p></a>
+  <a class="tile" href="#/calculator"><span class="ic" style="background:#B8860B">${I.calc}</span><b>N-P-K y cal</b><p>Estimaciones en kg/ha y por lote (ha)</p></a>
+  <a class="tile" href="#/calendar"><span class="cnt">${up.length}</span><span class="ic" style="background:#C62828">${I.cal}</span><b>Calendario</b><p>Tareas, reingreso y carencia, próximas visitas, exportación .ics</p></a>
+ </div>
+ ${ai.length?`<span class="k">Reingreso / carencia vigentes</span><div class="items">${ai.slice(0,6).map(x=>recItem(x.r,'pe')).join('')}</div>`:''}
+ <span class="k">Lo que viene</span>
+ ${up.length?`<div class="items">${up.map(evItem).join('')}</div>`:`<div class="empty"><b>Nada programado</b>Agrega una tarea en el calendario: los recordatorios llegan a tu celular con un archivo .ics.</div>`}
+ <span class="k">Seguridad de los datos</span>
+ <div class="card gold"><h3>Copia de seguridad</h3><p class="lead" style="margin-bottom:12px">Los datos se guardan solo en este navegador. Exporta una copia JSON con frecuencia: la necesitarás si cambias de celular.${storageOK?'':' <b style="color:var(--red)">El guardado en este dispositivo está bloqueado: exporta una copia ahora.</b>'}</p>
+ <div class="bgrid"><button class="btn dk" data-act="export-json">⬇ Guardar copia</button><a class="btn" href="#/backup">Copia y exportación</a></div></div>
+ <p class="foot">AgronomIA PRO · Cuaderno de campo PRO + calculadora N-P-K</p>`}
+function vFarms(){topBar('Productores y lotes','Tus clientes','#/');
+ const list=D.farms.slice().sort((a,b)=>a.name.localeCompare(b.name,'es'));
+ return `<div class="bgrid" style="margin-bottom:14px"><button class="btn pri" data-act="add-farm">＋ Productor</button><button class="btn" data-act="add-field">＋ Lote</button></div>
+ ${list.length?`<div class="items">${list.map(g=>{const fs=fieldsOf(g.id);const ha=fs.reduce((s,f)=>s+(num(f.area)||0),0);
+  return `<a class="item" href="#/grower/${g.id}" style="text-decoration:none;color:inherit"><span class="dt" style="background:#e6f2d9;color:#1E4620"><b>${fs.length}</b><small>${pl(fs.length,'lote','lotes')}</small></span><span class="tx"><b>${esc(gName(g))}</b><p>${esc([[g.county,g.state].filter(Boolean).join(', '),g.phone].filter(Boolean).join(' · ')||'—')}</p><span class="chip g">${fmt(ha,1)} ha</span>${[...new Set(fs.map(f=>f.crop).filter(Boolean))].slice(0,3).map(c=>`<span class="chip">${esc(c)}</span>`).join('')}</span><span class="ar">›</span></a>`}).join('')}</div>`
+ :`<div class="empty"><b>Empieza con tu primer productor</b>Agrega un productor y después sus lotes con cultivo, híbrido, antecesor y análisis de suelo.</div>`}`}
+function vFarm(id){const g=farm(id);if(!g){topBar('Productor','','#/growers');return '<div class="empty"><b>No se encontró el productor</b></div>'}
+ topBar(g.name,g.farmName||'Productor','#/growers');const fs=fieldsOf(id);const ha=fs.reduce((s,f)=>s+(num(f.area)||0),0);
+ return `<div class="card acc"><div class="kv"><div><small>Establecimiento / empresa</small><b>${esc(g.farmName||'—')}</b></div><div><small>Teléfono</small><b>${g.phone?`<a href="tel:${esc(g.phone.replace(/[^\d+]/g,''))}">${esc(g.phone)}</a>`:'—'}</b></div><div><small>Localidad / provincia</small><b>${esc([g.county,g.state].filter(Boolean).join(', ')||'—')}</b></div><div><small>N.º de registro</small><b>${esc(g.fsaFarm||'—')}</b></div><div><small>Lotes</small><b>${fs.length}</b></div><div><small>Hectáreas</small><b>${fmt(ha,1)} ha</b></div>${g.email?`<div style="grid-column:1/-1"><small>Correo</small><b><a href="mailto:${esc(g.email)}">${esc(g.email)}</a></b></div>`:''}</div>${g.notes?`<p style="margin-top:10px;font-size:14px">${esc(g.notes)}</p>`:''}
+ <div class="bgrid" style="margin-top:12px"><button class="btn sm" data-act="edit-farm" data-id="${g.id}">Editar</button><a class="btn sm" href="#/journal" data-act="dz-farm" data-id="${g.id}">Registro de aplicaciones</a></div></div>
+ <button class="btn pri full" data-act="add-field" data-farm="${g.id}" style="margin:4px 0 14px">＋ Agregar lote</button>
+ ${fs.length?`<div class="items">${fs.map(fieldItem).join('')}</div>`:`<div class="empty"><b>Todavía no hay lotes</b>Agrega el primer lote de este productor.</div>`}`}
+function fieldItem(f){const ch=[f.crop&&`<span class="chip g">${esc(f.crop)}</span>`,f.hybrid&&`<span class="chip">${esc(f.hybrid)}</span>`,f.ph!=null&&f.ph!==''&&`<span class="chip">pH ${fmt(num(f.ph),1)}</span>`].filter(Boolean).join('');
+ const c=cropBy(f.crop);
+ return `<a class="item" href="#/field/${f.id}" style="text-decoration:none;color:inherit"><span class="dt"><b style="font-size:15px">${fmt(num(f.area),1)}</b><small>ha</small></span><span class="tx"><b>${esc(f.name)}</b><p>${esc([f.tract&&'Catastro '+f.tract,f.clu&&'Cód. '+f.clu,f.prev&&'antecesor: '+f.prev,f.yield!=null&&f.yield!==''&&'objetivo '+fmt(num(f.yield),1)+' '+(c?c.u:'')].filter(Boolean).join(' · ')||'—')}</p>${ch}</span><span class="ar">›</span></a>`}
+function vField(id){const f=field(id);if(!f){topBar('Lote','','#/growers');return '<div class="empty"><b>No se encontró el lote</b></div>'}
+ const g=farm(f.farmId);topBar(f.name,g?gName(g):'Lote','#/grower/'+f.farmId);
+ const y=String(new Date().getFullYear());const nAp=D.ferts.filter(r=>r.fieldId===id&&year(r.date)===y).reduce((s,r)=>s+((fertKg(r)||{}).N||0),0);
+ const hist=[...D.entries.filter(r=>r.fieldId===id).map(r=>({r,t:'sc'})),...D.sprays.filter(r=>r.fieldId===id).map(r=>({r,t:'pe'})),...D.ferts.filter(r=>r.fieldId===id).map(r=>({r,t:'fe'}))].sort((a,b)=>(b.r.date||'').localeCompare(a.r.date||'')).slice(0,12);
+ const c=cropBy(f.crop);
+ return `<div class="card acc"><div class="kv">
+ <div><small>Cultivo</small><b>${esc(f.crop||'—')}</b></div><div><small>Hectáreas</small><b>${fmt(num(f.area),1)} ha</b></div>
+ <div><small>Híbrido / variedad</small><b>${esc(f.hybrid||'—')}</b></div><div><small>Rinde objetivo</small><b>${f.yield!=null&&f.yield!==''?fmt(num(f.yield),1)+' '+(c?c.u:''):'—'}</b></div>
+ <div><small>Antecesor</small><b>${esc(f.prev||'—')}</b></div><div><small>Catastro / código</small><b>${esc([f.tract,f.clu].filter(Boolean).join(' / ')||'—')}</b></div></div>
+ ${f.notes?`<p style="margin-top:10px;font-size:14px">${esc(f.notes)}</p>`:''}
+ <button class="btn sm full" style="margin-top:12px" data-act="edit-field" data-id="${f.id}">Editar lote</button></div>
+ <div class="card"><h3>Análisis de suelo ${f.adate?`<span class="chip">${fdate(f.adate)}</span>`:''}</h3>
+ <div class="kv" style="grid-template-columns:repeat(5,minmax(0,1fr))"><div><small>pH</small><b>${fmt(num(f.ph),1)}</b></div><div><small>P ppm</small><b>${fmt(num(f.p),0)}</b></div><div><small>K ppm</small><b>${fmt(num(f.k),0)}</b></div><div><small>MO %</small><b>${fmt(num(f.om),1)}</b></div><div><small>CIC</small><b>${fmt(num(f.cec),1)}</b></div></div></div>
+ ${f.plan?`<div class="card gold"><h3>Estimación de nutrientes ${f.plan.year||''}</h3><p style="font-size:14px">${esc(f.plan.crop)} · ${fmt(f.plan.y,1)} ${esc(f.plan.u||'')} → <b>${fmt(f.plan.N,0)} kg N/ha</b>, ${fmt(f.plan.P,0)} kg P₂O₅/ha, ${fmt(f.plan.K,0)} kg K₂O/ha${f.plan.lime?`, cal ${fmt(f.plan.lime,2)} t/ha`:''}</p>
+ <p style="font-size:14px;margin-top:6px">Aplicado en ${y}: <b>${fmt(nAp,0)} kg N/ha</b> de ${fmt(f.plan.N,0)} estimados</p>
+ <div style="height:10px;background:var(--soft);border-radius:9px;margin-top:8px;overflow:hidden"><i style="display:block;height:100%;width:${Math.min(100,f.plan.N?nAp/f.plan.N*100:0)}%;background:var(--leaf)"></i></div>
+ <p style="font-size:12px;color:var(--mut);margin-top:8px">${DISC}</p></div>`:''}
+ <div class="bgrid c3" style="margin:4px 0 8px"><button class="btn pri sm" data-act="add-entry" data-field="${f.id}">＋ Recorrida</button><button class="btn pri sm" data-act="add-spray" data-field="${f.id}">＋ Aplicación</button><button class="btn pri sm" data-act="add-fert" data-field="${f.id}">＋ Fertiliz.</button></div>
+ <div class="bgrid" style="margin-bottom:6px"><a class="btn gd sm" href="#/calculator?f=${f.id}">Estimación N-P-K</a><button class="btn sm" data-act="add-event" data-field="${f.id}">＋ Evento</button></div>
+ <span class="k">Historial del lote</span>
+ ${hist.length?`<div class="items">${hist.map(h=>recItem(h.r,h.t,true)).join('')}</div>`:'<div class="empty"><b>Todavía no hay registros</b>Agrega una recorrida o una aplicación.</div>'}`}
+
+/* ---- cuaderno ---- */
+const DZ={t:'sc',f:'',from:'',to:'',q:''};
+function recItem(r,t,short){const d=r.date||'';const dd=d?`<span class="dt"><b>${+d.slice(8,10)}</b><small>${MON[+d.slice(5,7)-1]||''} ${d.slice(2,4)}</small></span>`:'<span class="dt">—</span>';
+ let b='',p='',ch='';
+ if(t==='sc'){b=r.pests?esc(r.pests):'Recorrida';p=esc([r.obs,r.note].filter(Boolean).join(' · ').slice(0,220));ch=(r.stage?`<span class="chip b">${esc(r.stage)}</span>`:'')+(r.sev?`<span class="chip ${r.sev==='above'?'r':r.sev==='near'?'y':'g'}">${esc((SEV.find(s=>s[0]===r.sev)||['',''])[1])}</span>`:'')+(r.next?`<span class="chip">Próx. ${fdate(r.next)}</span>`:'')+(r.photo?'<span class="chip">📷 fotos</span>':'')+(r.voice?'<span class="chip">🎤 nota</span>':'')}
+ if(t==='pe'){const tot=sprayTotal(r),re=reiEnd(r),ph=phiClear(r),now=new Date();b=esc(r.product)+' · '+fmt(num(r.rate),2)+' '+esc(r.unit||'');p=esc([r.target,r.applicator].filter(Boolean).join(' · '));
+  ch=(r.rup==='yes'?'<span class="chip r">Uso restringido</span>':'')+`<span class="chip">${fmt(num(r.area),1)} ha</span>`+(tot!=null?`<span class="chip">${fmt(tot,1)} ${esc(totUnit(r.unit))}</span>`:'')+(r.epa?`<span class="chip">Reg. ${esc(r.epa)}</span>`:'')+(r.receta?`<span class="chip">Receta ${esc(r.receta)}</span>`:'')+
+  (re?`<span class="chip ${re.d>now?'r':'g'}">${re.d>now?'Reingreso: '+fdt(re.d):'Reingreso cumplido'}</span>`:'')+(ph?`<span class="chip ${ph>today()?'y':'g'}">${ph>today()?'Cosecha desde '+fdate(ph):'Carencia cumplida ✓'}</span>`:'')}
+ if(t==='fe'){const n=fertKg(r),tot=fertTotal(r);b=esc(r.product)+(r.analysis?' ('+esc(r.analysis)+')':'')+' · '+fmt(num(r.rate),2)+' '+esc(r.unit||'');p=esc([r.method,r.timing,r.notes].filter(Boolean).join(' · '));
+  ch=`<span class="chip g">Fertilización</span>`+(n?`<span class="chip y">${fmt(n.N,0)}-${fmt(n.P,0)}-${fmt(n.K,0)} kg/ha</span>`:'')+(tot!=null?`<span class="chip">${fmt(tot,1)} ${esc(totUnit(r.unit))}</span>`:'')+(num(r.cost)!=null?`<span class="chip">${money(num(r.cost))}</span>`:'')}
+ const where=short?'':`<p style="font-weight:600;color:var(--ink)">${esc(fLabel(r.fieldId))}</p>`;
+ return `<button class="item" data-act="open-${t}" data-id="${r.id}">${dd}<span class="tx"><b>${b}</b>${where}${p?`<p>${p}</p>`:''}${ch}</span><span class="ar">›</span></button>`}
+function dzRows(){const src={sc:D.entries,pe:D.sprays,fe:D.ferts}[DZ.t]||D.entries;const q=DZ.q.trim().toLowerCase();
+ let fids=null;if(DZ.f&&DZ.f.startsWith('g:'))fids=new Set(fieldsOf(DZ.f.slice(2)).map(f=>f.id));
+ return src.filter(r=>(!DZ.f||(fids?fids.has(r.fieldId):r.fieldId===DZ.f))&&(!DZ.from||(r.date||'')>=DZ.from)&&(!DZ.to||(r.date||'')<=DZ.to)&&(!q||JSON.stringify(r).toLowerCase().includes(q)||fLabel(r.fieldId).toLowerCase().includes(q))).sort((a,b)=>(b.date||'').localeCompare(a.date||''))}
+function vDz(){if(!['sc','pe','fe'].includes(DZ.t))DZ.t='sc';topBar('Cuaderno de campo','Recorridas · fitosanitarios · fertilización','#/');
+ const fo=`<option value="">Todos los lotes</option>`+D.farms.map(g=>`<option value="g:${g.id}"${DZ.f==='g:'+g.id?' selected':''}>▸ ${esc(gName(g))} (todos sus lotes)</option>`).join('')+fieldOpts(DZ.f,false);
+ return `<div class="tabs" role="tablist">${[['sc','Recorridas'],['pe','Fitosanitarios'],['fe','Fertilización']].map(([k,l])=>`<button role="tab" class="${DZ.t===k?'on':''}" data-act="dztab" data-t="${k}">${l}</button>`).join('')}</div>
+ <div class="filt"><label class="fl"><span>Lote</span><select class="dzf" data-k="f">${fo}</select></label>
+ <div class="frow"><label class="fl"><span>Desde</span><input type="date" class="dzf" data-k="from" value="${DZ.from}"></label><label class="fl"><span>Hasta</span><input type="date" class="dzf" data-k="to" value="${DZ.to}"></label></div>
+ <label class="fl" style="margin-bottom:0"><span>Buscar</span><input type="search" class="dzf" data-k="q" value="${esc(DZ.q)}" placeholder="producto, plaga, nota…"></label></div>
+ <div id="dzlist">${dzList()}</div>`}
+function dzList(){const rows=dzRows();const tot=DZ.t==='pe'?rows.reduce((s,r)=>s+(num(r.area)||0),0):null;
+ return `<div class="sum"><span>${rows.length} ${pl(rows.length,'registro','registros')}${tot!=null?` · ${fmt(tot,1)} ha tratadas`:''}</span><button class="btn sm" data-act="csv" ${rows.length?'':'disabled'}>⬇ CSV</button></div>
+ ${DZ.t==='pe'?`<div class="warn" style="margin-bottom:10px">${esc(LABEL)}</div>`:''}
+ ${rows.length?`<div class="items">${rows.map(r=>recItem(r,DZ.t)).join('')}</div>`:`<div class="empty"><b>Sin registros</b>${D.fields.length?'Agrega uno con el botón ＋ de abajo.':'Primero agrega un productor y un lote.'}</div>`}`}
+// CSV para Excel en español: separador punto y coma, coma decimal, UTF-8 con BOM
+function csvStr(H,R){return '\ufeff'+[H,...R].map(r=>r.map(c=>{c=c==null?'':String(c);return /[;"\n\r]/.test(c)?'"'+c.replace(/"/g,'""')+'"':c}).join(';')).join('\r\n')}
+function csvOut(){const rows=dzRows();const n=dc;let H,R,name;
+ const base=r=>{const f=field(r.fieldId),g=f?farm(f.farmId):null;return[g?g.name:'',g?g.farmName||'':'',g?[g.county,g.state].filter(Boolean).join(', '):'',g?g.fsaFarm||'':'',f?f.tract||'':'',f?f.clu||'':'',f?f.name:'']};
+ const BH=['Productor','Establecimiento','Localidad/provincia','N.º de registro del productor','Catastro/partida','Código interno','Lote'];
+ if(DZ.t==='pe'){H=['Fecha','Hora de inicio','Hora de fin','Aplicador','Matrícula del aplicador','Uso restringido','N.º de receta agronómica',...BH,'Cultivo/sitio','Hectáreas tratadas','Producto (nombre comercial)','N.º de registro del producto','Dosis','Unidad de dosis','Total aplicado','Unidad del total','Volumen de caldo (L/ha)','Plaga/maleza/enfermedad objetivo','Reingreso (h)','Fin del reingreso','Carencia (días)','Fin de carencia','Viento (km/h)','Dirección del viento','Temperatura (°C)','Equipo','Notas'];
+  R=rows.map(r=>{const re=reiEnd(r),ph=phiClear(r),t=sprayTotal(r);return[dmy(r.date),r.start,r.end,r.applicator,r.license,r.rup==='yes'?'Sí':'No',r.receta,...base(r),r.crop,n(r.area),r.product,r.epa,n(r.rate),r.unit,t==null?'':n(Math.round(t*100)/100),totUnit(r.unit),n(r.carrier),r.target,n(r.rei),re?dmy(iso(re.d))+' '+hm(re.d):'',n(r.phi),ph?dmy(ph):'',n(r.wind),r.windDir,n(r.temp),r.equip,r.notes]});name='registro_aplicaciones_fitosanitarios'}
+ else if(DZ.t==='fe'){H=['Fecha',...BH,'Hectáreas','Producto','Grado (N-P-K)','Dosis','Unidad','Total aplicado','Unidad del total','kg N/ha','kg P2O5/ha','kg K2O/ha','Forma de aplicación','Momento','Costo ($)','Aplicado por','Notas'];
+  R=rows.map(r=>{const k=fertKg(r),t=fertTotal(r);const rd=v=>v==null?'':n(Math.round(v*10)/10);return[dmy(r.date),...base(r),n(r.area),r.product,r.analysis,n(r.rate),r.unit,t==null?'':n(Math.round(t*100)/100),totUnit(r.unit),k?rd(k.N):'',k?rd(k.P):'',k?rd(k.K):'',r.method,r.timing,n(r.cost),r.operator,r.notes]});name='registro_fertilizacion'}
+ else{H=['Fecha',...BH,'Cultivo','Estado fenológico','Observaciones','Plaga/enfermedad/maleza','Severidad','Referencia de fotos','Recomendación','Próxima visita','Nota de voz'];
+  R=rows.map(r=>{const f=field(r.fieldId);return[dmy(r.date),...base(r),r.crop||(f?f.crop||'':''),r.stage,r.obs,r.pests,(SEV.find(s=>s[0]===r.sev)||['',''])[1],r.photo,r.note,dmy(r.next),r.voice]});name='recorridas'}
+ download(new Blob([csvStr(H,R)],{type:'text/csv;charset=utf-8'}),`${name}_${today()}.csv`);toast('CSV exportado ('+rows.length+')')}
+
+/* ---- calculadora ---- */
+const C={fieldId:'',crop:'Maíz (grano)',y:'9',area:'',prev:PREV[0][0],prevN:'0',man:'Ninguno',manRate:'',manN:'',manAvail:'',other:'0',prod:NPROD[0][0],catP:'2',catK:'2',ph:'',pppm:'',kppm:'',limeRec:'',limeRef:'100',limeE:'',priceN:'',priceP:'',priceK:''};
+function calcFromField(fid){const f=field(fid);if(!f)return;C.fieldId=fid;const c=cropBy(f.crop);if(c)C.crop=c.n;const cc=cropBy(C.crop)||D.crops[0];C.y=f.yield!=null&&f.yield!==''?dc(f.yield):dc(cc.y);C.area=f.area!=null?dc(f.area):'';
+ const pv=PREV.find(p=>p[0].toLowerCase()===String(f.prev||'').toLowerCase())||PREV.find(p=>f.prev&&p[0].toLowerCase().startsWith(String(f.prev).toLowerCase()));if(pv){C.prev=pv[0];C.prevN=String(pv[1])}
+ C.ph=f.ph!=null?dc(f.ph):'';C.pppm=f.p!=null?dc(f.p):'';C.kppm=f.k!=null?dc(f.k):''}
+function ci(k,l,o={}){const v=C[k]??'';if(o.sel)return `<label class="fl"><span>${l}</span><select data-c="${k}">${o.sel.map(x=>{const[a,b]=Array.isArray(x)?x:[x,x];return`<option value="${esc(a)}"${String(a)===String(v)?' selected':''}>${esc(b)}</option>`}).join('')}</select>${o.h?`<small>${o.h}</small>`:''}</label>`;
+ return `<label class="fl"><span>${l}</span><input data-c="${k}" type="text" inputmode="decimal" autocomplete="off" value="${esc(v)}" placeholder="${o.ph||''}">${o.h?`<small>${o.h}</small>`:''}</label>`}
+function vCalc(){topBar('Calculadora N-P-K y cal','Estimaciones · kg/ha · hectáreas','#/');
+ const fo=`<option value="">— sin lote (carga manual) —</option>`+fieldOpts(C.fieldId,false);const crop=cropBy(C.crop)||D.crops[0];const man=MAN.find(m=>m[0]===C.man)||MAN[0];
+ return `<div class="warn disc" style="margin-bottom:12px">${DISC}</div>
+ <div class="card"><h3>1. Cultivo y rinde objetivo</h3>
+ <label class="fl"><span>Lote</span><select data-c="fieldId">${fo}</select><small>Al elegir un lote se completan cultivo, rinde objetivo, hectáreas, antecesor y análisis de suelo.</small></label>
+ ${ci('crop','Cultivo',{sel:D.crops.map(c=>c.n)})}
+ <div class="frow">${ci('y','Rinde objetivo ('+esc(crop.u)+')')}${ci('area','Superficie del lote (ha)')}</div></div>
+ <div class="card"><h3>2. Nitrógeno: aportes</h3>
+ <div class="frow">${ci('prev','Cultivo antecesor',{sel:PREV.map(p=>p[0])})}${ci('prevN','Aporte de N (kg N/ha)',{h:'Valor típico precargado: reemplázalo por el de tu zona.'})}</div>
+ ${ci('man','Abono orgánico en esta campaña',{sel:MAN.map(n=>n[0])})}
+ <div class="frow3">${ci('manRate','Dosis/ha')}${ci('manN','kg N/'+esc(man[3]||'unidad'))}${ci('manAvail','% disp.')}</div>
+ <p style="font-size:12.5px;color:var(--mut);margin:-4px 0 12px">Dosis en ${esc(man[3]||'unidades')} por hectárea; kg de N total por ${esc(man[3]||'unidad')}; % disponible el primer año. Los valores precargados son estimaciones: usa el análisis de tu abono.</p>
+ ${ci('other','Otros aportes de N (kg N/ha)',{h:'Ej.: N del arrancador o del MAP/DAP, N aplicado antes, análisis de nitratos. Se resta de la necesidad.'})}
+ <div class="frow">${ci('prod','Fuente de N a calcular',{sel:NPROD.map(p=>p[0])})}${ci('priceN','Precio de la fuente de N ($/t)',{h:'Opcional'})}</div></div>
+ <div id="resN"></div>
+ <div class="card"><h3>3. Fósforo, potasio y pH</h3>
+ <div class="frow">${ci('pppm','P del análisis (ppm)')}${ci('kppm','K del análisis (ppm)')}</div>
+ <div class="frow">${ci('catP','Categoría de P (según tu laboratorio)',{sel:CLS.map((c,i)=>[String(i),c])})}${ci('catK','Categoría de K (según tu laboratorio)',{sel:CLS.map((c,i)=>[String(i),c])})}</div>
+ <p style="font-size:12.5px;color:var(--mut);margin:-4px 0 12px">Las categorías de interpretación dependen del método de extracción y de tu zona: tómalas de tu informe de análisis de suelo.</p>
+ <div class="frow">${ci('priceP','Precio del MAP ($/t)',{h:'Opcional'})}${ci('priceK','Precio del cloruro de potasio ($/t)',{h:'Opcional'})}</div></div>
+ <div id="resPK"></div>
+ <div class="card"><h3>4. Cal</h3>
+ <div class="frow">${ci('ph','pH del suelo')}${ci('limeRec','Cal recomendada por el laboratorio (t/ha)')}</div>
+ <div class="frow">${ci('limeRef','La recomendación supone un PRNT de (%)',{h:'Revisa tu informe; 100 si no lo indica.'})}${ci('limeE','PRNT de tu producto (%)',{h:'Figura en la etiqueta o la ficha del producto.'})}</div></div>
+ <div id="resL"></div>
+ <details class="ex noprint"><summary>Coeficientes de extracción y factores de N (editables)</summary><div class="dbody" id="uptab">${upTable()}</div></details>
+ <div class="warn disc" style="margin:4px 0 12px">${DISC}</div>
+ <div class="bgrid noprint"><button class="btn dk" data-act="calc-save" ${C.fieldId?'':'disabled'}>Guardar en el lote</button><button class="btn" data-act="calc-plan">Programar fraccionamiento</button></div>
+ <button class="btn full noprint" style="margin-top:10px" data-act="print">🖨 Imprimir / guardar PDF</button>`}
+function upTable(){return `<p style="font-size:12.5px;color:var(--mut);margin-bottom:8px">Valores orientativos, típicos de tablas técnicas. <b>N</b> = kg de N por tonelada de rinde objetivo (estimación simplificada por rinde objetivo). <b>P₂O₅ / K₂O</b> = kg extraídos por tonelada cosechada. Reemplázalos por los valores de tu zona.</p><div class="tsc"><table class="t"><tr><th>Cultivo</th><th>Unidad</th><th class="n">Objetivo</th><th class="n">N</th><th class="n">P₂O₅</th><th class="n">K₂O</th><th></th></tr>
+ ${D.crops.map((c,i)=>`<tr><td><input class="l" data-up="${i}" data-f="n" value="${esc(c.n)}" style="min-width:120px"></td><td><input class="l" data-up="${i}" data-f="u" value="${esc(c.u)}" style="min-width:76px"></td>${['y','N','P','K'].map(k=>`<td><input data-up="${i}" data-f="${k}" inputmode="decimal" value="${esc(dc(c[k]))}" style="width:64px"></td>`).join('')}<td><button class="btn sm red" data-act="up-del" data-i="${i}" aria-label="Quitar">×</button></td></tr>`).join('')}</table></div>
+ <p style="font-size:12.5px;color:var(--mut);margin:12px 0 6px">Multiplicador de P y K según la categoría del análisis (× extracción del cultivo), criterio simplificado de construcción y mantenimiento:</p>
+ <div class="tsc"><table class="t"><tr>${CLS.map(c=>`<th class="n">${c}</th>`).join('')}</tr><tr>${D.pkf.map((v,i)=>`<td><input data-pkf="${i}" inputmode="decimal" value="${esc(dc(v))}" style="width:58px"></td>`).join('')}</tr></table></div>
+ <div class="bgrid" style="margin-top:12px"><button class="btn sm" data-act="up-add">＋ Cultivo</button><button class="btn sm" data-act="up-reset">Restaurar valores</button></div>`}
+// Todo en unidades métricas: kg de producto/ha = kg de nutriente/ha ÷ (% del nutriente ÷ 100); total del lote = kg/ha × ha
+function calc(){const crop=cropBy(C.crop)||D.crops[0];const y=num(C.y)||0,area=num(C.area);
+ const need=y*crop.N, prevN=num(C.prevN)||0, manRate=num(C.manRate)||0, manN=num(C.manN)||0, manAvail=num(C.manAvail)||0, other=num(C.other)||0;
+ const manTot=manRate*manN, manEff=manTot*manAvail/100;
+ const raw=need-prevN-manEff-other;const N=Math.max(0,Math.round(raw/5)*5);
+ const prod=NPROD.find(p=>p[0]===C.prod)||NPROD[0];const prodKg=N/(prod[1]/100);
+ const priceN=num(C.priceN),priceP=num(C.priceP),priceK=num(C.priceK);
+ const splits=crop.split.map(([pct,term])=>{const n=N*pct/100;const kg=n/(prod[1]/100);return{pct,term,n,kg,L:prod[2]?kg/prod[2]:null}});
+ const iP=+C.catP||0,iK=+C.catK||0;
+ const P=Math.round(y*crop.P*(D.pkf[iP]??1)/5)*5, K=Math.round(y*crop.K*(D.pkf[iK]??1)/5)*5;
+ let lime=null;const rec=num(C.limeRec);if(rec!=null){const ref=num(C.limeRef)||100,e=num(C.limeE)||ref;lime={rec,ref,e,rate:rec*ref/e}}
+ return{crop,y,area,need,prevN,manTot,manEff,other,raw,N,prod,prodKg,splits,P,K,iP,iK,lime,priceN,priceP,priceK}}
+function calcUpd(){const r=calc();const A=r.area;const t=(v,u)=>A?fmt(v*A,0)+' '+u:'—';const liq=!!r.prod[2];
+ const costN=r.priceN!=null?r.prodKg/1000*r.priceN:null;
+ $('#resN').innerHTML=`<div class="res"><span class="lb">Dosis estimada de N · ${esc(r.crop.n)}</span><div class="big">${fmt(r.N,0)}<small>kg N/ha</small></div>
+ <div class="eq">${fmt(r.y,1)} ${esc(r.crop.u)} × ${fmt(r.crop.N,2)} kg N = <b>${fmt(r.need,0)}</b><br>− antecesor ${fmt(r.prevN,0)} − abono ${fmt(r.manEff,0)} − otros ${fmt(r.other,0)}<br>= ${fmt(Math.max(0,r.raw),0)} → redondeado a 5 kg</div>
+ ${A?`<div class="eq">Lote completo (${fmt(A,1)} ha): <b>${fmt(r.N*A,0)} kg N</b></div>`:''}
+ <div class="disc">${DISC}</div></div>
+ ${r.crop.N===0?`<p style="font-size:13px;color:var(--mut);margin:-4px 2px 12px">El factor de N de ${esc(r.crop.n)} es 0 (leguminosa / personalizado). Si hace falta, edítalo en la tabla de abajo.</p>`:''}
+ ${r.manTot>0?`<p style="font-size:13px;color:var(--mut);margin:-4px 2px 12px">Abono orgánico: ${fmt(r.manTot,0)} kg de N total/ha, de los cuales ${fmt(r.manEff,0)} kg N/ha se cuentan como disponibles el primer año (estimación).</p>`:''}
+ <div class="card"><h3>Fraccionamiento: ${esc(r.prod[0])}</h3><div class="tsc"><table class="t"><tr><th>Momento</th><th class="n">kg N/ha</th><th class="n">${liq?'L/ha':'kg/ha'}</th><th class="n">Lote</th></tr>
+ ${r.splits.map(s=>`<tr><td>${s.pct} % · ${esc(s.term)}</td><td class="n">${fmt(s.n,0)}</td><td class="n"><b>${liq?fmt(s.L,1):fmt(s.kg,0)}</b>${liq?`<br><small>${fmt(s.kg,0)} kg</small>`:''}</td><td class="n">${liq?t(s.L,'L'):t(s.kg,'kg')}</td></tr>`).join('')}
+ <tr><td><b>Total</b></td><td class="n"><b>${fmt(r.N,0)}</b></td><td class="n"><b>${liq?fmt(r.prodKg/r.prod[2],1):fmt(r.prodKg,0)}</b></td><td class="n"><b>${A?(liq?fmt(r.prodKg/r.prod[2]*A,0)+' L':fmt(r.prodKg*A,0)+' kg'):'—'}</b>${A?`<br><small>${fmt(r.prodKg*A/1000,2)} t</small>`:''}</td></tr></table></div>
+ ${costN!=null?`<p style="font-size:14px;margin-top:8px">Costo estimado: <b>${money(costN)}/ha</b>${A?` · <b>${money(costN*A)}</b> para el lote`:''}</p>`:''}
+ <p style="font-size:12.5px;color:var(--mut);margin-top:8px">El fraccionamiento es solo una guía: ajústalo según las 4R (fuente, dosis, momento y lugar correctos), el clima y el estado del cultivo.</p>
+ <span class="k" style="margin-top:14px">El mismo N con otras fuentes</span><div class="tsc"><table class="t"><tr><th>Fuente</th><th class="n">por ha</th><th class="n">Lote</th></tr>
+ ${NPROD.map(p=>{const kg=r.N/(p[1]/100);return`<tr><td>${esc(p[0])}</td><td class="n">${fmt(kg,0)} kg${p[2]?`<br><small>${fmt(kg/p[2],1)} L</small>`:''}</td><td class="n">${A?fmt(kg*A,0)+' kg':'—'}</td></tr>`}).join('')}</table></div></div>`;
+ const mapKg=r.P/0.52,dapKg=r.P/0.46,sptKg=r.P/0.46,kclKg=r.K/0.6;const cP=r.priceP!=null?mapKg/1000*r.priceP:null,cK=r.priceK!=null?kclKg/1000*r.priceK:null;
+ const row=(lab,kg)=>`<tr><td>${lab}</td><td class="n"><b>${fmt(kg,0)} kg/ha</b>${A?`<br><small>${fmt(kg*A,0)} kg en el lote</small>`:''}</td></tr>`;
+ $('#resPK').innerHTML=`<div class="card acc"><h3>P₂O₅ y K₂O estimados</h3>
+ <div class="pkg"><div><small>P₂O₅</small><b>${fmt(r.P,0)}</b><small>kg/ha</small></div><div><small>K₂O</small><b>${fmt(r.K,0)}</b><small>kg/ha</small></div><div><small>Lote</small><b style="font-size:16px;line-height:1.45">${A?fmt(r.P*A,0)+'<br>'+fmt(r.K*A,0):'—'}</b><small>kg P₂O₅ / K₂O</small></div></div>
+ <table class="t" style="margin-top:10px"><tr><td>P: <b>${CLS[r.iP]}</b> · ${fmt(r.y,1)} × ${fmt(r.crop.P,2)}</td><td class="n">× ${fmt(D.pkf[r.iP],2)}</td></tr><tr><td>K: <b>${CLS[r.iK]}</b> · ${fmt(r.y,1)} × ${fmt(r.crop.K,2)}</td><td class="n">× ${fmt(D.pkf[r.iK],2)}</td></tr>
+ ${row('Fosfato monoamónico (MAP) 11-52-0',mapKg)}${row('Fosfato diamónico (DAP) 18-46-0',dapKg)}${row('Superfosfato triple (SPT) 0-46-0',sptKg)}${row('Cloruro de potasio (KCl) 0-0-60',kclKg)}</table>
+ ${mapKg>0?`<p style="font-size:13px;margin-top:8px">A esta dosis, el MAP aporta además ~${fmt(mapKg*0.11,0)} kg N/ha (el DAP, ~${fmt(dapKg*0.18,0)}): súmalo en «Otros aportes de N» si lo usas.</p>`:''}
+ ${cP!=null||cK!=null?`<p style="font-size:14px;margin-top:6px">Costo estimado: ${cP!=null?`MAP <b>${money(cP)}/ha</b>`:''}${cP!=null&&cK!=null?' · ':''}${cK!=null?`cloruro de potasio <b>${money(cK)}/ha</b>`:''}${A?` · lote <b>${money(((cP||0)+(cK||0))*A)}</b>`:''}</p>`:''}
+ <p style="font-size:12px;color:var(--mut);margin-top:8px">${DISC}</p></div>`;
+ const L=r.lime;
+ $('#resL').innerHTML=`<div class="card gold"><h3>Cal</h3>${L?`<div class="pkg" style="grid-template-columns:1fr 1fr"><div><small>Tu producto</small><b>${fmt(L.rate,2)}</b><small>t/ha</small></div><div><small>Lote</small><b>${A?fmt(L.rate*A,1):'—'}</b><small>t</small></div></div>
+ <p style="font-size:12.5px;color:var(--mut);margin-top:8px">${fmt(L.rec,2)} t/ha (recomendación del laboratorio con PRNT ${fmt(L.ref,0)} %) × ${fmt(L.ref,0)} ÷ ${fmt(L.e,0)} % de PRNT de tu producto.${num(C.ph)!=null?' pH del suelo: '+fmt(num(C.ph),1)+'.':''}</p>`:'<p style="font-size:14px;color:var(--mut)">Ingresa la cal recomendada en tu análisis de suelo (t/ha) y el PRNT de tu producto para ajustar la dosis.</p>'}
+ <p style="font-size:12px;color:var(--mut);margin-top:8px">${DISC}</p></div>`;
+ return r}
+function onCalcInput(e){const el=e.target;const k=el.dataset.c;if(k){C[k]=el.value;
+  if(k==='fieldId'){if(el.value)calcFromField(el.value);else C.fieldId='';$('#view').innerHTML=vCalc();calcUpd();return}
+  if(k==='crop'&&e.type==='change'){const c=cropBy(el.value);if(c)C.y=dc(c.y);$('#view').innerHTML=vCalc();calcUpd();return}
+  if(k==='prev'&&e.type==='change'){const p=PREV.find(x=>x[0]===el.value);if(p){C.prevN=String(p[1]);document.querySelector('[data-c="prevN"]').value=C.prevN}}
+  if(k==='man'&&e.type==='change'){const n=MAN.find(x=>x[0]===el.value);if(n){C.manN=n[1]?dc(n[1]):'';C.manAvail=n[2]?String(n[2]):'';if(!n[1]&&n[0]==='Ninguno')C.manRate='';$('#view').innerHTML=vCalc();calcUpd();return}}
+  calcUpd();return}
+ if(el.dataset.up!=null){const c=D.crops[+el.dataset.up];if(!c)return;const f=el.dataset.f;if(f==='n'||f==='u'){if(el.value.trim())c[f]=el.value.trim()}else c[f]=num(el.value)??0;save();if(e.type==='change'&&(f==='n'||f==='u')){if(!cropBy(C.crop))C.crop=D.crops[0].n;rerenderCalcKeepOpen();return}calcUpd();return}
+ if(el.dataset.pkf!=null){D.pkf[+el.dataset.pkf]=num(el.value)??0;save();calcUpd()}}
+
+/* ---- calendario ---- */
+const CAL={y:new Date().getFullYear(),m:new Date().getMonth(),sel:today(),f:''};
+function termsFor(y){return D.terms.filter(t=>t.on).map(t=>({id:'t_'+t.id,tid:t.id,title:t.title,date:y+'-'+t.md,kind:'term',notes:t.notes,term:true}))}
+function autoEvents(){const out=[];
+ D.sprays.forEach(r=>{const re=reiEnd(r),ph=phiClear(r);
+  if(re)out.push({id:'rei_'+r.id,src:'pe',srcId:r.id,auto:true,kind:'rei',title:'Fin del reingreso – '+(r.product||'aplicación'),date:iso(re.d),time:hm(re.d),fieldId:r.fieldId,notes:(re.approx?'Sin hora de aplicación: se cuenta desde el fin del día. ':'')+'Reingreso de '+fmt(num(r.rei),0)+' h (etiqueta).'});
+  if(ph)out.push({id:'phi_'+r.id,src:'pe',srcId:r.id,auto:true,kind:'phi',title:'Fin de carencia – '+(r.product||'aplicación')+' (ya se puede cosechar)',date:ph,fieldId:r.fieldId,notes:'Carencia de '+fmt(num(r.phi),0)+' días (etiqueta), aplicado el '+fdate(r.date)+'.'})});
+ D.entries.forEach(r=>{if(r.next)out.push({id:'nv_'+r.id,src:'sc',srcId:r.id,auto:true,kind:'visit',title:'Próxima visita – '+fLabel(r.fieldId),date:r.next,fieldId:r.fieldId,notes:[r.pests,r.note].filter(Boolean).join(' · ')})});
+ return out}
+function evsInRange(a,b){const out=[...D.events,...autoEvents()].filter(e=>e.date>=a&&e.date<=b&&(!CAL.f||e.fieldId===CAL.f));const ya=+a.slice(0,4),yb=+b.slice(0,4);if(!CAL.f)for(let y=ya;y<=yb;y++)out.push(...termsFor(y).filter(e=>e.date>=a&&e.date<=b));return out.sort((x,y)=>(x.date+(x.time||'')).localeCompare(y.date+(y.time||'')))}
+function upcoming(n){const a=today();const d=new Date();d.setDate(d.getDate()+60);const keep=CAL.f;CAL.f='';const r=evsInRange(a,iso(d)).filter(e=>!e.done).slice(0,n);CAL.f=keep;return r}
+function evItem(e){const d=e.date;const K=KINDS[e.kind]||KINDS.other;
+ const dd=`<span class="dt" style="border-left:4px solid ${K[1]}"><b>${+d.slice(8,10)}</b><small>${MON[+d.slice(5,7)-1]}</small></span>`;
+ const act=!e.term&&!e.auto&&!e.done&&(e.kind==='spray'||e.kind==='fert')?`<button class="btn sm" style="margin-top:8px" data-act="ev-rec" data-id="${e.id}">${e.kind==='spray'?'Registrar aplicación':'Registrar fertilización'}</button>`:'';
+ const da=e.term?`data-act="open-term" data-id="${e.tid}"`:e.auto?`data-act="open-${e.src}" data-id="${e.srcId}"`:`data-act="open-ev" data-id="${e.id}"`;
+ return `<div class="item${e.done?' done':''}" ${da}>${!e.term&&!e.auto?`<input type="checkbox" class="chk" data-act="ev-done" data-id="${e.id}" ${e.done?'checked':''} aria-label="Hecho">`:''}${dd}<span class="tx"><b>${esc(e.title)}</b><p>${esc([ftime(e.time),e.fieldId&&e.kind!=='visit'?fLabel(e.fieldId):'',e.notes].filter(Boolean).join(' · '))}</p><span class="chip" style="border-color:${K[1]};color:${K[1]}">${K[0]}</span>${e.auto?'<span class="chip">automático</span>':''}${e.remind&&e.remind!=='0'?`<span class="chip">🔔 ${e.remind} d</span>`:''}${act}</span></div>`}
+function vCal(){topBar('Calendario','Tareas · reingreso y carencia · .ics','#/');
+ const {y,m}=CAL;const first=new Date(y,m,1);const off=(first.getDay()+6)%7;const start=new Date(y,m,1-off); // semana de lunes a domingo
+ const a=iso(start);const endD=new Date(start);endD.setDate(endD.getDate()+41);const evs=evsInRange(a,iso(endD));const by={};evs.forEach(e=>(by[e.date]=by[e.date]||[]).push(e));
+ let cells='';for(let i=0;i<42;i++){const d=new Date(start);d.setDate(d.getDate()+i);const s=iso(d);const es=by[s]||[];
+  cells+=`<button class="${d.getMonth()!==m?'o ':''}${s===today()?'td ':''}${s===CAL.sel?'sel':''}" data-act="cal-day" data-d="${s}" aria-label="${fdate(s)}">${d.getDate()}<span class="dots">${es.slice(0,3).map(e=>`<i style="background:${(KINDS[e.kind]||KINDS.other)[1]}"></i>`).join('')}</span></button>`}
+ const dayE=evsInRange(CAL.sel,CAL.sel);const up=(()=>{const d=new Date();d.setDate(d.getDate()+90);return evsInRange(today(),iso(d)).filter(e=>!e.done)})();
+ return `<div class="filt"><label class="fl" style="margin-bottom:0"><span>Lote</span><select data-act="cal-f" id="calf">${`<option value="">Todos los lotes + fechas anuales</option>`+fieldOpts(CAL.f,false)}</select></label></div>
+ <div class="calh"><button data-act="cal-prev" aria-label="Mes anterior">‹</button><b>${MONF[m]} ${y}</b><button data-act="cal-next" aria-label="Mes siguiente">›</button></div>
+ <div class="cal">${['Lu','Ma','Mi','Ju','Vi','Sá','Do'].map(w=>`<span class="wd">${w}</span>`).join('')}${cells}</div>
+ <div class="legend">${Object.values(KINDS).map(k=>`<span><i style="background:${k[1]}"></i>${k[0]}</span>`).join('')}</div>
+ <span class="k">${fdate(CAL.sel)}</span>
+ ${dayE.length?`<div class="items">${dayE.map(evItem).join('')}</div>`:`<div class="empty" style="padding:16px">Nada para este día</div>`}
+ <span class="k">Próximos 90 días</span>
+ ${up.length?`<div class="items">${up.map(evItem).join('')}</div>`:'<div class="empty" style="padding:16px">Nada programado</div>'}
+ <div class="card gold" style="margin-top:16px"><h3>Exportar al calendario del celular</h3><p style="font-size:13.5px;color:var(--mut);margin-bottom:10px">Descarga el archivo .ics y ábrelo: las tareas con recordatorio, los próximos fines de reingreso y de carencia y las próximas visitas pasan a Google Calendar, iPhone u Outlook.${CAL.f?' Solo se exporta el lote seleccionado.':''}</p>
+ <div class="bgrid"><button class="btn dk" data-act="ics">📅 Descargar .ics</button><button class="btn" data-act="add-event">＋ Evento</button></div></div>
+ <details class="ex"><summary>Fechas anuales (todos los años, editables)</summary><div class="dbody"><p style="font-size:12.5px;color:var(--mut);margin-bottom:10px">Las fechas son ejemplos. Ajústalas según la normativa vigente, el organismo oficial de tu país y las condiciones de tu zona.</p>
+ <div class="items">${D.terms.map(t=>`<button class="item" data-act="open-term" data-id="${t.id}"><span class="dt" style="border-left:4px solid #8E6BBF"><b>${+t.md.slice(3)}</b><small>${MON[+t.md.slice(0,2)-1]}</small></span><span class="tx"><b>${esc(t.title)}</b><p>${esc(t.notes||'')}</p>${t.on?'':'<span class="chip">oculta</span>'}</span><span class="ar">›</span></button>`).join('')}</div>
+ <button class="btn full" style="margin-top:10px" data-act="add-term">＋ Fecha anual</button></div></details>`}
+function icsOut(){const L=['BEGIN:VCALENDAR','VERSION:2.0','PRODID:-//AgronomIA PRO//Cuaderno de campo PRO//ES','CALSCALE:GREGORIAN','METHOD:PUBLISH','X-WR-CALNAME:AgronomIA – tareas de campo'];
+ const e=s=>String(s||'').replace(/\\/g,'\\\\').replace(/;/g,'\\;').replace(/,/g,'\\,').replace(/\r?\n/g,'\\n');
+ const stamp=new Date().toISOString().replace(/[-:]/g,'').replace(/\.\d+Z$/,'Z');
+ const dloc=d=>iso(d).replace(/-/g,'')+'T'+String(d.getHours()).padStart(2,'0')+String(d.getMinutes()).padStart(2,'0')+'00';
+ const nd=s=>addDays(s,1).replace(/-/g,'');
+ let n=0;const t0=today();
+ const evs=[...D.events,...autoEvents().filter(v=>v.date>=t0)].filter(v=>!CAL.f||v.fieldId===CAL.f);
+ evs.forEach(v=>{if(!v.date)return;n++;const K=KINDS[v.kind]||KINDS.other;
+  L.push('BEGIN:VEVENT','UID:'+v.id+'@agronomia-pro-es','DTSTAMP:'+stamp);
+  if(v.time){const s=new Date(v.date+'T'+v.time+':00');const en=new Date(s.getTime()+(v.auto?15:60)*60000);L.push('DTSTART:'+dloc(s),'DTEND:'+dloc(en))}
+  else L.push('DTSTART;VALUE=DATE:'+v.date.replace(/-/g,''),'DTEND;VALUE=DATE:'+nd(v.date));
+  L.push('SUMMARY:'+e((v.auto?'':K[0]+': ')+v.title+(v.fieldId&&v.kind!=='visit'?' – '+fLabel(v.fieldId):'')),'DESCRIPTION:'+e([v.fieldId?fLabel(v.fieldId):'',v.notes].filter(Boolean).join('\n')),'CATEGORIES:'+e(K[0]));
+  if(v.done)L.push('STATUS:CONFIRMED');
+  const rem=v.auto?(v.kind==='visit'?'1':'0'):v.remind;
+  if(v.kind==='rei')L.push('BEGIN:VALARM','ACTION:DISPLAY','DESCRIPTION:'+e(v.title),'TRIGGER:PT0M','END:VALARM');
+  else if(rem&&rem!=='0')L.push('BEGIN:VALARM','ACTION:DISPLAY','DESCRIPTION:'+e(v.title),'TRIGGER:-P'+rem+'D','END:VALARM');
+  L.push('END:VEVENT')});
+ if(!CAL.f){const y=new Date().getFullYear();D.terms.filter(t=>t.on).forEach(t=>{n++;const d=y+'-'+t.md;L.push('BEGIN:VEVENT','UID:term-'+t.id+'@agronomia-pro-es','DTSTAMP:'+stamp,'DTSTART;VALUE=DATE:'+d.replace(/-/g,''),'DTEND;VALUE=DATE:'+nd(d),'RRULE:FREQ=YEARLY','SUMMARY:'+e(t.title),'DESCRIPTION:'+e(t.notes||''),'CATEGORIES:'+e('Fecha anual'),'BEGIN:VALARM','ACTION:DISPLAY','DESCRIPTION:'+e(t.title),'TRIGGER:-P3D','END:VALARM','END:VEVENT')})}
+ L.push('END:VCALENDAR');
+ const enc=new TextEncoder();const fold=l=>{if(enc.encode(l).length<=75)return l;let out='',cur='',first=true;for(const ch of l){const lim=first?75:74;if(enc.encode(cur+ch).length>lim){out+=(first?'':'\r\n ')+cur;cur=ch;first=false}else cur+=ch}return out+(first?'':'\r\n ')+cur};
+ if(!n){toast('No hay eventos para exportar');return}
+ download(new Blob([L.map(fold).join('\r\n')+'\r\n'],{type:'text/calendar;charset=utf-8'}),`agronomia_calendario_${today()}.ics`);toast('.ics descargado ('+n+')')}
+
+/* ---- copia de seguridad ---- */
+function vBackup(){topBar('Copia y exportación','Datos en este dispositivo','#/');
+ const sz=(()=>{try{return(JSON.stringify(D).length/1024).toFixed(0)}catch(e){return'?'}})();
+ return `<div class="card gold"><h3>Copia de seguridad (JSON)</h3><p class="lead" style="margin-bottom:12px">Copia completa de productores, lotes, registros, eventos y tus tablas. Guárdala en Google Drive, en tu correo o en tu computadora. Tamaño: ~${sz} KB.</p>
+ <div class="bgrid"><button class="btn dk" data-act="export-json">⬇ Guardar copia</button><button class="btn" data-act="import-json">⬆ Restaurar copia</button></div></div>
+ <div class="card"><h3>Exportar a CSV (Excel)</h3><p class="lead" style="margin-bottom:12px">Planillas para tus registros, inspecciones y productores. Separadas por punto y coma, UTF-8, fechas DD/MM/AAAA.</p>
+ <div class="items"><button class="btn full" data-act="csv-all" data-t="pe">⬇ Registro de aplicaciones de fitosanitarios</button><button class="btn full" data-act="csv-all" data-t="sc">⬇ Recorridas</button><button class="btn full" data-act="csv-all" data-t="fe">⬇ Registro de fertilización</button><button class="btn full" data-act="csv-fields">⬇ Lotes y análisis de suelo</button></div></div>
+ <div class="card"><h3>Instalar en tu celular</h3><p class="lead" style="margin-bottom:0">Android (Chrome): menú ⋮ → «Agregar a la pantalla principal». iPhone (Safari): Compartir → «Agregar a inicio». El módulo también funciona sin conexión.</p></div>
+ <div class="card"><h3>Borrar todos los datos</h3><p class="lead" style="margin-bottom:12px">No se puede deshacer. Guarda una copia antes.</p><button class="btn red full" data-act="wipe">Borrar los datos de este dispositivo</button></div>`}
+function exportJson(){const o=Object.assign({app:'AgronomIA PRO – Cuaderno de campo PRO (es)',exported:new Date().toISOString()},D);
+ download(new Blob([JSON.stringify(o,null,1)],{type:'application/json'}),`agronomia_cuaderno_copia_${today()}.json`);toast('Copia JSON guardada')}
+$('#impfile').addEventListener('change',e=>{const f=e.target.files[0];e.target.value='';if(!f)return;const rd=new FileReader();
+ rd.onload=()=>{try{const o=JSON.parse(rd.result);if(!o||!Array.isArray(o.farms))throw 0;
+  if(!confirm(`¿Restaurar la copia (${o.farms.length} ${pl(o.farms.length,'productor','productores')}, ${(o.fields||[]).length} lotes)? Los datos actuales se reemplazarán.`))return;D=normalize(o);save();go('#/');toast('Copia restaurada')}catch(err){toast('Este archivo no es una copia válida')}};rd.readAsText(f)});
+function csvFields(){const n=dc;const H=['Productor','Establecimiento','Localidad/municipio','Provincia/estado','N.º de registro del productor','Catastro/partida','Código interno','Lote','Hectáreas','Cultivo','Híbrido/variedad','Antecesor','Rinde objetivo','Unidad de rinde','Fecha del análisis de suelo','pH','P (ppm)','K (ppm)','MO (%)','CIC (cmol/kg)','Notas'];
+ const R=D.fields.map(f=>{const g=farm(f.farmId),c=cropBy(f.crop);return[g?g.name:'',g?g.farmName||'':'',g?g.county||'':'',g?g.state||'':'',g?g.fsaFarm||'':'',f.tract,f.clu,f.name,n(f.area),f.crop,f.hybrid,f.prev,n(f.yield),c?c.u:'',dmy(f.adate),n(f.ph),n(f.p),n(f.k),n(f.om),n(f.cec),f.notes]});
+ download(new Blob([csvStr(H,R)],{type:'text/csv;charset=utf-8'}),`lotes_${today()}.csv`);toast('CSV exportado')}
+
+/* =============== acciones =============== */
+const ACT={
+ closesheet:()=>closeSheet(), sheetdel:()=>SH&&SH.del&&SH.del(),
+ theme:()=>{const t=document.documentElement.dataset.theme==='dark'?null:'dark';store('theme',t);theme(t);render()},
+ 'add-farm':()=>editFarm(), 'edit-farm':el=>editFarm(el.dataset.id),
+ 'add-field':el=>editField(null,el.dataset.farm), 'edit-field':el=>editField(el.dataset.id),
+ 'add-entry':el=>editEntry(null,{fieldId:el.dataset.field||(DZ.f&&!DZ.f.startsWith('g:')?DZ.f:'')}),
+ 'add-spray':el=>editSpray(null,{fieldId:el.dataset.field||(DZ.f&&!DZ.f.startsWith('g:')?DZ.f:'')}),
+ 'add-fert':el=>editFert(null,{fieldId:el.dataset.field||(DZ.f&&!DZ.f.startsWith('g:')?DZ.f:'')}),
+ 'add-event':el=>editEvent(null,{fieldId:el.dataset.field||CAL.f||''}),
+ 'open-sc':el=>editEntry(el.dataset.id),'open-pe':el=>editSpray(el.dataset.id),'open-fe':el=>editFert(el.dataset.id),
+ 'open-ev':el=>editEvent(el.dataset.id),'open-term':el=>editTerm(el.dataset.id),'add-term':()=>editTerm(),
+ 'ev-done':(el,e)=>{e.stopPropagation();const v=D.events.find(x=>x.id===el.dataset.id);if(v){v.done=el.checked;save();setTimeout(render,150);toast(v.done?'Marcado como hecho':'Restaurado')}},
+ 'ev-rec':(el,e)=>{e.stopPropagation();const v=D.events.find(x=>x.id===el.dataset.id);if(!v)return;const pre={fieldId:v.fieldId,date:v.date<=today()?v.date:today(),eventId:v.id,notes:v.notes};if(v.kind==='spray')editSpray(null,Object.assign(pre,{product:v.title}));else editFert(null,pre)},
+ dztab:el=>{DZ.t=el.dataset.t;render()},
+ 'dz-farm':(el,e)=>{e.preventDefault();DZ.f='g:'+el.dataset.id;DZ.t='pe';go('#/journal')},
+ csv:()=>csvOut(), 'csv-all':el=>{const s={...DZ};Object.assign(DZ,{t:el.dataset.t,f:'',from:'',to:'',q:''});csvOut();Object.assign(DZ,s)}, 'csv-fields':()=>csvFields(),
+ 'export-json':()=>exportJson(),'import-json':()=>$('#impfile').click(),
+ wipe:()=>{if(!confirm('¿Seguro que quieres borrar todos los datos del módulo en este dispositivo?'))return;if(!confirm('Última confirmación: los datos se borrarán para siempre.'))return;D=blank();save();go('#/');toast('Datos borrados')},
+ 'cal-prev':()=>{CAL.m--;if(CAL.m<0){CAL.m=11;CAL.y--}render()},'cal-next':()=>{CAL.m++;if(CAL.m>11){CAL.m=0;CAL.y++}render()},
+ 'cal-day':el=>{CAL.sel=el.dataset.d;const d=new Date(CAL.sel+'T12:00:00');CAL.y=d.getFullYear();CAL.m=d.getMonth();render();const k=document.querySelectorAll('.k')[0];k&&k.scrollIntoView({behavior:'smooth',block:'start'})},
+ ics:()=>icsOut(), print:()=>window.print(),
+ 'up-add':()=>{D.crops.push({n:'Cultivo nuevo '+(D.crops.length+1),u:'t/ha',y:1,N:0,P:0,K:0,split:[[50,'Primera aplicación'],[50,'Segunda aplicación']]});save();rerenderCalcKeepOpen()},
+ 'up-del':el=>{if(D.crops.length<=1)return;const c=D.crops[+el.dataset.i];if(!confirm(`¿Quitar «${c.n}» de la tabla?`))return;D.crops.splice(+el.dataset.i,1);save();if(!cropBy(C.crop))C.crop=D.crops[0].n;rerenderCalcKeepOpen()},
+ 'up-reset':()=>{if(!confirm('¿Restaurar la tabla de coeficientes y los multiplicadores originales?'))return;D.crops=JSON.parse(JSON.stringify(DEF_CROPS));D.pkf=DEF_PKF.slice();save();if(!cropBy(C.crop))C.crop=D.crops[0].n;rerenderCalcKeepOpen()},
+ 'calc-save':()=>{const f=field(C.fieldId);if(!f)return;const r=calc();f.plan={year:new Date().getFullYear(),date:today(),crop:r.crop.n,u:r.crop.u,y:r.y,N:r.N,P:r.P,K:r.K,lime:r.lime?Math.round(r.lime.rate*100)/100:0,prod:r.prod[0],splits:r.splits.map(s=>({pct:s.pct,term:s.term,n:Math.round(s.n),kg:Math.round(s.kg)}))};save();toast('Estimación guardada en la ficha del lote')},
+ 'calc-plan':()=>{const r=calc();if(!D.fields.length){toast('Primero agrega un lote');return}
+  const liq=!!r.prod[2];const amt=s=>liq?fmt(s.L,1)+' L/ha':fmt(s.kg,0)+' kg/ha';
+  const fs=r.splits.map((s,i)=>({k:'d'+i,l:`${s.pct} % · ${s.term} – ${amt(s)}`,t:'date'}));
+  sheet({title:'Programar el fraccionamiento de N',note:`${r.crop.n}: ${fmt(r.N,0)} kg N/ha como ${r.prod[0]} (estimación). Ingresa las fechas: las que queden vacías se omiten.`,obj:{fieldId:C.fieldId},fields:[{k:'fieldId',l:'Lote',t:'select',o:fieldOpts(C.fieldId,true),req:1},...fs],
+   save:v=>{let n=0;r.splits.forEach((s,i)=>{if(v['d'+i]){D.events.push({id:uid(),title:`${r.prod[0]} – ${amt(s)} (${fmt(s.n,0)} kg N)`,kind:'fert',fieldId:v.fieldId,date:v['d'+i],remind:'1',notes:s.term,done:false});n++}});if(!n){toast('Ingresa al menos una fecha');return false}}})}
+};
+function rerenderCalcKeepOpen(){if(!cropBy(C.crop))C.crop=D.crops[0].n;$('#view').innerHTML=vCalc();const d=document.querySelector('details.ex');if(d)d.open=true;calcUpd()}
+document.addEventListener('click',e=>{const el=e.target.closest('[data-act]');if(!el)return;const a=el.dataset.act;if(a==='cal-f')return;
+ const fn=ACT[a];if(fn)fn(el,e)});
+document.addEventListener('input',e=>{if(e.target.closest('#view')&&location.hash.startsWith('#/calculator'))onCalcInput(e)
+ ;if(e.target.classList.contains('dzf')&&e.target.dataset.k==='q'){DZ.q=e.target.value;$('#dzlist').innerHTML=dzList()}});
+document.addEventListener('change',e=>{const t=e.target;if(t.closest('#view')&&location.hash.startsWith('#/calculator')){onCalcInput(e);return}
+ if(t.classList.contains('dzf')){DZ[t.dataset.k]=t.value;$('#dzlist').innerHTML=dzList()}
+ if(t.id==='calf'){CAL.f=t.value;render()}});
+document.addEventListener('click',e=>{const b=e.target.closest('[data-act="dictate"]');if(!b)return;const SR=window.SpeechRecognition||window.webkitSpeechRecognition;if(!SR)return;
+ try{const r=new SR();r.lang=DLANG;r.interimResults=false;const ta=document.getElementById(b.dataset.target);b.textContent='● Escuchando…';
+  r.onresult=ev=>{const t=Array.from(ev.results).map(x=>x[0].transcript).join(' ');ta.value=(ta.value?ta.value+' ':'')+t};r.onend=()=>{b.textContent='🎤 Dictar'};r.onerror=()=>{b.textContent='🎤 Dictar';toast('El dictado no está disponible: pega el texto')};r.start()}catch(err){toast('El dictado no está disponible: pega el texto')}});
+document.addEventListener('keydown',e=>{if(e.key==='Escape'&&SH)closeSheet()});
+
+render();
+if('serviceWorker' in navigator&&location.protocol==='https:')navigator.serviceWorker.register('sw.js').catch(()=>{});
+</script>
+</body></html>
