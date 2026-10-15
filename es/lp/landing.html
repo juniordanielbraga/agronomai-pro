@@ -1,0 +1,351 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>AgronomIA PRO · La app de IA del ingeniero agrónomo</title>
+<meta name="description" content="60 Skills del agro y 24 agentes especialistas para salir de la recorrida con el informe, la planificación y el presupuesto listos para revisar.">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+:root{--vd:#1d3a1b;--vd2:#2a6a2c;--am:#f6c544;--na:#f26a1b;--na2:#e0570c;--cl:#f3f7f2;--tx:#1a2416;--gr:#5b6657;--ok:#22c55e;--li:#e3ebe0}
+html{scroll-behavior:smooth}
+body{font-family:Poppins,system-ui,-apple-system,sans-serif;color:var(--tx);background:#fff;line-height:1.5;-webkit-font-smoothing:antialiased}
+img{max-width:100%;display:block}
+.w{max-width:560px;margin:0 auto;padding:0 18px}
+.ww{max-width:1080px;margin:0 auto;padding:0 18px}
+.osc{background:radial-gradient(ellipse at 50% 30%,#2e7a30 0%,#21491f 55%,#1a3518 100%);color:#fff;position:relative}
+.osc:before{content:"";position:absolute;inset:0;background-image:linear-gradient(rgba(255,255,255,.035) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.035) 1px,transparent 1px);background-size:36px 36px;pointer-events:none}
+.osc>*{position:relative}
+.cla{background:var(--cl);background-image:radial-gradient(rgba(42,106,44,.08) 1px,transparent 1px);background-size:18px 18px}
+section{padding:52px 0}
+h1,h2,h3{font-weight:900;letter-spacing:-.6px;line-height:1.12;text-wrap:balance}
+h2{font-size:clamp(26px,6.6vw,38px);text-align:center;margin-bottom:26px}
+.am{color:var(--am)}
+.btn{display:inline-block;background:linear-gradient(180deg,#f8792b,var(--na2));color:#fff;font-weight:800;text-decoration:none;border-radius:999px;padding:17px 34px;font-size:16px;box-shadow:0 10px 24px rgba(242,106,27,.38);text-align:center;transition:transform .15s}
+.btn:hover{transform:translateY(-2px)}
+.btn.big{display:block;padding:20px 22px;font-size:17px;text-transform:uppercase;border-radius:22px}
+.ctr{text-align:center}
+/* hero */
+.hero{padding:22px 0 44px;text-align:center}
+.logo{display:flex;align-items:center;justify-content:center;gap:9px;margin-bottom:26px;font-weight:800;font-size:26px;letter-spacing:-.5px}
+.logo svg{width:40px;height:40px}
+.logo b{color:var(--am);font-weight:800}
+.hero h1{font-size:clamp(31px,8.4vw,52px);margin-bottom:18px}
+.hero .sub{font-size:16.5px;color:#e9f1e6;max-width:520px;margin:0 auto 24px}
+.hero .sub b{color:#fff}
+.vid{border-radius:16px;overflow:hidden;box-shadow:0 24px 50px rgba(0,0,0,.35);background:#000;margin:0 auto 28px;max-width:560px;position:relative}
+.vid video{width:100%;display:block;aspect-ratio:16/9;background:#000}
+.vid .tap{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;background:rgba(0,0,0,.18);cursor:pointer;border:0;width:100%}
+.vid .tap span{background:rgba(120,70,200,.85);color:#fff;font-weight:700;font-size:14px;padding:14px 22px;border-radius:12px;box-shadow:0 8px 20px rgba(0,0,0,.35)}
+.micro{font-size:14px;color:#dfe9db;margin-top:16px}
+/* para quien */
+.tagp{display:inline-flex;align-items:center;gap:8px;background:#e6efe3;border:1px solid #cddcc8;color:#2a6a2c;font-weight:700;font-size:12.5px;letter-spacing:1px;padding:6px 14px;border-radius:999px;margin:0 auto 14px}
+.tagp:before{content:"";width:8px;height:8px;border-radius:50%;background:var(--ok)}
+.pq{display:grid;gap:16px}
+.pq .c{background:#fff;border-radius:18px;border-left:5px solid var(--vd2);padding:20px 18px;display:flex;gap:16px;box-shadow:0 6px 20px rgba(20,50,20,.07)}
+.pq .ic{width:44px;height:44px;flex:none;border-radius:12px;background:#e8f1e5;display:flex;align-items:center;justify-content:center;font-size:22px}
+.pq h3{font-size:19px;letter-spacing:-.3px;margin-bottom:10px}
+.chips{display:flex;flex-wrap:wrap;gap:8px}
+.chips span{background:#f1f4ef;border:1px solid var(--li);border-radius:999px;padding:4px 12px;font-size:12.5px;font-weight:600;color:#3d4a39}
+.chips span:first-child:before{content:"● ";color:var(--ok);font-size:9px}
+/* beneficios */
+.bn{display:grid;gap:14px}
+.bn div{background:#fff;color:var(--tx);border-radius:14px;padding:18px 18px;display:flex;align-items:center;gap:14px;font-weight:800;font-size:17px}
+.bn div:before{content:"✓";width:30px;height:30px;flex:none;border-radius:50%;background:var(--am);color:#5b3b00;display:flex;align-items:center;justify-content:center;font-size:15px}
+/* recibir */
+.rc{display:grid;gap:12px}
+.rc div{background:#fff;border-radius:12px;border-left:4px solid var(--vd2);padding:15px 16px;font-weight:700;font-size:16px;display:flex;gap:12px;align-items:center;box-shadow:0 4px 14px rgba(20,50,20,.06)}
+/* app carrusel */
+.car{display:flex;gap:16px;overflow-x:auto;scroll-snap-type:x mandatory;padding:4px 18px 18px;-webkit-overflow-scrolling:touch}
+.car figure{flex:0 0 82%;max-width:420px;scroll-snap-align:center;background:#fff;border:1px solid var(--li);border-radius:16px;padding:12px;box-shadow:0 6px 18px rgba(20,50,20,.08)}
+.car img{border-radius:10px;border:1px solid var(--li)}
+.car figcaption{text-align:center;font-weight:700;font-size:14.5px;padding:12px 4px 4px}
+.hint{text-align:center;font-size:13px;color:var(--gr)}
+/* bonos */
+.bt{text-transform:uppercase}
+.bos{display:grid;gap:18px}
+.bo{background:#fff;color:var(--tx);border-radius:20px;padding:14px 14px 22px;text-align:center}
+.bo .hd{display:flex;justify-content:space-between;margin-bottom:12px}
+.pill{font-size:12px;font-weight:800;padding:5px 12px;border-radius:999px}
+.pa{background:#fde68a;color:#5b3b00}.pv{background:var(--ok);color:#fff}
+.bo img{border-radius:14px;background:#eef3ec;aspect-ratio:1;object-fit:cover;width:100%}
+.bo h3{font-size:19px;margin:16px 6px 8px}
+.bo p{font-size:14.5px;color:var(--gr);margin:0 6px 14px}
+.inc{display:inline-block;border:1px solid #bfe3c8;background:#ecfdf5;color:#e0570c;font-weight:800;font-size:13.5px;padding:6px 14px;border-radius:999px}
+/* depoimentos */
+.dep{display:flex;gap:16px;overflow-x:auto;scroll-snap-type:x mandatory;padding:4px 18px 18px}
+.dep .c{flex:0 0 84%;max-width:400px;scroll-snap-align:center;border:1px solid var(--li);border-left:5px solid var(--vd2);border-radius:18px;padding:20px;background:#fff;box-shadow:0 6px 18px rgba(20,50,20,.07);display:flex;flex-direction:column;gap:14px}
+.dep .st{display:flex;justify-content:space-between;align-items:center;color:#f5b301;font-size:18px;letter-spacing:2px}
+.dep .st span{font-size:12px;letter-spacing:0;background:#e6efe3;color:#2a6a2c;font-weight:700;padding:4px 10px;border-radius:999px}
+.dep p{font-size:15px;color:#2f3a2b;flex:1}
+.dep .pe{display:flex;align-items:center;gap:12px}
+.dep .pe img{width:48px;height:48px;border-radius:50%;object-fit:cover}
+.dep .pe b{display:block;font-size:15px}.dep .pe small{color:var(--gr);font-size:13px}
+/* oferta */
+.of h2{color:#fff}
+.mk{background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.12);border-radius:20px;padding:12px;margin-bottom:22px}
+.box{background:#fff;color:var(--tx);border-radius:24px;padding:22px 18px 24px}
+.lab{display:table;margin:0 auto 10px;background:#fef3c7;border:1px solid #fde68a;color:#92400e;font-weight:800;font-size:12.5px;letter-spacing:1px;padding:6px 14px;border-radius:999px}
+.box h3{text-align:center;font-size:22px;margin-bottom:14px}
+.ls{list-style:none}
+.ls li{display:flex;align-items:center;gap:12px;padding:12px 0;border-bottom:1px dashed var(--li);font-weight:700;font-size:15.5px}
+.ls li:before{content:"✓";width:24px;height:24px;flex:none;border-radius:50%;background:var(--na);color:#fff;display:flex;align-items:center;justify-content:center;font-size:13px}
+.ls li span{margin-left:auto;font-weight:800;white-space:nowrap}
+.bi{display:grid;gap:10px;margin:8px 0 22px}
+.bi div{display:flex;align-items:center;gap:12px;border:1px solid var(--li);border-radius:14px;padding:8px 12px}
+.bi img{width:46px;height:46px;border-radius:8px;object-fit:cover;background:#eef3ec}
+.bi .tx{flex:1;font-weight:700;font-size:14.5px;line-height:1.25}
+.bi .tx i{display:inline-block;font-style:normal;background:var(--ok);color:#fff;font-size:10.5px;font-weight:800;padding:2px 8px;border-radius:999px;margin-bottom:3px}
+.bi .pr{color:#e0570c;font-weight:800;font-size:12.5px;background:#fff7ed;padding:3px 8px;border-radius:8px}
+.pre{background:#ecfdf5;border:1px solid #bbe5c8;border-radius:20px;padding:22px 16px;text-align:center}
+.pre .t1{font-weight:800;font-size:16px}
+.pre s{display:inline-block;margin:10px 0 14px;background:#ffe4e6;color:#e11d48;font-weight:900;font-size:24px;padding:6px 18px;border-radius:10px}
+.pre .t2{font-weight:800;font-size:17px}
+.pre .pz{color:var(--na2);font-weight:900;font-size:48px;letter-spacing:-1.5px;line-height:1.1;margin:4px 0}
+.pre .ec{color:#3d4a39;font-weight:600;font-size:14px;margin-bottom:20px}
+.gar4{display:grid;grid-template-columns:1fr 1fr;gap:8px 10px;margin-top:18px;text-align:left;font-weight:600;font-size:14px}
+.st2{margin-top:20px;background:#fff;color:var(--tx);border:2px dashed #b9d9bf;border-radius:22px;padding:22px 18px;text-align:center}
+.st2 .k{color:var(--gr);font-weight:800;font-size:13px;letter-spacing:1px}
+.st2 h3{font-size:22px;margin:4px 0 6px}.st2 h3 span{color:var(--na2)}
+.st2 ul{list-style:none;text-align:left;margin:16px 0 12px;display:grid;gap:8px}
+.st2 li{display:flex;gap:10px;font-size:14.5px}
+.st2 li:before{content:"✓";width:20px;height:20px;flex:none;border-radius:50%;background:var(--na);color:#fff;display:flex;align-items:center;justify-content:center;font-size:11px;margin-top:2px}
+.st2 .fo{font-size:13px;color:var(--gr);margin-bottom:16px}
+.btn2{display:block;border:2px solid var(--na);color:var(--na2);font-weight:800;text-decoration:none;border-radius:999px;padding:14px;font-size:16px}
+.st2 .df{font-size:13px;color:var(--gr);margin-top:10px}
+/* garantia */
+.gar{background:#f3f4f6;text-align:center}
+.selo{width:190px;height:190px;border-radius:50%;margin:0 auto 22px;background:radial-gradient(circle at 40% 35%,#ffe48a,#f2b51c 70%);border:6px solid #fff3c4;box-shadow:0 0 0 3px #f2c24a,0 14px 30px rgba(180,120,0,.3);display:flex;flex-direction:column;align-items:center;justify-content:center;color:#3a2a00}
+.selo b{font-size:66px;font-weight:900;line-height:1}.selo span{font-size:13px;font-weight:800;letter-spacing:.5px}
+.gar h2{margin-bottom:12px;text-transform:uppercase;font-size:clamp(23px,5.8vw,32px)}
+.gar .s1{font-weight:800;color:#3d4a39;margin-bottom:10px}
+.gar .s2{color:#3d4a39;margin-bottom:16px}
+.gar .s3{display:flex;flex-wrap:wrap;justify-content:center;gap:6px 18px;font-weight:700;font-size:14.5px}
+/* faq */
+.faq details{border:1px solid var(--li);border-radius:14px;margin-bottom:12px;background:#fff;box-shadow:0 3px 10px rgba(20,50,20,.05)}
+.faq summary{list-style:none;cursor:pointer;padding:18px 54px 18px 18px;font-weight:800;font-size:16px;position:relative}
+.faq summary::-webkit-details-marker{display:none}
+.faq summary:after{content:"+";position:absolute;right:16px;top:50%;transform:translateY(-50%);width:26px;height:26px;border-radius:50%;background:#e6efe3;color:#2a6a2c;display:flex;align-items:center;justify-content:center;font-weight:900}
+.faq details[open] summary:after{content:"−"}
+.faq details p{padding:0 18px 18px;color:#3d4a39;font-size:15px}
+.fin{text-align:center}
+.fin h2{color:#fff}.fin p{font-weight:600;margin-bottom:24px}
+footer{background:#f3f4f6;padding:36px 0 40px;text-align:center;font-size:12.5px;color:#4b5563}
+footer b{display:block;margin-top:14px;color:#1f2937}
+@media(min-width:900px){
+ .pq{grid-template-columns:1fr 1fr}.bn{grid-template-columns:1fr 1fr}.rc{grid-template-columns:1fr 1fr}
+ .bos{grid-template-columns:1fr 1fr 1fr}.w.wide{max-width:1080px}
+ .car,.dep{justify-content:center}
+}
+@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}.btn{transition:none}}
+</style>
+</head>
+<body>
+
+<header class="osc hero">
+ <div class="w">
+  <div class="logo"><svg viewBox="0 0 64 64" aria-hidden="true"><path d="M8 50 Q32 35 56 50" stroke="#7CB342" stroke-width="3.2" fill="none" stroke-linecap="round"/><path d="M13 57.5 Q32 45 51 57.5" stroke="#7CB342" stroke-width="3.2" fill="none" stroke-linecap="round" opacity=".7"/><path d="M32 43 V25" stroke="#F5F0E3" stroke-width="3.4" stroke-linecap="round"/><path d="M32 31 C31 22 24 17 15 18 C15.5 27 22.5 32 32 31Z" fill="#7CB342"/><path d="M32 27 C33 17 40 12 49 12.5 C48.5 22 41.5 27.5 32 27Z" fill="#A5D46A"/><path d="M51 30 l1.6 4 4 1.6 -4 1.6 -1.6 4 -1.6 -4 -4 -1.6 4 -1.6Z" fill="#F6C544"/></svg><span>Agronom<b>IA</b> PRO</span></div>
+  <h1>Lleva tu agronomía al <span class="am">nivel de las grandes consultoras con IA:</span> más productores, menos oficina.</h1>
+  <p class="sub"><b>Aunque no sepas nada de IA</b>, con <b>60 Skills del agro</b> y <b>24 agentes especialistas</b> por cultivo y ganadería, sales de la recorrida con el <b>informe, la planificación y el presupuesto listos para revisar</b>, directo desde el celular.</p>
+  <div class="vid">
+   <video id="vsl" src="https://aekpgsbqjzqntlbucbts.supabase.co/storage/v1/object/public/store-resources/90fe6aec-93c6-42ee-aca4-c6db03ac0f91/1792037496739_agronomia-pro-demo.mp4" poster="https://aekpgsbqjzqntlbucbts.supabase.co/storage/v1/object/public/store-resources/90fe6aec-93c6-42ee-aca4-c6db03ac0f91/1792036533784_lp-poster-155c6d33.webp" playsinline muted autoplay loop preload="metadata"></video>
+   <button class="tap" id="tap" aria-label="Activar el sonido"><span>🔊 Tu video ya empezó · Toca para escuchar</span></button>
+  </div>
+  <a class="btn" href="#oferta">Quiero AgronomIA PRO</a>
+  <p class="micro">Pago único desde USD 9 • 60 Skills + 24 agentes • Garantía de 30 días</p>
+ </div>
+</header>
+
+<section class="cla">
+ <div class="w wide">
+  <div class="ctr"><span class="tagp">PARA QUIÉN ES</span></div>
+  <h2>Hecha para el agrónomo que quiere dejar de empezar de cero</h2>
+  <div class="pq">
+   <div class="c"><div class="ic">🌱</div><div><h3>Ingeniero agrónomo o técnico independiente</h3><div class="chips"><span>+ tiempo</span><span>cero improvisación</span><span>formato listo</span></div></div></div>
+   <div class="c"><div class="ic">🏢</div><div><h3>Consultora, cooperativa, acopio o agronomía</h3><div class="chips"><span>todo con el mismo formato</span><span>menos retrabajo</span><span>+ control</span></div></div></div>
+   <div class="c"><div class="ic">🤖</div><div><h3>Quien ya usa IA y se frustra</h3><div class="chips"><span>+ precisión</span><span>menos ajustes</span><span>listo para revisar</span></div></div></div>
+   <div class="c"><div class="ic">📸</div><div><h3>Quien se ahoga en el papeleo después de la recorrida</h3><div class="chips"><span>menos oficina</span><span>+ rapidez</span><span>productor bien atendido</span></div></div></div>
+  </div>
+ </div>
+</section>
+
+<section class="osc">
+ <div class="w wide">
+  <h2>Beneficios de AgronomIA PRO</h2>
+  <div class="bn">
+   <div>El informe sale en el mismo lote</div>
+   <div>Productor bien atendido</div>
+   <div>Más productores, mismo equipo</div>
+   <div>Carpeta de crédito ordenada</div>
+   <div>Un agente por cultivo</div>
+   <div>En el celular y en la computadora</div>
+  </div>
+ </div>
+</section>
+
+<section class="cla">
+ <div class="w wide">
+  <h2 class="bt">Lo que vas a recibir</h2>
+  <div class="rc">
+   <div>📚 60 Skills del agro</div>
+   <div>🤝 24 agentes especialistas</div>
+   <div>⚡ 600 comandos listos</div>
+   <div>📸 Registro fotográfico</div>
+   <div>📝 Informe de visita</div>
+   <div>🏦 Crédito y seguro agrícola</div>
+   <div>📱 App en el celular y en la computadora</div>
+   <div>🔄 Actualizaciones incluidas</div>
+   <div>🎓 Se instala en 1 minuto</div>
+   <div>🎁 8 bonos</div>
+  </div>
+ </div>
+</section>
+
+<section>
+ <div class="w"><h2>Mira la app por dentro</h2></div>
+ <div class="car">
+  <figure><img src="https://aekpgsbqjzqntlbucbts.supabase.co/storage/v1/object/public/store-resources/90fe6aec-93c6-42ee-aca4-c6db03ac0f91/1792036553169_lp-app1-723a5815.webp" alt="Pantalla de inicio de AgronomIA PRO" loading="lazy"><figcaption>Pantalla de inicio de la app</figcaption></figure>
+  <figure><img src="https://aekpgsbqjzqntlbucbts.supabase.co/storage/v1/object/public/store-resources/90fe6aec-93c6-42ee-aca4-c6db03ac0f91/1792036557348_lp-app2-517b6558.webp" alt="Departamento Recorridas y visitas" loading="lazy"><figcaption>Departamento de recorridas y visitas</figcaption></figure>
+  <figure><img src="https://aekpgsbqjzqntlbucbts.supabase.co/storage/v1/object/public/store-resources/90fe6aec-93c6-42ee-aca4-c6db03ac0f91/1792036560906_lp-app3-9207af7b.webp" alt="Los 10 comandos de una Skill" loading="lazy"><figcaption>Los 10 comandos de una Skill</figcaption></figure>
+  <figure><img src="https://aekpgsbqjzqntlbucbts.supabase.co/storage/v1/object/public/store-resources/90fe6aec-93c6-42ee-aca4-c6db03ac0f91/1792036564600_lp-app4-d7ef0fde.webp" alt="Ejemplo completado listo para revisar" loading="lazy"><figcaption>Ejemplo completado, listo para revisar</figcaption></figure>
+ </div>
+ <p class="hint">Desliza para ver más →</p>
+</section>
+
+<section class="osc">
+ <div class="w wide">
+  <h2 class="bt">🎁 Bonos exclusivos de hoy</h2>
+  <div class="bos">
+   <div class="bo"><div class="hd"><span class="pill pa">BONO 1</span><span class="pill pv">GRATIS</span></div><img src="https://aekpgsbqjzqntlbucbts.supabase.co/storage/v1/object/public/store-resources/90fe6aec-93c6-42ee-aca4-c6db03ac0f91/1792036502367_lp-b1-7c1d83ba.webp" alt="Pack de planillas del agro" loading="lazy"><h3>Pack de planillas del agro</h3><p>Costo por lote, presupuesto de campaña, control de visitas, cronograma, cartera de productores, lista de insumos y pendientes. Para Excel y Google Sheets.</p><span class="inc">Incluido en el PRO</span></div>
+   <div class="bo"><div class="hd"><span class="pill pa">BONO 2</span><span class="pill pv">GRATIS</span></div><img src="https://aekpgsbqjzqntlbucbts.supabase.co/storage/v1/object/public/store-resources/90fe6aec-93c6-42ee-aca4-c6db03ac0f91/1792036506431_lp-b2-45c13e4c.webp" alt="Biblioteca de modelos editables" loading="lazy"><h3>Biblioteca de modelos editables</h3><p>Informe de visita, cuaderno de campo, plan de acción, planificación, presupuesto, propuesta, resumen de proyecto y presentación, con tu marca.</p><span class="inc">Incluido en el PRO</span></div>
+   <div class="bo"><div class="hd"><span class="pill pa">BONO 3</span><span class="pill pv">GRATIS</span></div><img src="https://aekpgsbqjzqntlbucbts.supabase.co/storage/v1/object/public/store-resources/90fe6aec-93c6-42ee-aca4-c6db03ac0f91/1792036510536_lp-b3-cf791bd3.webp" alt="Kit crédito agropecuario organizado" loading="lazy"><h3>Kit crédito agropecuario organizado</h3><p>Guía de la carpeta, checklist de documentos, resumen del establecimiento, cuadro de inversiones, cronograma físico-financiero y mapa de pendientes. Ordena los papeles; no garantiza la aprobación.</p><span class="inc">Incluido en el PRO</span></div>
+   <div class="bo"><div class="hd"><span class="pill pa">BONO 4</span><span class="pill pv">GRATIS</span></div><img src="https://aekpgsbqjzqntlbucbts.supabase.co/storage/v1/object/public/store-resources/90fe6aec-93c6-42ee-aca4-c6db03ac0f91/1792036514670_lp-b4-540613b7.webp" alt="Kit propuestas y honorarios" loading="lazy"><h3>Kit propuestas y honorarios de asesoramiento</h3><p>Estructura de alcance, cómo armar tu tabla de honorarios, modelos de propuesta por tipo de servicio, responsabilidades y seguimiento.</p><span class="inc">Incluido en el PRO</span></div>
+   <div class="bo"><div class="hd"><span class="pill pa">BONO 5</span><span class="pill pv">GRATIS</span></div><img src="https://aekpgsbqjzqntlbucbts.supabase.co/storage/v1/object/public/store-resources/90fe6aec-93c6-42ee-aca4-c6db03ac0f91/1792036518577_lp-b5-b48484ef.webp" alt="Biblioteca de 30 ejemplos completados" loading="lazy"><h3>Biblioteca de 30 ejemplos completados</h3><p>Treinta resultados completos (informe, planificación, presupuesto, propuesta, proyecto, plan de acción) para que veas el estándar antes de generar el tuyo.</p><span class="inc">Incluido en el PRO</span></div>
+   <div class="bo"><div class="hd"><span class="pill pa">BONO 6</span><span class="pill pv">GRATIS</span></div><img src="https://aekpgsbqjzqntlbucbts.supabase.co/storage/v1/object/public/store-resources/90fe6aec-93c6-42ee-aca4-c6db03ac0f91/1792036522349_lp-b6-fd59403f.webp" alt="Agentes del agro para ChatGPT y Gemini" loading="lazy"><h3>Agentes del agro para ChatGPT y Gemini</h3><p>Versiones adaptadas de los agentes y comandos para quien también usa otras herramientas de IA.</p><span class="inc">Incluido en el PRO</span></div>
+   <div class="bo"><div class="hd"><span class="pill pa">BONO 7</span><span class="pill pv">GRATIS</span></div><img src="https://aekpgsbqjzqntlbucbts.supabase.co/storage/v1/object/public/store-resources/90fe6aec-93c6-42ee-aca4-c6db03ac0f91/1792036526478_lp-b7-4a02ae96.webp" alt="Kit registro fotográfico de campo" loading="lazy"><h3>Kit registro fotográfico y evidencias de campo</h3><p>Estándar de fotos por lote, guion de captura, cómo nombrar y ordenar los archivos, armado del anexo fotográfico y cuidado de los datos del productor.</p><span class="inc">Incluido en el PRO</span></div>
+   <div class="bo"><div class="hd"><span class="pill pa">BONO 8</span><span class="pill pv">GRATIS</span></div><img src="https://aekpgsbqjzqntlbucbts.supabase.co/storage/v1/object/public/store-resources/90fe6aec-93c6-42ee-aca4-c6db03ac0f91/1792036530153_lp-b8-2dd86cd5.webp" alt="Kit bienvenida de productores" loading="lazy"><h3>Kit bienvenida y relación con productores</h3><p>Primer contacto, diagnóstico inicial, plan de los primeros 90 días, calendario de contacto y mensajes listos para mantener activo al cliente.</p><span class="inc">Incluido en el PRO</span></div>
+  </div>
+ </div>
+</section>
+
+<section>
+ <div class="w"><h2>Agrónomos que ya la usan todos los días</h2></div>
+ <div class="dep">
+  <div class="c"><div class="st">★★★★★<span>Informes</span></div><p>Después de las visitas me quedaban fotos y notas por todos lados. Uso AgronomIA PRO para ordenar la información y armar la base del informe. Después reviso los datos y hago los ajustes técnicos.</p><div class="pe"><img src="https://aekpgsbqjzqntlbucbts.supabase.co/storage/v1/object/public/store-resources/90fe6aec-93c6-42ee-aca4-c6db03ac0f91/1792036568067_lp-d1-be3027a0.webp" alt="Martín Ferreyra" loading="lazy"><div><b>Martín Ferreyra</b><small>Ingeniero agrónomo</small></div></div></div>
+  <div class="c"><div class="st">★★★★★<span>Productor</span></div><p>La uso mucho para preparar la devolución al productor. Cargo lo que vi en el lote, los puntos de atención y las próximas acciones. Así no se me queda ningún pendiente.</p><div class="pe"><img src="https://aekpgsbqjzqntlbucbts.supabase.co/storage/v1/object/public/store-resources/90fe6aec-93c6-42ee-aca4-c6db03ac0f91/1792036571238_lp-d2-9249cfc6.webp" alt="Carolina Benítez" loading="lazy"><div><b>Carolina Benítez</b><small>Asesora agrícola</small></div></div></div>
+  <div class="c"><div class="st">★★★★★<span>Recorridas</span></div><p>Lo que más me sirvió es tener los flujos separados. Cuando tengo que armar una inspección, un plan de seguimiento o un informe, ya encuentro una estructura lista para arrancar.</p><div class="pe"><img src="https://aekpgsbqjzqntlbucbts.supabase.co/storage/v1/object/public/store-resources/90fe6aec-93c6-42ee-aca4-c6db03ac0f91/1792036574489_lp-d3-c07475da.webp" alt="Diego Ramírez" loading="lazy"><div><b>Diego Ramírez</b><small>Agrónomo de campo</small></div></div></div>
+  <div class="c"><div class="st">★★★★★<span>Campo</span></div><p>La uso sobre todo para convertir mis notas de campo en documentos más ordenados. La parte técnica sigue siendo mía, pero ya no tengo que empezar todo de cero.</p><div class="pe"><img src="https://aekpgsbqjzqntlbucbts.supabase.co/storage/v1/object/public/store-resources/90fe6aec-93c6-42ee-aca4-c6db03ac0f91/1792036577702_lp-d4-3c636050.webp" alt="Valentina Ortiz" loading="lazy"><div><b>Valentina Ortiz</b><small>Responsable técnica</small></div></div></div>
+  <div class="c"><div class="st">★★★★★<span>Flujos</span></div><p>Yo ya usaba inteligencia artificial, pero tenía que explicar demasiado y las respuestas salían muy genéricas. Con los flujos de agronomía es mucho más fácil orientar cada pedido.</p><div class="pe"><img src="https://aekpgsbqjzqntlbucbts.supabase.co/storage/v1/object/public/store-resources/90fe6aec-93c6-42ee-aca4-c6db03ac0f91/1792036580898_lp-d5-3c767969.webp" alt="Javier Medina" loading="lazy"><div><b>Javier Medina</b><small>Asesor en producción vegetal</small></div></div></div>
+ </div>
+ <p class="hint">Desliza para ver más →</p>
+</section>
+
+<section class="osc of" id="oferta">
+ <div class="w">
+  <h2>AgronomIA PRO completo</h2>
+  <div class="mk"><img src="https://aekpgsbqjzqntlbucbts.supabase.co/storage/v1/object/public/store-resources/90fe6aec-93c6-42ee-aca4-c6db03ac0f91/1792036498132_lp-main-d98a734c.webp" alt="AgronomIA PRO: app, Skills, agentes y bonos"></div>
+  <div class="box">
+   <span class="lab">TE LLEVAS</span>
+   <h3>Contenido del paquete</h3>
+   <ul class="ls">
+    <li>App con 60 Skills<span>USD 147</span></li>
+    <li>Agentes especialistas (24)<span>USD 97</span></li>
+    <li>Comandos listos (600)<span>USD 47</span></li>
+    <li>Bonos completos (8)<span>USD 97</span></li>
+    <li>Acceso de por vida + actualizaciones<span>Incluido</span></li>
+   </ul>
+   <span class="lab" style="margin-top:22px">BONOS INCLUIDOS (8)</span>
+   <div class="bi">
+    <div><img src="https://aekpgsbqjzqntlbucbts.supabase.co/storage/v1/object/public/store-resources/90fe6aec-93c6-42ee-aca4-c6db03ac0f91/1792036502367_lp-b1-7c1d83ba.webp" alt=""><div class="tx"><i>GRATIS</i><br>Planillas del agro</div><span class="pr">PRO</span></div>
+    <div><img src="https://aekpgsbqjzqntlbucbts.supabase.co/storage/v1/object/public/store-resources/90fe6aec-93c6-42ee-aca4-c6db03ac0f91/1792036506431_lp-b2-45c13e4c.webp" alt=""><div class="tx"><i>GRATIS</i><br>Modelos editables</div><span class="pr">PRO</span></div>
+    <div><img src="https://aekpgsbqjzqntlbucbts.supabase.co/storage/v1/object/public/store-resources/90fe6aec-93c6-42ee-aca4-c6db03ac0f91/1792036510536_lp-b3-cf791bd3.webp" alt=""><div class="tx"><i>GRATIS</i><br>Crédito agropecuario organizado</div><span class="pr">PRO</span></div>
+    <div><img src="https://aekpgsbqjzqntlbucbts.supabase.co/storage/v1/object/public/store-resources/90fe6aec-93c6-42ee-aca4-c6db03ac0f91/1792036514670_lp-b4-540613b7.webp" alt=""><div class="tx"><i>GRATIS</i><br>Propuestas y honorarios</div><span class="pr">PRO</span></div>
+    <div><img src="https://aekpgsbqjzqntlbucbts.supabase.co/storage/v1/object/public/store-resources/90fe6aec-93c6-42ee-aca4-c6db03ac0f91/1792036518577_lp-b5-b48484ef.webp" alt=""><div class="tx"><i>GRATIS</i><br>30 ejemplos completados</div><span class="pr">PRO</span></div>
+    <div><img src="https://aekpgsbqjzqntlbucbts.supabase.co/storage/v1/object/public/store-resources/90fe6aec-93c6-42ee-aca4-c6db03ac0f91/1792036522349_lp-b6-fd59403f.webp" alt=""><div class="tx"><i>GRATIS</i><br>Agentes para ChatGPT y Gemini</div><span class="pr">PRO</span></div>
+    <div><img src="https://aekpgsbqjzqntlbucbts.supabase.co/storage/v1/object/public/store-resources/90fe6aec-93c6-42ee-aca4-c6db03ac0f91/1792036526478_lp-b7-4a02ae96.webp" alt=""><div class="tx"><i>GRATIS</i><br>Registro fotográfico</div><span class="pr">PRO</span></div>
+    <div><img src="https://aekpgsbqjzqntlbucbts.supabase.co/storage/v1/object/public/store-resources/90fe6aec-93c6-42ee-aca4-c6db03ac0f91/1792036530153_lp-b8-2dd86cd5.webp" alt=""><div class="tx"><i>GRATIS</i><br>Bienvenida de productores</div><span class="pr">PRO</span></div>
+   </div>
+   <div class="pre">
+    <div class="t1">Valor sumado</div>
+    <s>USD 388</s>
+    <div class="t2">Valor hoy, pago único</div>
+    <div class="pz">USD 17</div>
+    <div class="ec">Ahorras USD 371 · sin mensualidad</div>
+    <a class="btn big" href="/checkout">Quiero más productores y menos oficina</a>
+    <div class="gar4"><span>✅ Acceso inmediato</span><span>✅ Acceso de por vida</span><span>✅ Actualizaciones incluidas</span><span>✅ Garantía de 30 días</span></div>
+   </div>
+  </div>
+  <div class="st2">
+   <div class="k">¿PREFIERES EMPEZAR DE A POCO?</div>
+   <h3>AgronomIA Start <span>USD 9</span></h3>
+   <p>12 Skills para probar la app en las tareas más repetitivas.</p>
+   <ul>
+    <li>12 Skills esenciales: plan de recorrida, informe de visita, devolución al productor, plan de fertilización, presupuesto de campaña y receta agronómica</li>
+    <li>120 comandos listos dentro de la app</li>
+    <li>12 briefs y 12 checklists de revisión</li>
+    <li>12 ejemplos completados + instalación en el celular y en la computadora</li>
+   </ul>
+   <p class="fo">Quedan afuera: los 24 agentes, las otras 48 Skills, los 8 bonos y el acceso de por vida. El acceso dura 6 meses.</p>
+   <a class="btn2" href="/checkout?p=d386f32f-2b7d-4208-852a-9de1f8d03a89">Empezar con el Start · USD 9</a>
+   <p class="df">Si después quieres el completo, son solo USD 8 de diferencia.</p>
+  </div>
+ </div>
+</section>
+
+<section class="gar">
+ <div class="w">
+  <div class="selo"><b>30</b><span>DÍAS DE</span><span>GARANTÍA</span></div>
+  <h2>Tienes 30 días de garantía</h2>
+  <p class="s1">Pruébala sin riesgo. Si no te sirve, te devolvemos el 100 %, sin preguntas.</p>
+  <p class="s2">Instálala, genera tus primeros informes y decide. Si no es para ti, pide el reembolso dentro de los 30 días y recibes el valor completo de vuelta.</p>
+  <div class="s3"><span>✔ Sin vueltas</span><span>✔ Sin preguntas</span><span>✔ Reembolso total hasta 30 días</span></div>
+ </div>
+</section>
+
+<section class="faq">
+ <div class="w">
+  <h2 class="bt">Preguntas frecuentes</h2>
+  <details><summary>¿Qué diferencia hay entre una Skill y un agente?</summary><p>La Skill te entrega el documento listo para revisar y firmar: informe, plan, presupuesto, propuesta. El agente es un especialista del cultivo o del tema que te orienta y responde tus dudas, como un colega de campo. En el PRO tienes los dos: 60 Skills y 24 agentes.</p></details>
+  <details><summary>¿Es una app de verdad o un PDF con prompts?</summary><p>Es una app. Instalas el ícono en la pantalla de inicio del celular y en el escritorio de la computadora y la usas como cualquier otra app: inicio, departamentos, buscador, favoritos y avance.</p></details>
+  <details><summary>¿Cómo la instalo?</summary><p>Recibes el link por correo. En Android: menú de Chrome y «Instalar aplicación». En iPhone: Compartir en Safari y «Agregar a inicio». En Windows y Mac: el ícono de instalar en la barra de direcciones de Chrome o Edge. Tarda menos de un minuto por equipo y no pasa por ninguna tienda de apps.</p></details>
+  <details><summary>¿Ocupa espacio en el celular?</summary><p>Prácticamente nada. No se descarga como una app tradicional: queda instalada como ícono, carga al instante y las actualizaciones llegan solas.</p></details>
+  <details><summary>¿Funciona en el celular y en la computadora?</summary><p>Sí, en los dos: Android, iPhone, Windows y Mac. También abre en tablet.</p></details>
+  <details><summary>¿Tiene mensualidad?</summary><p>No. Es un pago único. No hay cobro recurrente, renovación automática ni suscripción.</p></details>
+  <details><summary>¿El acceso es de por vida?</summary><p>En el plan PRO, sí. Pagas una vez y la usas para siempre, con las actualizaciones incluidas. El plan Start tiene acceso por 6 meses.</p></details>
+  <details><summary>¿Las actualizaciones se cobran aparte?</summary><p>No. Las Skills, herramientas y prompts nuevos entran en tu acceso sin costo adicional.</p></details>
+  <details><summary>¿Necesito saber escribir prompts o configurar algo?</summary><p>No. Eliges la herramienta, completas los campos que aparecen (o pegas tu nota de voz) y recibes la estructura lista.</p></details>
+  <details><summary>¿Necesito una cuenta paga de ChatGPT o Claude?</summary><p>No. La app funciona con las cuentas gratis de ChatGPT, Claude o Gemini, con menos uso por día. Algunas funciones dependen del plan de cada plataforma.</p></details>
+  <details><summary>¿La app hace diagnósticos del cultivo?</summary><p>No. Ordena las observaciones que cargas, señala hipótesis para verificar e indica qué requiere análisis de laboratorio o una evaluación en el lote.</p></details>
+  <details><summary>¿Hace recomendaciones de fitosanitarios o recetas agronómicas?</summary><p>No. No reemplaza la evaluación técnica, la receta agronómica, la normativa vigente ni la responsabilidad profesional.</p></details>
+  <details><summary>¿Las cuentas y los números son confiables?</summary><p>Cada Skill muestra los supuestos que usa y marca los datos que faltan. El resultado es un apoyo para tu decisión y tienes que revisarlo antes de que se convierta en recomendación.</p></details>
+  <details><summary>¿Sirve para cualquier cultivo?</summary><p>Sí. Las estructuras se adaptan a granos, café, caña, cítricos, frutales, hortalizas, pasturas y ganadería, según el contexto que cargues.</p></details>
+  <details><summary>¿Me ayuda con una carpeta de crédito agropecuario?</summary><p>Ordena la información, los documentos, el presupuesto y el resumen del proyecto. No garantiza que califiques, la aprobación ni el desembolso.</p></details>
+  <details><summary>¿Puedo cargar datos de mis productores?</summary><p>Sí, respetando la privacidad, los contratos y las políticas internas. Conviene anonimizar los datos sensibles.</p></details>
+  <details><summary>¿Tengo que revisar lo que genera la app?</summary><p>Sí, siempre. Todo lo que sale es material para que lo revise y valide el profesional responsable.</p></details>
+  <details><summary>¿Tiene garantía?</summary><p>Sí, 30 días. Si no te sirve, pides el reembolso y te devolvemos el dinero.</p></details>
+ </div>
+</section>
+
+<section class="osc fin">
+ <div class="w">
+  <h2>¿Listo para tener <span class="am">más productores y menos oficina?</span></h2>
+  <p>Se instala en 1 minuto. Pago único. 30 días de garantía.</p>
+  <a class="btn" href="#oferta">Quiero AgronomIA PRO</a>
+ </div>
+</section>
+
+<footer>
+ <div class="w">
+  <p>ChatGPT, Claude y Gemini son marcas de sus respectivas empresas. AgronomIA PRO es un producto independiente, compuesto por materiales educativos, Skills, instrucciones, modelos y flujos para usar con herramientas de inteligencia artificial, y no está desarrollado, patrocinado, avalado ni asociado oficialmente a ninguna de ellas. AgronomIA PRO es una app de apoyo operativo basada en inteligencia artificial y no reemplaza la visita técnica, el diagnóstico agronómico, el análisis de laboratorio, la receta agronómica, la normativa vigente, el software de gestión ni la responsabilidad y el criterio del profesional. Los resultados generados por IA pueden contener errores, omisiones o información desactualizada. Costos, precios, normativa, crédito, insumos, manejo y condiciones del lote deben confirmarse en fuentes actualizadas y ser validados por el profesional responsable antes de usarlos. El producto no garantiza rendimientos, resultados económicos ni la aprobación de créditos. El usuario es responsable de la privacidad, la protección de datos personales y la anonimización de la información que carga en la herramienta.</p>
+  <b>© 2026 AgronomIA PRO · Todos los derechos reservados.</b>
+ </div>
+</footer>
+
+<script>
+(function(){var v=document.getElementById('vsl'),t=document.getElementById('tap');if(!v||!t)return;
+t.addEventListener('click',function(){v.muted=false;v.loop=false;v.currentTime=0;v.controls=true;var p=v.play();if(p&&p.catch)p.catch(function(){});t.remove();});})();
+</script>
+</body>
+</html>
